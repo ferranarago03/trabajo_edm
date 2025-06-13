@@ -1,11 +1,29 @@
 import streamlit as st
 from streamlit_folium import st_folium
 import folium
+import sys
+import osmnx as ox
+
+sys.path.append("./src/")
+
+from utils import get_route
 
 st.title("Define inicio y fin de tu ruta")
 
 # 1. Control para elegir qué punto vamos a fijar
-punto = st.radio("¿Qué punto vas a seleccionar?", ("Inicio", "Fin"))
+st.sidebar.header("Tipo de ruta")
+# Selectbox to choose the type of route
+tipo_opciones = ["Caminando", "En bicicleta"]  # Opciones para el tipo de ruta
+type_route = st.sidebar.selectbox("¿Qué tipo de ruta quieres definir?", tipo_opciones)
+
+st.sidebar.header("Selecciona el punto de la ruta")
+# Radio button to choose between start and end point
+# (This could also be a selectbox or a dropdown)
+
+
+punto_opciones = ["Inicio", "Fin"]  # Opciones para el punto
+
+punto = st.sidebar.radio("¿Qué punto quieres fijar?", punto_opciones)
 
 # 2. Inicializa en sesión las coordenadas si no existen
 if "start" not in st.session_state:
@@ -20,7 +38,7 @@ if st.session_state.start:
 elif st.session_state.end:
     centro = [st.session_state.end["lat"], st.session_state.end["lng"]]
 
-m = folium.Map(location=centro, zoom_start=13)
+m = folium.Map(location=centro, zoom_start=15)
 
 # 4. Añade los marcadores ya guardados
 if st.session_state.start:
@@ -38,14 +56,25 @@ if st.session_state.end:
 
 # 5. Si ya tenemos ambos puntos, dibuja la ruta (línea)
 if st.session_state.start and st.session_state.end:
-    folium.PolyLine(
-        locations=[
-            [st.session_state.start["lat"], st.session_state.start["lng"]],
-            [st.session_state.end["lat"], st.session_state.end["lng"]],
-        ],
-        weight=5,
-        opacity=0.8,
-    ).add_to(m)
+    graph_cycling = ox.load_graphml("data/valencia_cycling_network.graphml")
+    graph_walking = ox.load_graphml("data/valencia_walking_network.graphml")
+
+    if type_route == "Caminando":
+        route = get_route(
+            (st.session_state.start["lat"], st.session_state.start["lng"]),
+            (st.session_state.end["lat"], st.session_state.end["lng"]),
+            graph_walking,
+        )
+
+        folium.PolyLine(
+            locations=[
+                [graph_walking.nodes[node]["y"], graph_walking.nodes[node]["x"]]
+                for node in route
+            ],
+            color="blue",
+            weight=5,
+            opacity=0.7,
+        ).add_to(m)
 
 # 6. Plugin para capturar clics y colocar un marcador temporal
 m.add_child(
