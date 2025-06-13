@@ -106,3 +106,22 @@ def get_nearest_cycle_station(graph, geovalenbisi):
 
     geovalenbisi["nearest_node"] = nearest_points
     return geovalenbisi
+
+
+def get_route(start, end, graph):
+    """
+    Get the route between two nodes in the graph.
+
+    Parameters:
+        start(tuple): Tuple of coordenates for the start point.
+        end: Tuple of coordinates for the end point.
+        graph: The cycling network graph.
+
+    Returns:
+        list: A list of nodes representing the route.
+    """
+    from_node = ox.distance.nearest_nodes(graph, start[1], start[0])
+    to_node = ox.distance.nearest_nodes(graph, end[1], end[0])
+
+    route = ox.shortest_path(graph, from_node, to_node, weight="length")
+    return route
