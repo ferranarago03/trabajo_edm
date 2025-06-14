@@ -15156,8 +15156,8 @@
     <edge source="29834279" target="111148850" id="0">
       <data key="d9">[176260048, 211248458]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['1', '2']</data>
-      <data key="d11">["Plaça d'Espanya", 'Carrer de Sant Vicent Màrtir']</data>
+      <data key="d16">['2', '1']</data>
+      <data key="d11">['Carrer de Sant Vicent Màrtir', "Plaça d'Espanya"]</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">87.95885464010516</data>
@@ -15266,9 +15266,9 @@
     <edge source="60707999" target="1287585224" id="0">
       <data key="d9">[770904168, 8102633, 7970449]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['2', '1']</data>
+      <data key="d16">['1', '2']</data>
       <data key="d17">30</data>
-      <data key="d11">['Carrer del General Tovar', 'Plaça de Tetuan']</data>
+      <data key="d11">['Plaça de Tetuan', 'Carrer del General Tovar']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">178.11813768911892</data>
@@ -15308,7 +15308,7 @@
       <data key="d9">[1313349810, 1313545669, 1313545670]</data>
       <data key="d10">cycleway</data>
       <data key="d11">Carrer Santa Amalia</data>
-      <data key="d18">['1.7', '2']</data>
+      <data key="d18">['2', '1.7']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">264.6373245382771</data>
@@ -15318,7 +15318,7 @@
       <data key="d9">[148463996, 13955558]</data>
       <data key="d10">tertiary</data>
       <data key="d16">2</data>
-      <data key="d11">['Carrer de Santa Rita', "Carrer d'Almassora"]</data>
+      <data key="d11">["Carrer d'Almassora", 'Carrer de Santa Rita']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">161.42769040974488</data>
@@ -15338,7 +15338,7 @@
     <edge source="69574954" target="322603623" id="0">
       <data key="d9">[10532170, 1188717507]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '5']</data>
+      <data key="d16">['5', '3']</data>
       <data key="d11">Avinguda de Suècia</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -15469,8 +15469,8 @@
     <edge source="90771124" target="322603635" id="0">
       <data key="d9">[10531088, 10531095]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
-      <data key="d11">['Carrer de Jaume Roig', 'Avinguda de Blasco Ibáñez']</data>
+      <data key="d16">['2', '3']</data>
+      <data key="d11">['Avinguda de Blasco Ibáñez', 'Carrer de Jaume Roig']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">79.49153457858324</data>
@@ -17183,7 +17183,7 @@
     <edge source="128249498" target="128249515" id="0">
       <data key="d9">[61722232, 61722233, 186976285, 13787447]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d17">50</data>
       <data key="d11">["Carrer de l'Hort d'En Vicent", 'Carrer de Molinell', "Carrer de l'Argenter Suàrez", "Carrer d'Almassora"]</data>
       <data key="d12">True</data>
@@ -17272,7 +17272,7 @@
     <edge source="128249566" target="128249585" id="0">
       <data key="d9">[18592809, 13787449]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Carrer de Joaquín Ballester', 'Carrer de Reus']</data>
+      <data key="d11">['Carrer de Reus', 'Carrer de Joaquín Ballester']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">88.86253495079316</data>
@@ -17309,7 +17309,7 @@
     <edge source="128249585" target="128249566" id="0">
       <data key="d9">[13787449, 18592809]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Carrer de Joaquín Ballester', 'Carrer de Reus']</data>
+      <data key="d11">['Carrer de Reus', 'Carrer de Joaquín Ballester']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">88.86253495079316</data>
@@ -17362,7 +17362,7 @@
     <edge source="128249625" target="1259522955" id="0">
       <data key="d9">[109585272, 9281560, 13787453, 186976286]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">["Carrer d'Almassora", 'Carrer de Molinell', "Carrer de l'Hort d'En Vicent", "Carrer de l'Argenter Suàrez"]</data>
+      <data key="d11">["Carrer de l'Hort d'En Vicent", "Carrer de l'Argenter Suàrez", "Carrer d'Almassora", 'Carrer de Molinell']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">353.6586283614535</data>
@@ -17771,7 +17771,7 @@
     <edge source="132194516" target="132194529" id="0">
       <data key="d9">[13963492, 625263142]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">["Carrer d'Eugènia Viñes", "Carrer d'Isabel de Villena"]</data>
+      <data key="d11">["Carrer d'Isabel de Villena", "Carrer d'Eugènia Viñes"]</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">29.672851185279413</data>
@@ -17860,7 +17860,7 @@
     </edge>
     <edge source="139308871" target="2115366330" id="0">
       <data key="d9">[1313353795, 1313353796, 414789485, 201534511]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">46.62111679888903</data>
@@ -18495,7 +18495,7 @@
     <edge source="243982402" target="1316130976" id="0">
       <data key="d9">[11945184, 677746898, 677746893]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d11">Carrer de la Vall de la Ballestera</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -18959,7 +18959,7 @@
     <edge source="251049216" target="433957693" id="0">
       <data key="d9">[690158344, 23209077, 97395160, 721261694, 721261695]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Carrer del Gravador Fabregat', 'Plaça del Músic Espí', 'Carrer de Jacomart']</data>
+      <data key="d11">['Plaça del Músic Espí', 'Carrer de Jacomart', 'Carrer del Gravador Fabregat']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">776.6314878123242</data>
@@ -19522,7 +19522,7 @@
     </edge>
     <edge source="252650166" target="442029859" id="0">
       <data key="d9">[23793739, 23332454]</data>
-      <data key="d10">['tertiary', 'secondary_link']</data>
+      <data key="d10">['secondary_link', 'tertiary']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">53.98666224375899</data>
@@ -20463,7 +20463,7 @@
     <edge source="254020022" target="254020074" id="0">
       <data key="d9">[640323290, 23455524, 23455525]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">["Carrer d'Antoni Joan", 'Carrer del Pintor Ferrandis']</data>
+      <data key="d11">['Carrer del Pintor Ferrandis', "Carrer d'Antoni Joan"]</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">508.5439554773758</data>
@@ -20500,7 +20500,7 @@
       <data key="d9">[704273817, 367483860]</data>
       <data key="d10">tertiary</data>
       <data key="d16">2</data>
-      <data key="d11">['Carrer de la Reina', 'Plaça de la Setmana Santa Marinera']</data>
+      <data key="d11">['Plaça de la Setmana Santa Marinera', 'Carrer de la Reina']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">507.70743820318023</data>
@@ -20510,7 +20510,7 @@
       <data key="d9">[640323290, 23455524, 23455525]</data>
       <data key="d10">tertiary</data>
       <data key="d16">2</data>
-      <data key="d11">["Carrer d'Antoni Joan", 'Carrer del Pintor Ferrandis']</data>
+      <data key="d11">['Carrer del Pintor Ferrandis', "Carrer d'Antoni Joan"]</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">508.5439554773758</data>
@@ -21309,7 +21309,7 @@
     <edge source="255434019" target="476473906" id="0">
       <data key="d9">[23588344, 783193210, 783193207]</data>
       <data key="d10">unclassified</data>
-      <data key="d11">['Camí del Caminot', 'Carretera del Riu']</data>
+      <data key="d11">['Carretera del Riu', 'Camí del Caminot']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">817.1902289529847</data>
@@ -21659,7 +21659,7 @@
       <data key="d9">[149420124, 386867757, 386867758]</data>
       <data key="d10">tertiary</data>
       <data key="d16">2</data>
-      <data key="d11">["Carrera de la Font d'en Corts", "Carretera de la Font d'en Corts"]</data>
+      <data key="d11">["Carretera de la Font d'en Corts", "Carrera de la Font d'en Corts"]</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">1059.5104222934615</data>
@@ -21690,7 +21690,7 @@
       <data key="d9">[149420124, 386867757, 386867758]</data>
       <data key="d10">tertiary</data>
       <data key="d16">2</data>
-      <data key="d11">["Carrera de la Font d'en Corts", "Carretera de la Font d'en Corts"]</data>
+      <data key="d11">["Carretera de la Font d'en Corts", "Carrera de la Font d'en Corts"]</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">1059.5104222934613</data>
@@ -21782,7 +21782,7 @@
     </edge>
     <edge source="255749741" target="8483665821" id="0">
       <data key="d9">[997545145, 902409349, 23614119]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Camí del Molí de les Fonts</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -21907,7 +21907,7 @@
     <edge source="256627719" target="107502507" id="0">
       <data key="d9">[1370620458, 11945191]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['2', '1']</data>
+      <data key="d16">['1', '2']</data>
       <data key="d17">30</data>
       <data key="d11">Carrer de Hernández Lázaro</data>
       <data key="d12">True</data>
@@ -22050,7 +22050,7 @@
     <edge source="257608631" target="4278580894" id="0">
       <data key="d9">[1122251505, 23776594]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Avinguda dels Germans Machado', 'Carrer del Comte de Lumiares']</data>
+      <data key="d11">['Carrer del Comte de Lumiares', 'Avinguda dels Germans Machado']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">64.61200511194458</data>
@@ -22439,7 +22439,7 @@
     </edge>
     <edge source="266910214" target="1796785417" id="0">
       <data key="d9">[12345960, 1289469001, 99867860, 1313540279, 1313540280]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">599.0317952656803</data>
@@ -24999,7 +24999,7 @@
       <data key="d9">[11993601, 52092234, 52092235, 812825806, 809229276]</data>
       <data key="d10">tertiary</data>
       <data key="d16">1</data>
-      <data key="d11">['Carrer de Joaquín Costa', 'Carrer de Joaquim Costa']</data>
+      <data key="d11">['Carrer de Joaquim Costa', 'Carrer de Joaquín Costa']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">416.9704583528042</data>
@@ -25199,7 +25199,7 @@
     <edge source="322603542" target="10188944743" id="0">
       <data key="d9">[94131890, 10505684]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d11">['Avinguda de Blasco Ibáñez', 'Carrer del Doctor Moliner']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -25234,7 +25234,7 @@
     <edge source="322603623" target="69574954" id="0">
       <data key="d9">[10532170, 1188717507]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '5']</data>
+      <data key="d16">['5', '3']</data>
       <data key="d11">Avinguda de Suècia</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
@@ -25636,7 +25636,7 @@
     <edge source="330795429" target="11908196407" id="0">
       <data key="d9">[130909849, 30038197]</data>
       <data key="d10">unclassified</data>
-      <data key="d11">['Camino de Borbotó a Godella', 'Camí Borbotó a Godella']</data>
+      <data key="d11">['Camí Borbotó a Godella', 'Camino de Borbotó a Godella']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">291.5407304748374</data>
@@ -25892,7 +25892,7 @@
     </edge>
     <edge source="429652571" target="429652572" id="0">
       <data key="d9">[36950216, 36950217, 36950214, 36950215]</data>
-      <data key="d10">['tertiary', 'track']</data>
+      <data key="d10">['track', 'tertiary']</data>
       <data key="d16">2</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -25920,7 +25920,7 @@
     </edge>
     <edge source="429652572" target="429652571" id="0">
       <data key="d9">[36950216, 36950217, 36950214, 36950215]</data>
-      <data key="d10">['tertiary', 'track']</data>
+      <data key="d10">['track', 'tertiary']</data>
       <data key="d11">Camí de la Marjal</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -26955,7 +26955,7 @@
     <edge source="430238784" target="253488224" id="0">
       <data key="d9">[23413040, 23413042]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '1']</data>
+      <data key="d16">['1', '3']</data>
       <data key="d17">50</data>
       <data key="d11">['Carrer de José María Haro (Magistrat)', 'Avinguda de Blasco Ibáñez']</data>
       <data key="d12">True</data>
@@ -27008,9 +27008,9 @@
     <edge source="430238815" target="430238821" id="0">
       <data key="d9">[23413024, 23397562, 23397560]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['1', '2']</data>
+      <data key="d16">['2', '1']</data>
       <data key="d17">50</data>
-      <data key="d11">['Carrer del Músic Ginés', 'Avinguda de Blasco Ibáñez', "Plaça de l'Actor Enrique Rambal"]</data>
+      <data key="d11">["Plaça de l'Actor Enrique Rambal", 'Avinguda de Blasco Ibáñez', 'Carrer del Músic Ginés']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">96.40981789030263</data>
@@ -27033,7 +27033,7 @@
     </edge>
     <edge source="430238816" target="10233338056" id="0">
       <data key="d9">[23413025, 144297572]</data>
-      <data key="d10">['tertiary', 'tertiary_link']</data>
+      <data key="d10">['tertiary_link', 'tertiary']</data>
       <data key="d16">2</data>
       <data key="d17">50</data>
       <data key="d11">Carrer del Músic Ginés</data>
@@ -27079,8 +27079,8 @@
     <edge source="430238822" target="430238816" id="0">
       <data key="d9">[23397561, 77213044, 23413025]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['2', '1']</data>
-      <data key="d11">['Carrer del Músic Ginés', 'Avinguda de Blasco Ibáñez', "Plaça de l'Actor Enrique Rambal"]</data>
+      <data key="d16">['1', '2']</data>
+      <data key="d11">["Plaça de l'Actor Enrique Rambal", 'Avinguda de Blasco Ibáñez', 'Carrer del Músic Ginés']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">97.04944041091633</data>
@@ -27269,7 +27269,7 @@
     </edge>
     <edge source="430366489" target="11865873983" id="0">
       <data key="d9">[168613021, 37004655]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Camí del Racó de l'Anell</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -27773,7 +27773,7 @@
     </edge>
     <edge source="442029859" target="252650166" id="0">
       <data key="d9">[23793739, 23332454]</data>
-      <data key="d10">['tertiary', 'secondary_link']</data>
+      <data key="d10">['secondary_link', 'tertiary']</data>
       <data key="d17">50</data>
       <data key="d11">Carrer de Santiago Rusiñol</data>
       <data key="d12">False</data>
@@ -27994,7 +27994,7 @@
     <edge source="442029995" target="6213230529" id="0">
       <data key="d9">[1340630787, 1340630788, 1322710980, 1340630791, 1340630792, 439765321, 1340630781, 1340630782]</data>
       <data key="d10">cycleway</data>
-      <data key="d18">['1.7', '1.9']</data>
+      <data key="d18">['1.9', '1.7']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">209.5477379690883</data>
@@ -28047,7 +28047,7 @@
     </edge>
     <edge source="460989407" target="705426311" id="0">
       <data key="d9">[425704812, 38833252]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d21">CR-5003</data>
       <data key="d18">2</data>
       <data key="d12">False</data>
@@ -28991,7 +28991,7 @@
     <edge source="476473906" target="255434019" id="0">
       <data key="d9">[23588344, 783193210, 783193207]</data>
       <data key="d10">unclassified</data>
-      <data key="d11">['Camí del Caminot', 'Carretera del Riu']</data>
+      <data key="d11">['Carretera del Riu', 'Camí del Caminot']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">817.1902289529847</data>
@@ -30041,7 +30041,7 @@
     </edge>
     <edge source="705426311" target="460989407" id="0">
       <data key="d9">[38833252, 425704812]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">1704.517658478848</data>
@@ -30130,7 +30130,7 @@
     </edge>
     <edge source="705427001" target="4250870445" id="0">
       <data key="d9">[56213064, 56213111]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">158.94757708609973</data>
@@ -30504,7 +30504,7 @@
     </edge>
     <edge source="781443039" target="11889829506" id="0">
       <data key="d9">[62717504, 1280972436]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Carretera de Daniel</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -31131,7 +31131,7 @@
     <edge source="1134207323" target="257843396" id="0">
       <data key="d9">[97443144, 117791803, 117791742, 727476831]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d11">Carrer d'Emili Baró</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -31245,7 +31245,7 @@
     <edge source="1146459531" target="863514077" id="0">
       <data key="d9">[99093104, 23588358]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['1', '2']</data>
+      <data key="d16">['2', '1']</data>
       <data key="d11">["Carretera de la Font d'en Corts", "Avinguda d'Antonio Ferrandis (Actor)"]</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -31539,7 +31539,7 @@
     </edge>
     <edge source="1154523587" target="4250873207" id="0">
       <data key="d9">[1148813297, 1148813298, 12209814, 425777943]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">1116.4074091799616</data>
@@ -31575,7 +31575,7 @@
     </edge>
     <edge source="1154523603" target="3716818263" id="0">
       <data key="d9">[1032842669, 367801725]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">312.28856190773587</data>
@@ -31836,7 +31836,7 @@
     </edge>
     <edge source="1154523893" target="11375400684" id="0">
       <data key="d9">[118895505, 1226719871]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d18">['1', '2.5']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
@@ -31871,7 +31871,7 @@
     </edge>
     <edge source="1154523924" target="5522819375" id="0">
       <data key="d9">[99867888, 575587913]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d18">2.5</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -32199,7 +32199,7 @@
     <edge source="1160312412" target="1160312332" id="0">
       <data key="d9">[103029739, 103589335]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['2', '1']</data>
+      <data key="d16">['1', '2']</data>
       <data key="d11">Carrer de Campos Crespo</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -32756,7 +32756,7 @@
       <data key="d10">tertiary</data>
       <data key="d16">3</data>
       <data key="d17">30</data>
-      <data key="d11">['Carrer de la Pau', "Plaça d'Alfons el Magnànim"]</data>
+      <data key="d11">["Plaça d'Alfons el Magnànim", 'Carrer de la Pau']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">359.4918568443845</data>
@@ -33050,7 +33050,7 @@
     <edge source="1307522886" target="4286093908" id="0">
       <data key="d9">[12403491, 1172731428, 12403430, 61720124, 12403507, 627037402, 100780347, 261779388, 12403486]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Plaça del Doctor Landete', 'Carrer de Russafa', 'Carrer del Mestre Aguilar', 'Carrer del Consolat de Mar', 'Plaça del Baró de Cortes']</data>
+      <data key="d11">['Carrer del Consolat de Mar', 'Carrer del Mestre Aguilar', 'Plaça del Doctor Landete', 'Carrer de Russafa', 'Plaça del Baró de Cortes']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">724.3860209335205</data>
@@ -34295,7 +34295,7 @@
     <edge source="1326293610" target="6004906443" id="0">
       <data key="d9">[18592810, 13787451]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Carrer de Ruaya', 'Carrer de Reus']</data>
+      <data key="d11">['Carrer de Reus', 'Carrer de Ruaya']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">21.191723865270635</data>
@@ -34386,7 +34386,7 @@
     </edge>
     <edge source="1328253482" target="8483640409" id="0">
       <data key="d9">[118012187, 913268100, 913268101, 913268102]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">574.3698489031289</data>
@@ -35106,7 +35106,7 @@
     <edge source="1561771595" target="1561771560" id="0">
       <data key="d9">[1111158844, 142709877]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d11">Carrera de Malilla</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -35541,7 +35541,7 @@
     <edge source="1579350952" target="1316130939" id="0">
       <data key="d9">[1370620457, 114102535]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d17">30</data>
       <data key="d11">Carrer d'Hernández Lázaro</data>
       <data key="d12">True</data>
@@ -36234,7 +36234,7 @@
     </edge>
     <edge source="1632038561" target="3716818253" id="0">
       <data key="d9">[1039964866, 367801727]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">171.47985665707776</data>
@@ -36375,7 +36375,7 @@
     <edge source="1635581148" target="1635547155" id="0">
       <data key="d9">[862802640, 862802641]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d17">30</data>
       <data key="d11">Carrer d'Eugènia Viñes</data>
       <data key="d12">True</data>
@@ -36616,7 +36616,7 @@
     <edge source="1666034156" target="1666034185" id="0">
       <data key="d9">[695359252, 153992526]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['2', '1']</data>
+      <data key="d16">['1', '2']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">204.116972010008</data>
@@ -36653,7 +36653,7 @@
     <edge source="1666034199" target="1666034161" id="0">
       <data key="d9">[153992524, 695359254]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['2', '1']</data>
+      <data key="d16">['1', '2']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">280.25640116504616</data>
@@ -36718,7 +36718,7 @@
     <edge source="1666034236" target="2853540965" id="0">
       <data key="d9">[695359288, 505250941]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['2', '1']</data>
+      <data key="d16">['1', '2']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">941.7012209276741</data>
@@ -37023,7 +37023,7 @@
     </edge>
     <edge source="1763285869" target="10086003414" id="0">
       <data key="d9">[1314438080, 1315363232, 1315363223, 141974090, 1315363220, 1315363221, 1315363222, 116822295, 1315363224, 1315363225, 1315363226, 1315363227, 1315363228, 1315363229, 1315363230, 1315363231]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">643.5433171205757</data>
@@ -37084,7 +37084,7 @@
     </edge>
     <edge source="1796785417" target="266910214" id="0">
       <data key="d9">[12345960, 1289469001, 99867860, 1313540279, 1313540280]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">599.0317952656802</data>
@@ -39635,7 +39635,7 @@
     </edge>
     <edge source="1801737890" target="8260079633" id="0">
       <data key="d9">[168996177, 888452833]</data>
-      <data key="d10">['path', 'unclassified']</data>
+      <data key="d10">['unclassified', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">302.03596539708667</data>
@@ -39717,7 +39717,7 @@
     </edge>
     <edge source="1801767574" target="1801767625" id="0">
       <data key="d9">[916937200, 1364979823]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">140.068217919627</data>
@@ -39748,7 +39748,7 @@
     </edge>
     <edge source="1801767604" target="11876711546" id="0">
       <data key="d9">[916937196, 169131574]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">64.69233969552103</data>
@@ -39763,7 +39763,7 @@
     </edge>
     <edge source="1801767625" target="1801767574" id="0">
       <data key="d9">[916937200, 1364979823]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">140.068217919627</data>
@@ -42599,7 +42599,7 @@
     </edge>
     <edge source="1935758783" target="11191642849" id="0">
       <data key="d9">[183207393, 183207415]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Camí de l'Alqueria del Grande</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -42608,7 +42608,7 @@
     </edge>
     <edge source="1935758783" target="1935760014" id="0">
       <data key="d9">[691538605, 62718782]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">486.94181968928774</data>
@@ -42694,7 +42694,7 @@
     </edge>
     <edge source="1935759328" target="11850236529" id="0">
       <data key="d9">[183207382, 168705375]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">113.3026700460914</data>
@@ -42833,7 +42833,7 @@
     </edge>
     <edge source="1935760014" target="1935758783" id="0">
       <data key="d9">[691538605, 62718782]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">486.9418196892877</data>
@@ -43525,7 +43525,7 @@
     <edge source="1977279617" target="69573313" id="0">
       <data key="d9">[1313349810, 1313545669, 1313545670]</data>
       <data key="d10">cycleway</data>
-      <data key="d18">['1.7', '2']</data>
+      <data key="d18">['2', '1.7']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">264.6373245382771</data>
@@ -43881,7 +43881,7 @@
     <edge source="2017887011" target="88429230" id="0">
       <data key="d9">[622151120, 622151119]</data>
       <data key="d10">secondary_link</data>
-      <data key="d11">["Avinguda de l'Enginyer Manuel Soto", 'Carrer de Joan Verdeguer']</data>
+      <data key="d11">['Carrer de Joan Verdeguer', "Avinguda de l'Enginyer Manuel Soto"]</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">61.121143123028205</data>
@@ -43956,7 +43956,7 @@
     </edge>
     <edge source="2115366330" target="139308871" id="0">
       <data key="d9">[1313353795, 1313353796, 414789485, 201534511]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">46.621116798889034</data>
@@ -44582,7 +44582,7 @@
     </edge>
     <edge source="2207558107" target="4997238324" id="0">
       <data key="d9">[510769347, 210674517]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Avinguda de la Gola del Pujol</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -44647,7 +44647,7 @@
     </edge>
     <edge source="2207558134" target="11375445255" id="0">
       <data key="d9">[99867896, 1226723746]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">144.18479420031414</data>
@@ -45126,7 +45126,7 @@
     </edge>
     <edge source="2215076349" target="9523908025" id="0">
       <data key="d9">[1033774776, 211505366]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">405.126917887042</data>
@@ -45852,8 +45852,8 @@
     </edge>
     <edge source="2281179806" target="6213230518" id="0">
       <data key="d9">[13787445, 218916655, 218916647]</data>
-      <data key="d10">['tertiary', 'tertiary_link']</data>
-      <data key="d16">['4', '2']</data>
+      <data key="d10">['tertiary_link', 'tertiary']</data>
+      <data key="d16">['2', '4']</data>
       <data key="d17">50</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -46670,7 +46670,7 @@
     <edge source="2853540936" target="12317889930" id="0">
       <data key="d9">[695359289, 153992539, 505250942, 695359287]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['3', '4', '2']</data>
+      <data key="d16">['2', '4', '3']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">962.3008492632817</data>
@@ -46961,7 +46961,7 @@
       <data key="d13">False</data>
       <data key="d14">343.1245492398892</data>
       <data key="d20">yes</data>
-      <data key="d11">['Avinguda de Peris i Valero', "Pont de l'Àngel Custodi"]</data>
+      <data key="d11">["Pont de l'Àngel Custodi", 'Avinguda de Peris i Valero']</data>
       <data key="d15">LINESTRING (-0.3590338 39.4637469, -0.3590618 39.4637267, -0.3591144 39.4636871, -0.3591379 39.4636753, -0.3591636 39.4636683, -0.3592155 39.4636536, -0.3606105 39.4633254, -0.3606977 39.4633344, -0.3607436 39.4633424, -0.3608237 39.4633463, -0.3608904 39.4633441, -0.3609624 39.4633303, -0.3610378 39.4633159, -0.361108 39.4633008, -0.361175 39.463287, -0.3611441 39.4632162, -0.3611821 39.4631766, -0.3612177 39.4631618, -0.3617636 39.4629343, -0.3619391 39.4628612, -0.361955 39.4628508, -0.3619686 39.4628401, -0.3619979 39.4628251, -0.3620619 39.4627969, -0.3621188 39.4627734, -0.3624263 39.4626467, -0.3624659 39.4626304, -0.3625661 39.4625913)</data>
     </edge>
     <edge source="3270269431" target="250422687" id="0">
@@ -47298,7 +47298,7 @@
     </edge>
     <edge source="3716818253" target="1632038561" id="0">
       <data key="d9">[1039964866, 367801727]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">171.4798566570778</data>
@@ -47385,7 +47385,7 @@
     </edge>
     <edge source="3716818263" target="1154523603" id="0">
       <data key="d9">[367801725, 1032842669]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">312.28856190773587</data>
@@ -48478,7 +48478,7 @@
     </edge>
     <edge source="4124933292" target="4124933298" id="0">
       <data key="d9">[1298196748, 1313835536, 410707857, 410707858, 722548120]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">94.60489658408564</data>
@@ -48509,7 +48509,7 @@
     </edge>
     <edge source="4124933298" target="4124933292" id="0">
       <data key="d9">[1298196748, 1313835536, 410707857, 410707858, 722548120]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">94.60489658408562</data>
@@ -48605,7 +48605,7 @@
     </edge>
     <edge source="4250870445" target="705427001" id="0">
       <data key="d9">[56213064, 56213111]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">158.9475770860997</data>
@@ -48759,7 +48759,7 @@
     </edge>
     <edge source="4250873207" target="1154523587" id="0">
       <data key="d9">[1148813297, 1148813298, 12209814, 425777943]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d11">Antic Tallafoc dels Ferros</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -49372,7 +49372,7 @@
       <data key="d13">True</data>
       <data key="d14">200.68046133033022</data>
       <data key="d20">yes</data>
-      <data key="d11">['Carrer Santa Amalia', 'Pont de Fusta']</data>
+      <data key="d11">['Pont de Fusta', 'Carrer Santa Amalia']</data>
       <data key="d18">2</data>
       <data key="d15">LINESTRING (-0.3747975 39.4790876, -0.3747626 39.4791348, -0.3746585 39.4792652, -0.3742361 39.4797737, -0.3737093 39.4804453, -0.3736874 39.4804717, -0.3736195 39.4805536, -0.3735637 39.4806186, -0.3735626 39.4806199)</data>
     </edge>
@@ -49632,7 +49632,7 @@
     <edge source="4626625308" target="4890714962" id="0">
       <data key="d9">[1338926478, 727519155, 4890126, 116822286]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['4', '1', '2']</data>
+      <data key="d16">['2', '1', '4']</data>
       <data key="d17">30</data>
       <data key="d11">Carrer de Quart</data>
       <data key="d12">True</data>
@@ -50653,7 +50653,7 @@
     <edge source="4997238324" target="2207558107" id="0">
       <data key="d9">[510769347, 210674517]</data>
       <data key="d22">no</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">154.990094484109</data>
@@ -51279,7 +51279,7 @@
     </edge>
     <edge source="5458501138" target="5458501146" id="0">
       <data key="d9">[566915947, 785031206, 566915951]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d11">['Camí Sèquia Fabiana', 'Camí de la Séquia de Fabiana']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
@@ -51302,7 +51302,7 @@
     </edge>
     <edge source="5458501146" target="5458501138" id="0">
       <data key="d9">[566915947, 785031206, 566915951]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">276.68371850106456</data>
@@ -51515,7 +51515,7 @@
     </edge>
     <edge source="5522819375" target="1154523924" id="0">
       <data key="d9">[99867888, 575587913]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">200.48242355450338</data>
@@ -51712,7 +51712,7 @@
     <edge source="5911331160" target="5636858817" id="0">
       <data key="d9">[626144960, 1026682557]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['4', '6']</data>
+      <data key="d16">['6', '4']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">161.80874003663035</data>
@@ -52146,7 +52146,7 @@
     <edge source="6004906444" target="1326293275" id="0">
       <data key="d9">[13787450, 13787452]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Carrer de Ruaya', 'Carrer de Reus']</data>
+      <data key="d11">['Carrer de Reus', 'Carrer de Ruaya']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">21.864214134705612</data>
@@ -52313,8 +52313,8 @@
     <edge source="6082395645" target="254524238" id="0">
       <data key="d9">[640323288, 640323289, 1370936330, 23502062]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['2', '1']</data>
-      <data key="d17">['30', '20']</data>
+      <data key="d16">['1', '2']</data>
+      <data key="d17">['20', '30']</data>
       <data key="d11">Avinguda de la Malva-rosa</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -52632,7 +52632,7 @@
     <edge source="6213230495" target="111148850" id="0">
       <data key="d9">[176260049, 1211355165, 446490805]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">["Plaça d'Espanya", 'Carrer de Sant Vicent Màrtir']</data>
+      <data key="d11">['Carrer de Sant Vicent Màrtir', "Plaça d'Espanya"]</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">46.73332604184763</data>
@@ -52843,7 +52843,7 @@
     <edge source="6213230516" target="132030053" id="0">
       <data key="d9">[727141345, 61722235, 727141343]</data>
       <data key="d10">tertiary</data>
-      <data key="d11">['Carrer de Jaume Roig', "Carrer d'Emili Baró"]</data>
+      <data key="d11">["Carrer d'Emili Baró", 'Carrer de Jaume Roig']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">122.32226293491907</data>
@@ -53040,7 +53040,7 @@
     <edge source="6213230529" target="442029995" id="0">
       <data key="d9">[1340630787, 1340630788, 1322710980, 1340630791, 1340630792, 439765321, 1340630781, 1340630782]</data>
       <data key="d10">cycleway</data>
-      <data key="d18">['1.7', '1.9']</data>
+      <data key="d18">['1.9', '1.7']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">209.54773796908822</data>
@@ -53556,7 +53556,7 @@
     <edge source="6529967841" target="9471592588" id="0">
       <data key="d9">[695359243, 1331302691, 153992523, 695359244]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">2097.1829529607617</data>
@@ -55737,7 +55737,7 @@
     </edge>
     <edge source="8260079633" target="1801737890" id="0">
       <data key="d9">[168996177, 888452833]</data>
-      <data key="d10">['path', 'unclassified']</data>
+      <data key="d10">['unclassified', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">302.0359653970867</data>
@@ -55745,7 +55745,7 @@
     </edge>
     <edge source="8260079652" target="8990618023" id="0">
       <data key="d9">[888452838, 971413351]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">758.8869622872461</data>
@@ -55834,7 +55834,7 @@
     </edge>
     <edge source="8483640409" target="1328253482" id="0">
       <data key="d9">[118012187, 913268100, 913268101, 913268102]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">574.3698489031289</data>
@@ -55906,7 +55906,7 @@
     </edge>
     <edge source="8483665821" target="255749741" id="0">
       <data key="d9">[997545145, 902409349, 23614119]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">1087.8859675131496</data>
@@ -56225,7 +56225,7 @@
     </edge>
     <edge source="8990618023" target="8260079652" id="0">
       <data key="d9">[888452838, 971413351]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d18">2.5</data>
       <data key="d13">False</data>
@@ -56618,7 +56618,7 @@
       <data key="d9">[100777776, 1291554830]</data>
       <data key="d10">tertiary</data>
       <data key="d16">2</data>
-      <data key="d11">['Carrer de les Barraques del Figuero', 'Avinguda de la Ronda de Natzaret']</data>
+      <data key="d11">['Avinguda de la Ronda de Natzaret', 'Carrer de les Barraques del Figuero']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">55.07129832368232</data>
@@ -57143,7 +57143,7 @@
     </edge>
     <edge source="9523908025" target="2215076349" id="0">
       <data key="d9">[1033774776, 211505366]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">405.1269178870419</data>
@@ -57834,7 +57834,7 @@
     </edge>
     <edge source="10086003414" target="1763285869" id="0">
       <data key="d9">[1315363232, 1314438080, 141974090, 116822295, 1315363220, 1315363221, 1315363222, 1315363223, 1315363224, 1315363225, 1315363226, 1315363227, 1315363228, 1315363229, 1315363230, 1315363231]</data>
-      <data key="d10">['cycleway', 'path']</data>
+      <data key="d10">['path', 'cycleway']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">643.5433171205755</data>
@@ -58239,7 +58239,7 @@
     <edge source="10170106772" target="120227098" id="0">
       <data key="d9">[862802637, 862802638]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d17">30</data>
       <data key="d11">Carrer d'Eugènia Viñes</data>
       <data key="d12">True</data>
@@ -58369,7 +58369,7 @@
       <data key="d9">[1314476345, 94131890]</data>
       <data key="d10">tertiary</data>
       <data key="d16">3</data>
-      <data key="d11">['Carrer del Doctor Gómez Ferrer', 'Avinguda de Blasco Ibáñez']</data>
+      <data key="d11">['Avinguda de Blasco Ibáñez', 'Carrer del Doctor Gómez Ferrer']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">18.060273920065754</data>
@@ -58486,7 +58486,7 @@
     </edge>
     <edge source="10233338068" target="430238815" id="0">
       <data key="d9">[23413024, 144297547]</data>
-      <data key="d10">['tertiary', 'tertiary_link']</data>
+      <data key="d10">['tertiary_link', 'tertiary']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">370.7293278241764</data>
@@ -59946,7 +59946,7 @@
     <edge source="10887187682" target="3270269431" id="0">
       <data key="d9">[1313596261, 1313596264, 1313596265, 1313596267, 1313596268, 115829325, 1313596271, 320501071, 320501076, 320501080, 314809661]</data>
       <data key="d10">cycleway</data>
-      <data key="d11">['Avinguda de Peris i Valero', "Pont de l'Àngel Custodi"]</data>
+      <data key="d11">["Pont de l'Àngel Custodi", 'Avinguda de Peris i Valero']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">343.12454923988923</data>
@@ -60075,7 +60075,7 @@
     <edge source="10938081732" target="193553428" id="0">
       <data key="d9">[823356696, 82467124, 824958276]</data>
       <data key="d10">tertiary</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d11">Carrer de Ricardo Micó</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
@@ -60812,7 +60812,7 @@
     </edge>
     <edge source="11191642849" target="1935758783" id="0">
       <data key="d9">[183207393, 183207415]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">200.54675102898386</data>
@@ -61022,8 +61022,8 @@
     </edge>
     <edge source="11375400684" target="1154523893" id="0">
       <data key="d9">[118895505, 1226719871]</data>
-      <data key="d10">['path', 'track']</data>
-      <data key="d18">['2.5', '1']</data>
+      <data key="d10">['track', 'path']</data>
+      <data key="d18">['1', '2.5']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">302.1434553828664</data>
@@ -61046,7 +61046,7 @@
     </edge>
     <edge source="11375445255" target="2207558134" id="0">
       <data key="d9">[99867896, 1226723746]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">144.18479420031417</data>
@@ -62565,7 +62565,7 @@
     <edge source="11810349638" target="2853539835" id="0">
       <data key="d9">[23509447, 1271823982, 695359216, 695359218, 119179513]</data>
       <data key="d10">unclassified</data>
-      <data key="d16">['3', '2']</data>
+      <data key="d16">['2', '3']</data>
       <data key="d12">True</data>
       <data key="d13">False</data>
       <data key="d14">2119.712949842993</data>
@@ -63746,7 +63746,7 @@
     </edge>
     <edge source="11850236529" target="1935759328" id="0">
       <data key="d9">[183207382, 168705375]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">113.30267004609141</data>
@@ -63904,7 +63904,7 @@
     </edge>
     <edge source="11865873983" target="430366489" id="0">
       <data key="d9">[168613021, 37004655]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Camí del Racó de l'Anell</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
@@ -64399,7 +64399,7 @@
     </edge>
     <edge source="11876711546" target="1801767604" id="0">
       <data key="d9">[916937196, 169131574]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">64.69233969552103</data>
@@ -64936,7 +64936,7 @@
     </edge>
     <edge source="11889829506" target="781443039" id="0">
       <data key="d9">[62717504, 1280972436]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">593.7457303185116</data>
@@ -65083,7 +65083,7 @@
     </edge>
     <edge source="11891260081" target="11893425476" id="0">
       <data key="d9">[1281144480, 693838621]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">155.7221472932206</data>
@@ -65183,7 +65183,7 @@
     </edge>
     <edge source="11892390515" target="11893425250" id="0">
       <data key="d9">[1281410613, 1364980718]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">173.7721421784473</data>
@@ -65330,7 +65330,7 @@
     </edge>
     <edge source="11893425250" target="11892390515" id="0">
       <data key="d9">[1281410613, 1364980718]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">173.77214217844733</data>
@@ -65338,7 +65338,7 @@
     </edge>
     <edge source="11893425250" target="11893425299" id="0">
       <data key="d9">[1281410621, 1364980716, 1364980717]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">168.45775329617769</data>
@@ -65411,7 +65411,7 @@
     </edge>
     <edge source="11893425299" target="11893425250" id="0">
       <data key="d9">[1364980717, 1364980716, 1281410621]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">168.45775329617766</data>
@@ -65491,7 +65491,7 @@
     </edge>
     <edge source="11893425476" target="11891260081" id="0">
       <data key="d9">[1281144480, 693838621]</data>
-      <data key="d10">['track', 'unclassified']</data>
+      <data key="d10">['unclassified', 'track']</data>
       <data key="d11">Entrada Algarín</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
@@ -66284,7 +66284,7 @@
     <edge source="11908196407" target="330795429" id="0">
       <data key="d9">[130909849, 30038197]</data>
       <data key="d10">unclassified</data>
-      <data key="d11">['Camino de Borbotó a Godella', 'Camí Borbotó a Godella']</data>
+      <data key="d11">['Camí Borbotó a Godella', 'Camino de Borbotó a Godella']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">291.54073047483746</data>
@@ -67327,7 +67327,7 @@
     <edge source="12154157463" target="4374496649" id="0">
       <data key="d9">[439765323, 413954427, 642984501, 439765324]</data>
       <data key="d10">cycleway</data>
-      <data key="d11">['Carrer Santa Amalia', 'Pont de Fusta']</data>
+      <data key="d11">['Pont de Fusta', 'Carrer Santa Amalia']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">200.6804613303302</data>
@@ -67501,7 +67501,7 @@
     </edge>
     <edge source="12304786425" target="12304786428" id="0">
       <data key="d9">[1329944853, 1329944854]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">68.61328355663738</data>
@@ -67509,7 +67509,7 @@
     </edge>
     <edge source="12304786428" target="12304786425" id="0">
       <data key="d9">[1329944853, 1329944854]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">68.61328355663738</data>
@@ -67581,7 +67581,7 @@
     </edge>
     <edge source="12305997546" target="12305997554" id="0">
       <data key="d9">[1330056290, 1330147052]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">False</data>
       <data key="d14">274.7963249233856</data>
@@ -67642,7 +67642,7 @@
     </edge>
     <edge source="12305997554" target="12305997546" id="0">
       <data key="d9">[1330056290, 1330147052]</data>
-      <data key="d10">['path', 'track']</data>
+      <data key="d10">['track', 'path']</data>
       <data key="d12">False</data>
       <data key="d13">True</data>
       <data key="d14">274.7963249233856</data>
@@ -67975,7 +67975,7 @@
     <edge source="12400733691" target="4286093908" id="0">
       <data key="d9">[1340609648, 1340609649, 733392250, 636849862]</data>
       <data key="d10">cycleway</data>
-      <data key="d11">['Carril bici eix Regne de València', 'Avinguda del Regne de València']</data>
+      <data key="d11">['Avinguda del Regne de València', 'Carril bici eix Regne de València']</data>
       <data key="d12">False</data>
       <data key="d13">[False, True]</data>
       <data key="d14">77.52424959217625</data>
@@ -68105,7 +68105,7 @@
       <data key="d14">40.019607107644404</data>
       <data key="d15">LINESTRING (-0.3919711 39.4672423, -0.3919181 39.4672334, -0.3917014 39.4672038, -0.3915267 39.4672651)</data>
     </edge>
-    <data key="d0">2025-06-12 21:15:16</data>
+    <data key="d0">2025-06-14 12:06:08</data>
     <data key="d1">OSMnx 2.0.4</data>
     <data key="d2">epsg:4326</data>
     <data key="d3">True</data>
