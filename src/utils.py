@@ -2,7 +2,7 @@ import osmnx as ox
 import pandas as pd
 import requests
 import geopandas as gpd
-
+from shapely.geometry import Point
 
 def get_walking_network(place_name: str):
     """
@@ -125,3 +125,25 @@ def get_route(start, end, graph):
 
     route = ox.shortest_path(graph, from_node, to_node, weight="length")
     return route
+
+
+
+def get_nearest_station(point, gdf):
+    """
+    Find the nearest station to a given point using Euclidean distance 
+    after reprojecting the data to a metric CRS.
+
+    Parameters:
+        point (tuple): Tuple of coordinates (lat, lon) for the query point.
+        gdf (GeoDataFrame): GeoDataFrame of stations with geometry column in EPSG:4326.
+
+    Returns:
+        GeoSeries: Row corresponding to the nearest station, including the distance in meters.
+    """
+
+    gdf_proj = gdf.to_crs(epsg=25830)
+    point_geom = gpd.GeoSeries([Point(point[1], point[0])], crs="EPSG:4326").to_crs(epsg=25830).iloc[0]
+    gdf_proj["distance"] = gdf_proj.distance(point_geom)
+    nearest_row = gdf_proj.loc[gdf_proj["distance"].idxmin()]
+    return nearest_row
+    
