@@ -76,6 +76,23 @@ if st.session_state.start and st.session_state.end:
             opacity=0.7,
         ).add_to(m)
 
+    if type_route == "En bicicleta":
+        route = get_route(
+            (st.session_state.start["lat"], st.session_state.start["lng"]),
+            (st.session_state.end["lat"], st.session_state.end["lng"]),
+            graph_cycling,
+        )
+
+        folium.PolyLine(
+            locations=[
+                [graph_cycling.nodes[node]["y"], graph_cycling.nodes[node]["x"]]
+                for node in route
+            ],
+            color="blue",
+            weight=5,
+            opacity=0.7,
+        ).add_to(m)
+
 # 6. Plugin para capturar clics y colocar un marcador temporal
 m.add_child(
     folium.ClickForMarker(
