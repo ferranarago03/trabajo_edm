@@ -4,6 +4,7 @@ import requests
 import geopandas as gpd
 from shapely.geometry import Point
 
+
 def get_walking_network(place_name: str):
     """
     Get the walking network for a specified place using OSMnx.
@@ -50,7 +51,6 @@ def get_valencian_open_data(url: str, params: dict = None):
 
     if response.status_code == 200:
         total_records = response.json().get("total_count")
-        print(f"Total records found: {total_records}")
 
         for start in range(0, total_records, params.get("rows", 10)):
             params["start"] = start
@@ -127,10 +127,9 @@ def get_route(start, end, graph):
     return route
 
 
-
 def get_nearest_station(point, gdf):
     """
-    Find the nearest station to a given point using Euclidean distance 
+    Find the nearest station to a given point using Euclidean distance
     after reprojecting the data to a metric CRS.
 
     Parameters:
@@ -142,8 +141,11 @@ def get_nearest_station(point, gdf):
     """
 
     gdf_proj = gdf.to_crs(epsg=25830)
-    point_geom = gpd.GeoSeries([Point(point[1], point[0])], crs="EPSG:4326").to_crs(epsg=25830).iloc[0]
+    point_geom = (
+        gpd.GeoSeries([Point(point[1], point[0])], crs="EPSG:4326")
+        .to_crs(epsg=25830)
+        .iloc[0]
+    )
     gdf_proj["distance"] = gdf_proj.distance(point_geom)
     nearest_row = gdf_proj.loc[gdf_proj["distance"].idxmin()]
     return nearest_row
-    
