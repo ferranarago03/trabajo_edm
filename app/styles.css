@@ -1,0 +1,232 @@
+/* styles.css */
+
+/* --- General Body and Font Styles --- */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #333333;
+    background-color: #ffffff; /* Light gray background for the app */
+}
+
+/* --- Streamlit Main Containers --- */
+.main .block-container {
+    padding-top: 2.5rem; /* Adjust padding at the top of main content */
+    padding-right: 5rem; /* Adjust right padding */
+    padding-left: 5rem;  /* Adjust left padding */
+    padding-bottom: 2.5rem; /* Adjust bottom padding */
+}
+
+/* --- Headers (H1, H2, H3, etc.) --- */
+h1 {
+    color: white !important; /* A dark blue, similar to ESADE's primary blue */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    color: #1a1a1a !important; /* A slightly lighter blue */
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #FF7F0E; /* Orange accent underline */
+    padding-bottom: 0.5rem;
+}
+
+h3 {
+    color: #0056B3; /* Even lighter blue */
+    font-weight: 500;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+h4 {
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+h5 {
+    color: #4a4a4a;
+    font-weight: 500;
+}
+
+
+/* --- Streamlit Sidebar Customization --- */
+/* Estado normal */
+[data-testid="stSidebar"] .stButton > button {
+  background-color: #FF7F0E !important;   /* naranja */
+  color: #FFFFFF !important;              /* texto blanco */
+}
+
+/* Hover */
+[data-testid="stSidebar"] .stButton > button:hover {
+  background-color: #FF9933 !important;   /* naranja claro */
+}
+
+/* Focus / activo (cuando haces click) */
+[data-testid="stSidebar"] .stButton > button:focus,
+[data-testid="stSidebar"] .stButton > button:active {
+  background-color: #D35400 !important;   /* naranja oscuro */
+  color: #FFFFFF !important;
+}
+
+/* --- Streamlit Markdown Elements --- */
+.stMarkdown p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.stMarkdown ul {
+    font-size: 1.1rem;
+    margin-left: 20px;
+    margin-bottom: 1rem;
+}
+
+/* --- Streamlit Expander --- */
+.streamlit-expanderHeader {
+    background-color: #e7f3ff;
+    color: #004080;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: 600;
+}
+
+/* --- Specific styling for the Hero Section in Homepage (via custom HTML) --- */
+/* The styles for .hero-section and its children are already embedded in the Python markdown,
+   but you can override or add more here if needed. */
+
+/* Example: Adjusting some default Streamlit components for better aesthetics */
+div.stSelectbox > label, div.stRadio > label {
+    font-weight: 600;
+    color: #004080;
+    margin-bottom: 0.5rem;
+}
+
+/* Style for st.success, st.warning, st.error messages */
+[data-testid="stStatusWidget"] {
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+[data-testid="stStatusWidget-Success"] {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+[data-testid="stStatusWidget-Warning"] {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 5px solid #ffc107;
+}
+
+[data-testid="stStatusWidget-Error"] {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+/* Style for st.columns gap */
+.st-emotion-cache-c69466 { /* This class can change, might need inspection */
+    gap: 2rem;
+}
+
+/* --- Adjustments for the Horizontal Menu (streamlit_option_menu) --- */
+/* The styles defined in menu_styles in Python are quite robust,
+   but you can add global overrides here if specific elements need more tweaking. */
+[data-testid="stHorizontalBlock"] .st-emotion-cache-12ttj4v { /* This class targets the menu item container */
+    justify-content: center; /* Center menu items if desired */
+}
+
+/* Ensure images have proper max-width within columns/containers */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove extra space below image */
+}
+
+/* Adjust the link button styling if you like */
+.stLinkButton > a {
+    background-color: white !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.stLinkButton > a:hover {
+    background-color: #0056B3 !important;
+    transform: translateY(-2px) !important;
+}
+
+/* General Link Styling */
+a {
+    color: #004080; /* A nice blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #0056B3;
+}
+
+/* Forzar fondo blanco en toda la app */
+.stApp {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+/* Forzar fondo blanco también en el sidebar */
+[data-testid="stSidebar"] {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+/* Texto en azul dentro del sidebar */
+[data-testid="stSidebar"] {
+  /* Esto aplica color a muchos elementos hijos */
+  color: #004080 !important;
+}
+
+/* Si quieres reforzar en párrafos y listas */
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] li {
+  color: #004080 !important;
+}
+
+/* Enlaces */
+[data-testid="stSidebar"] a {
+  color: #0056B3 !important;
+}
+
+/* Labels de inputs (select, radio, checkbox) */
+[data-testid="stSidebar"] label {
+  color: white !important;
+}
+
+/* Botones secundarios (texto del label) */
+[data-testid="stSidebar"] .stButton > button {
+  color: white !important; /* botón por defecto blanco si el fondo es azul */
+}
+
+/* Opcional: si usas markdown para títulos en sidebar */
+[data-testid="stSidebar"] .stMarkdown h1,
+[data-testid="stSidebar"] .stMarkdown h2,
+[data-testid="stSidebar"] .stMarkdown h3 {
+  color: #004080 !important;
+}
+/* Forzar color de texto oscuro en todo el contenido principal */
+.stApp, 
+ .stApp h3, .stApp h4, .stApp h5,
+ .stApp p, .stApp li {
+  color: #333333 !important;
+}
+
+/* ─── Estilo para la navegación multipágina en la sidebar ─── */
+
+/* ─── Multipage Sidebar Nav (Home / Implementation / Idea Presentation) ─── */
+
+
