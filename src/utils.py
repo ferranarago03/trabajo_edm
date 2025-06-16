@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import geopandas as gpd
 from shapely.geometry import Point
+import math
 
 
 def get_walking_network(place_name: str):
@@ -108,25 +109,6 @@ def get_nearest_cycle_station(graph, geovalenbisi):
     return geovalenbisi
 
 
-def get_route(start, end, graph):
-    """
-    Get the route between two nodes in the graph.
-
-    Parameters:
-        start(tuple): Tuple of coordenates for the start point.
-        end: Tuple of coordinates for the end point.
-        graph: The cycling network graph.
-
-    Returns:
-        list: A list of nodes representing the route.
-    """
-    from_node = ox.distance.nearest_nodes(graph, start[1], start[0])
-    to_node = ox.distance.nearest_nodes(graph, end[1], end[0])
-
-    route = ox.shortest_path(graph, from_node, to_node, weight="length")
-    return route
-
-
 def get_nearest_station(point, gdf):
     """
     Find the nearest station to a given point using Euclidean distance
@@ -149,3 +131,32 @@ def get_nearest_station(point, gdf):
     gdf_proj["distance"] = gdf_proj.distance(point_geom)
     nearest_row = gdf_proj.loc[gdf_proj["distance"].idxmin()]
     return nearest_row
+
+
+def get_distance(start, end):
+    """
+    Calculate the distance between two geographic points.
+
+    Parameters:
+        start (tuple): (lat, lon) in decimal degrees.
+        end   (tuple): (lat, lon) in decimal degrees.
+
+    Returns:
+        deg_dist (float): Euclidean distance in decimal degrees.
+        gc_dist_m (float): Great-circle distance in meters.
+    """
+    lat1, lon1 = map(math.radians, start)
+    lat2, lon2 = map(math.radians, end)
+
+    # 2. Haversine (great-circle) in meters
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = (
+        math.sin(dlat / 2) ** 2
+        + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    )
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    R = 6371000  # Earth radius in meters
+    gc_dist_m = R * c
+
+    return gc_dist_m
