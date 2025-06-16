@@ -18,5 +18,9 @@ dependencies = [
     "shapely>=2.1.1",
     "streamlit>=1.45.1",
     "streamlit-folium>=0.25.0",
+<<<<<<< HEAD
     "streamlit-option-menu>=0.4.0",
+=======
+    "tqdm>=4.67.1",
+>>>>>>> a540b7d814187c39829ab3d275915573557738bd
 ]
