@@ -1,10 +1,11 @@
 import numpy as np
 from math import radians, sin, cos, sqrt, atan2
 from scipy.spatial import cKDTree
+import folium
 
 
 def get_nearest_water_fountains_on_route(
-    graph, distancia, route_nodes, type_displacement, temperatura, fuentes_publicas_gpd
+    graph, distancia, route_nodes, type_displacement, temperatura, public_fountains_gdf
 ):
     """
     Find the nearest public water fountains along a given route, using pre-loaded fountain GeoDataFrame.
@@ -15,13 +16,13 @@ def get_nearest_water_fountains_on_route(
         route_nodes (list): A list of nodes representing the route.
         type_displacement (str): "Caminando", "En Bicicleta" or "En ValenBisi".
         temperatura (float): Current temperature in °C.
-        fuentes_publicas_gpd (GeoDataFrame): GeoDataFrame of public fountains with geometry column.
+        public_fountains_gdf (GeoDataFrame): GeoDataFrame of public fountains with geometry column.
 
     Returns:
         list: A list of node IDs for fountains within max_distance of each stop point.
     """
-    fountain_nodes = fuentes_publicas_gpd.index.to_list()
-    fountain_coords = np.array([(pt.y, pt.x) for pt in fuentes_publicas_gpd.geometry])
+    fountain_nodes = public_fountains_gdf.index.to_list()
+    fountain_coords = np.array([(pt.y, pt.x) for pt in public_fountains_gdf.geometry])
     tree = cKDTree(fountain_coords)
 
     def haversine(a, b):
@@ -79,7 +80,7 @@ def get_nearest_water_fountains_on_route(
                 k=1,
             )
             fountain_idx = fountain_nodes[idx[0]]
-            fountain_pt = fuentes_publicas_gpd.loc[fountain_idx].geometry
+            fountain_pt = public_fountains_gdf.loc[fountain_idx].geometry
             d_m = haversine(
                 (graph.nodes[route_nodes[i]]["y"], graph.nodes[route_nodes[i]]["x"]),
                 (fountain_pt.y, fountain_pt.x),
@@ -89,3 +90,22 @@ def get_nearest_water_fountains_on_route(
                 resultados.append(fountain_idx)
 
     return resultados
+
+
+def print_fountains(fountains, public_fountains_gpd, map):
+    """
+    Print the fountains on the map.
+
+    Parameters:
+        fountains (list): List of fountain node IDs.
+        public_fountains_gpd (GeoDataFrame): GeoDataFrame of public fountains with geometry column.
+        map: The folium map to draw the fountains on.
+    """
+    for idx in fountains:
+        calle = public_fountains_gpd.loc[idx, "calle"]
+        pt = public_fountains_gpd.loc[idx].geometry
+        folium.Marker(
+            location=(pt.y, pt.x),  # latitud, longitud
+            popup=f"Fuente calle {calle}",
+            icon=folium.Icon(color="blue", icon="tint", prefix="fa"),
+        ).add_to(map)

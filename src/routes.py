@@ -111,13 +111,13 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
     ini_station_loc = ini_station["geo_point_2d"]
     end_station_loc = end_station["geo_point_2d"]
 
-    ini_walking_route = get_route(
+    ini_walking_route, dist1 = get_route(
         start, (ini_station_loc["lat"], ini_station_loc["lon"]), walking_graph
     )
-    end_walking_route = get_route(
+    end_walking_route, dist2 = get_route(
         (end_station_loc["lat"], end_station_loc["lon"]), end, walking_graph
     )
-    cycling_route = get_route(
+    cycling_route, dist3 = get_route(
         (ini_station_loc["lat"], ini_station_loc["lon"]),
         (end_station_loc["lat"], end_station_loc["lon"]),
         cycling_graph,
@@ -138,7 +138,7 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
     )
 
     if dist_ini_station > threshold:
-        inter_ini = get_route(
+        inter_ini, d_aux = get_route(
             (ini_station_loc["lat"], ini_station_loc["lon"]),
             (
                 cycling_graph.nodes[cycling_route[0]]["y"],
@@ -147,8 +147,9 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
             walking_graph,
         )
         ini_walking_route.extend(inter_ini)
+        dist1 += d_aux
     if dist_end_station > threshold:
-        inter_end = get_route(
+        inter_end, d_aux = get_route(
             (
                 cycling_graph.nodes[cycling_route[-1]]["y"],
                 cycling_graph.nodes[cycling_route[-1]]["x"],
@@ -157,5 +158,30 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
             walking_graph,
         )
         end_walking_route = inter_end + end_walking_route
+        dist2 += d_aux
+    return (
+        ini_walking_route,
+        dist1,
+        cycling_route,
+        dist2,
+        end_walking_route,
+        dist3,
+        ini_station,
+        end_station,
+    )
 
-    return ini_walking_route, cycling_route, end_walking_route, ini_station, end_station
+
+def print_stations(ini, end, map):
+    ini_station_loc = ini["geo_point_2d"]
+    end_station_loc = end["geo_point_2d"]
+    folium.Marker(
+        location=(ini_station_loc["lat"], ini_station_loc["lon"]),
+        popup=f"Start Station.<br>Available Bikes: {ini['available']}",
+        icon=folium.Icon(color="green", icon="bicycle", prefix="fa"),
+    ).add_to(map)
+
+    folium.Marker(
+        location=(end_station_loc["lat"], end_station_loc["lon"]),
+        popup=f"End Station: {end['address']}<br>Available Places: {end['free']}",
+        icon=folium.Icon(color="red", icon="home"),
+    ).add_to(map)

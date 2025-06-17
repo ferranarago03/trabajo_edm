@@ -72,19 +72,19 @@ def get_valencian_open_data(url: str, params: dict = None):
         )
 
 
-def get_valenbisi_stations(valenbisi_data):
+def get_gdf(df):
     """
-    Extract Valenbisi stations from the Valenbisi data.
+    Extract a GeoDataFrame from DataFrame containing teh geometry column.
 
     Parameters:
-        valenbisi_data (DataFrame): A DataFrame containing Valenbisi data.
+        df (DataFrame): A DataFrame containing the column geometry.
 
     Returns:
-        GeoDataFrame: A GeoDataFrame containing the Valenbisi stations.
+        GeoDataFrame: A GeoDataFrame of the given DataFrame.
     """
 
     # Convert the DataFrame to a GeoDataFrame
-    gdf = gpd.GeoDataFrame(valenbisi_data, geometry=valenbisi_data["geometry"])
+    gdf = gpd.GeoDataFrame(df, geometry=df["geometry"])
     gdf.set_crs(epsg=4326, inplace=True)  # Set the coordinate reference system
 
     return gdf
