@@ -178,6 +178,68 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
     )
 
 
+def get_cycling_route(start, end, cycling_graph, walking_graph):
+    """
+    Get the mixed route from start to end using walking and cycling network graphs.
+
+    Parameters:
+        start (tuple): (lat, lon) start point.
+        end (tuple): (lat, lon) end point.
+        cycling_graph: OSMnx cycling graph.
+        walking_graph: OSMnx walking graph.
+
+    Returns:
+        tuple:
+            - walking route from start to cycling network
+            - distance of that walking route
+            - cycling route
+            - distance of that cycling route
+            - walking route from cycling network to end
+            - distance of that walking route
+    """
+
+    nodo_ini_bike = ox.distance.nearest_nodes(cycling_graph, X=start[1], Y=start[0])
+    nodo_end_bike = ox.distance.nearest_nodes(cycling_graph, X=end[1], Y=end[0])
+
+    ini_walking_route, dist1 = get_route(
+        start,
+        (
+            cycling_graph.nodes[nodo_ini_bike]["y"],
+            cycling_graph.nodes[nodo_ini_bike]["x"],
+        ),
+        walking_graph,
+    )
+    end_walking_route, dist3 = get_route(
+        (
+            cycling_graph.nodes[nodo_ini_bike]["y"],
+            cycling_graph.nodes[nodo_ini_bike]["x"],
+        ),
+        end,
+        walking_graph,
+    )
+
+    cycling_route, dist2 = get_route(
+        (
+            cycling_graph.nodes[nodo_ini_bike]["y"],
+            cycling_graph.nodes[nodo_ini_bike]["x"],
+        ),
+        (
+            cycling_graph.nodes[nodo_end_bike]["y"],
+            cycling_graph.nodes[nodo_end_bike]["x"],
+        ),
+        cycling_graph,
+    )
+
+    return (
+        ini_walking_route,
+        dist1,
+        cycling_route,
+        dist2,
+        end_walking_route,
+        dist3,
+    )
+
+
 def print_stations(ini, end, map):
     ini_station_loc = ini["geo_point_2d"]
     end_station_loc = end["geo_point_2d"]
