@@ -91,9 +91,9 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
 
     threshold = 0.0001
 
-    cycling_nearest_node = ox.distance.nearest_nodes(
-        cycling_graph, X=start[1], Y=start[0]
-    )
+    cycling_ini_node = ox.distance.nearest_nodes(cycling_graph, X=start[1], Y=start[0])
+
+    cycling_end_node = ox.distance.nearest_nodes(cycling_graph, X=end[1], Y=end[0])
 
     ini_valenbisi_station = valenbisi_stations[
         valenbisi_stations["available"] > 0
@@ -102,12 +102,18 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
 
     ini_station = get_nearest_station(
         (
-            cycling_graph.nodes[cycling_nearest_node]["y"],
-            cycling_graph.nodes[cycling_nearest_node]["x"],
+            cycling_graph.nodes[cycling_ini_node]["y"],
+            cycling_graph.nodes[cycling_ini_node]["x"],
         ),
         ini_valenbisi_station,
     )
-    end_station = get_nearest_station(end, end_valenbisi_station)
+    end_station = get_nearest_station(
+        (
+            cycling_graph.nodes[cycling_end_node]["y"],
+            cycling_graph.nodes[cycling_end_node]["x"],
+        ),
+        end_valenbisi_station,
+    )
 
     ini_station_loc = ini_station["geo_point_2d"]
     end_station_loc = end_station["geo_point_2d"]
