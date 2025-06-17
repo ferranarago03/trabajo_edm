@@ -73,21 +73,30 @@ def get_nearest_water_fountains_on_route(
     for i in range(len(route_nodes) - 1):
         edge_info = graph.get_edge_data(route_nodes[i], route_nodes[i + 1])
 
-        d_accum += edge_info[0]["length"]
-        if d_accum >= parada * d:
-            _, idx = tree.query(
-                [(graph.nodes[route_nodes[i]]["y"], graph.nodes[route_nodes[i]]["x"])],
-                k=1,
-            )
-            fountain_idx = fountain_nodes[idx[0]]
-            fountain_pt = public_fountains_gdf.loc[fountain_idx].geometry
-            d_m = haversine(
-                (graph.nodes[route_nodes[i]]["y"], graph.nodes[route_nodes[i]]["x"]),
-                (fountain_pt.y, fountain_pt.x),
-            )
-            parada += 1
-            if d_m <= max_distance:
-                resultados.append(fountain_idx)
+        if edge_info:
+            d_accum += edge_info[0]["length"]
+            if d_accum >= parada * d:
+                _, idx = tree.query(
+                    [
+                        (
+                            graph.nodes[route_nodes[i]]["y"],
+                            graph.nodes[route_nodes[i]]["x"],
+                        )
+                    ],
+                    k=1,
+                )
+                fountain_idx = fountain_nodes[idx[0]]
+                fountain_pt = public_fountains_gdf.loc[fountain_idx].geometry
+                d_m = haversine(
+                    (
+                        graph.nodes[route_nodes[i]]["y"],
+                        graph.nodes[route_nodes[i]]["x"],
+                    ),
+                    (fountain_pt.y, fountain_pt.x),
+                )
+                parada += 1
+                if d_m <= max_distance:
+                    resultados.append(fountain_idx)
 
     return resultados
 

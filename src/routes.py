@@ -21,10 +21,11 @@ def get_route(start, end, graph):
     """
     from_node = ox.distance.nearest_nodes(graph, start[1], start[0])
     to_node = ox.distance.nearest_nodes(graph, end[1], end[0])
-    distancia = get_distance(
-        start, end
-    )  # [1]  # Get the great-circle distance in meters
+    distancia = get_distance(start, end)
     route = ox.shortest_path(graph, from_node, to_node, weight="length")
+    if not route:
+        print("No route found.")
+        return [], 0
     return route, distancia
 
 
