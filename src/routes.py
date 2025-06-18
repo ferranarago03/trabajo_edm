@@ -252,6 +252,6 @@ def print_stations(ini, end, map):
 
     folium.Marker(
         location=(end_station_loc["lat"], end_station_loc["lon"]),
-        popup=f"End Station: {end['address']}<br>Available Places: {end['free']}",
+        popup=f"End Station<br>Available Places: {end['free']}",
         icon=folium.Icon(color="red", icon="home"),
     ).add_to(map)
