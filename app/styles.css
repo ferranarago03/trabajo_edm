@@ -27,7 +27,7 @@ h2 {
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    border-bottom: 2px solid #FF7F0E; /* Orange accent underline */
+    border-bottom: 2px solid #FF9933; /* Orange accent underline */
     padding-bottom: 0.5rem;
 }
 
@@ -52,7 +52,7 @@ h5 {
 /* --- Streamlit Sidebar Customization --- */
 /* Estado normal */
 [data-testid="stSidebar"] .stButton > button {
-  background-color: #FF7F0E !important;   /* naranja */
+  background-color: #FF9933 !important;   /* naranja */
   color: #FFFFFF !important;              /* texto blanco */
 }
 
@@ -64,7 +64,7 @@ h5 {
 /* Focus / activo (cuando haces click) */
 [data-testid="stSidebar"] .stButton > button:focus,
 [data-testid="stSidebar"] .stButton > button:active {
-  background-color: #D35400 !important;   /* naranja oscuro */
+  background-color: #004080 !important;   /* naranja oscuro */
   color: #FFFFFF !important;
 }
 
@@ -117,14 +117,14 @@ div.stSelectbox > label, div.stRadio > label {
 
 [data-testid="stStatusWidget-Warning"] {
     background-color: #fff3cd;
-    color: #856404;
+    color: #FF9933;
     border-left: 5px solid #ffc107;
 }
 
 [data-testid="stStatusWidget-Error"] {
     background-color: #f8d7da;
-    color: #721c24;
-    border-left: 5px solid #dc3545;
+    color: #FF9933;
+    border-left: 5px solid #FF9933;
 }
 
 /* Style for st.columns gap */
