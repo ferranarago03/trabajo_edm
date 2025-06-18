@@ -21,10 +21,11 @@ def get_route(start, end, graph):
     """
     from_node = ox.distance.nearest_nodes(graph, start[1], start[0])
     to_node = ox.distance.nearest_nodes(graph, end[1], end[0])
-    distancia = get_distance(
-        start, end
-    )  # [1]  # Get the great-circle distance in meters
+    distancia = get_distance(start, end)
     route = ox.shortest_path(graph, from_node, to_node, weight="length")
+    if not route:
+        print("No route found.")
+        return [], 0
     return route, distancia
 
 
@@ -90,9 +91,9 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
 
     threshold = 0.0001
 
-    cycling_nearest_node = ox.distance.nearest_nodes(
-        cycling_graph, X=start[1], Y=start[0]
-    )
+    cycling_ini_node = ox.distance.nearest_nodes(cycling_graph, X=start[1], Y=start[0])
+
+    cycling_end_node = ox.distance.nearest_nodes(cycling_graph, X=end[1], Y=end[0])
 
     ini_valenbisi_station = valenbisi_stations[
         valenbisi_stations["available"] > 0
@@ -101,23 +102,29 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
 
     ini_station = get_nearest_station(
         (
-            cycling_graph.nodes[cycling_nearest_node]["y"],
-            cycling_graph.nodes[cycling_nearest_node]["x"],
+            cycling_graph.nodes[cycling_ini_node]["y"],
+            cycling_graph.nodes[cycling_ini_node]["x"],
         ),
         ini_valenbisi_station,
     )
-    end_station = get_nearest_station(end, end_valenbisi_station)
+    end_station = get_nearest_station(
+        (
+            cycling_graph.nodes[cycling_end_node]["y"],
+            cycling_graph.nodes[cycling_end_node]["x"],
+        ),
+        end_valenbisi_station,
+    )
 
     ini_station_loc = ini_station["geo_point_2d"]
     end_station_loc = end_station["geo_point_2d"]
 
-    ini_walking_route = get_route(
+    ini_walking_route, dist1 = get_route(
         start, (ini_station_loc["lat"], ini_station_loc["lon"]), walking_graph
     )
-    end_walking_route = get_route(
+    end_walking_route, dist2 = get_route(
         (end_station_loc["lat"], end_station_loc["lon"]), end, walking_graph
     )
-    cycling_route = get_route(
+    cycling_route, dist3 = get_route(
         (ini_station_loc["lat"], ini_station_loc["lon"]),
         (end_station_loc["lat"], end_station_loc["lon"]),
         cycling_graph,
@@ -138,7 +145,7 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
     )
 
     if dist_ini_station > threshold:
-        inter_ini = get_route(
+        inter_ini, d_aux = get_route(
             (ini_station_loc["lat"], ini_station_loc["lon"]),
             (
                 cycling_graph.nodes[cycling_route[0]]["y"],
@@ -147,8 +154,9 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
             walking_graph,
         )
         ini_walking_route.extend(inter_ini)
+        dist1 += d_aux
     if dist_end_station > threshold:
-        inter_end = get_route(
+        inter_end, d_aux = get_route(
             (
                 cycling_graph.nodes[cycling_route[-1]]["y"],
                 cycling_graph.nodes[cycling_route[-1]]["x"],
@@ -157,5 +165,93 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
             walking_graph,
         )
         end_walking_route = inter_end + end_walking_route
+        dist2 += d_aux
+    return (
+        ini_walking_route,
+        dist1,
+        cycling_route,
+        dist2,
+        end_walking_route,
+        dist3,
+        ini_station,
+        end_station,
+    )
 
-    return ini_walking_route, cycling_route, end_walking_route, ini_station, end_station
+
+def get_cycling_route(start, end, cycling_graph, walking_graph):
+    """
+    Get the mixed route from start to end using walking and cycling network graphs.
+
+    Parameters:
+        start (tuple): (lat, lon) start point.
+        end (tuple): (lat, lon) end point.
+        cycling_graph: OSMnx cycling graph.
+        walking_graph: OSMnx walking graph.
+
+    Returns:
+        tuple:
+            - walking route from start to cycling network
+            - distance of that walking route
+            - cycling route
+            - distance of that cycling route
+            - walking route from cycling network to end
+            - distance of that walking route
+    """
+
+    nodo_ini_bike = ox.distance.nearest_nodes(cycling_graph, X=start[1], Y=start[0])
+    nodo_end_bike = ox.distance.nearest_nodes(cycling_graph, X=end[1], Y=end[0])
+
+    ini_walking_route, dist1 = get_route(
+        start,
+        (
+            cycling_graph.nodes[nodo_ini_bike]["y"],
+            cycling_graph.nodes[nodo_ini_bike]["x"],
+        ),
+        walking_graph,
+    )
+
+    cycling_route, dist2 = get_route(
+        (
+            cycling_graph.nodes[nodo_ini_bike]["y"],
+            cycling_graph.nodes[nodo_ini_bike]["x"],
+        ),
+        (
+            cycling_graph.nodes[nodo_end_bike]["y"],
+            cycling_graph.nodes[nodo_end_bike]["x"],
+        ),
+        cycling_graph,
+    )
+
+    end_walking_route, dist3 = get_route(
+        (
+            cycling_graph.nodes[nodo_end_bike]["y"],
+            cycling_graph.nodes[nodo_end_bike]["x"],
+        ),
+        end,
+        walking_graph,
+    )
+
+    return (
+        ini_walking_route,
+        dist1,
+        cycling_route,
+        dist2,
+        end_walking_route,
+        dist3,
+    )
+
+
+def print_stations(ini, end, map):
+    ini_station_loc = ini["geo_point_2d"]
+    end_station_loc = end["geo_point_2d"]
+    folium.Marker(
+        location=(ini_station_loc["lat"], ini_station_loc["lon"]),
+        popup=f"Start Station.<br>Available Bikes: {ini['available']}",
+        icon=folium.Icon(color="green", icon="bicycle", prefix="fa"),
+    ).add_to(map)
+
+    folium.Marker(
+        location=(end_station_loc["lat"], end_station_loc["lon"]),
+        popup=f"End Station<br>Available Places: {end['free']}",
+        icon=folium.Icon(color="red", icon="home"),
+    ).add_to(map)
