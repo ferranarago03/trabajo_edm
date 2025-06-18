@@ -10,8 +10,14 @@ import sys
 
 sys.path.append("./src/")
 from utils import get_valencian_open_data, get_gdf
-from fuentes import get_nearest_water_fountains_on_route, print_fountains
-from routes import get_route, print_route, get_valenbisi_route, print_stations
+from fountains import get_nearest_water_fountains_on_route, print_fountains
+from routes import (
+    get_route,
+    print_route,
+    get_valenbisi_route,
+    get_cycling_route,
+    print_stations,
+)
 
 
 # 1. Cache-loading of heavy static resources
@@ -35,6 +41,41 @@ def fetch_valenbisi_stations(url, params):
     df["geometry"] = df["geo_shape"].apply(shape)
     gdf = get_gdf(df)
     return gdf[gdf["open"] == "T"]
+
+
+# Cache the route computation by inputs
+@st.cache_data
+def compute_route(s, e, _graph):
+    return get_route(s, e, _graph)
+
+
+@st.cache_data
+def compute_valenbisi_trip(start, end, _cycling_graph, _walking_graph, _stations):
+    return get_valenbisi_route(
+        start,
+        end,
+        _cycling_graph,
+        _walking_graph,
+        _stations,
+    )
+
+
+# Cache fountains lookup, mark graph param as unhashable
+@st.cache_data
+def compute_fountains(_g, d, r, mode, temp_val, _fountains_gdf):
+    return get_nearest_water_fountains_on_route(
+        _g, d, r, mode, temp_val, _fountains_gdf
+    )
+
+
+@st.cache_data
+def compute_cycling_route(start, end, _cycling_graph, _walking_graph):
+    return get_cycling_route(
+        start,
+        end,
+        _cycling_graph,
+        _walking_graph,
+    )
 
 
 @st.cache_data
@@ -93,28 +134,39 @@ if st.session_state.start and st.session_state.end:
     start_coord = (st.session_state.start["lat"], st.session_state.start["lng"])
     end_coord = (st.session_state.end["lat"], st.session_state.end["lng"])
 
-    if type_route in ("Caminando", "En Bicicleta"):
-        graph = graph_walking if type_route == "Caminando" else graph_cycling
-
-        # Cache the route computation by inputs
-        @st.cache_data
-        def compute_route(s, e, mode):
-            return get_route(s, e, graph)
-
-        route, dist = compute_route(start_coord, end_coord, type_route)
-        print_route(route, graph, m, color="blue")
-
-        # Cache fountains lookup, mark graph param as unhashable
-        @st.cache_data
-        def compute_fountains(_g, d, r, mode, temp_val, _fountains_gdf):
-            return get_nearest_water_fountains_on_route(
-                _g, d, r, mode, temp_val, _fountains_gdf
-            )
+    if type_route == "Caminando":
+        route, dist = compute_route(start_coord, end_coord, graph_walking)
+        print_route(route, graph_walking, m, color="green")
 
         fountains_on_route = compute_fountains(
-            graph, dist, route, type_route, temp, public_fountains_gdf
+            graph_walking, dist, route, type_route, temp, public_fountains_gdf
         )
         print_fountains(fountains_on_route, public_fountains_gdf, m)
+
+    elif type_route == "En Bicicleta":
+        ini_walk, dist_ini, cycle, dist_cycle, end_walk, dist_end = (
+            compute_cycling_route(start_coord, end_coord, graph_cycling, graph_walking)
+        )
+
+        print_route(ini_walk, graph_walking, m, color="green")
+        print_route(cycle, graph_cycling, m, color="blue")
+        print_route(end_walk, graph_walking, m, color="green")
+
+        # Fountains for each segment
+        for seg_graph, seg_dist, seg_route, seg_mode in [
+            (graph_walking, dist_ini, ini_walk, "Caminando"),
+            (graph_cycling, dist_cycle, cycle, "En Bicicleta"),
+            (graph_walking, dist_end, end_walk, "Caminando"),
+        ]:
+            fountains_on_segment = compute_fountains(
+                seg_graph,
+                seg_dist,
+                seg_route,
+                seg_mode,
+                temp,
+                public_fountains_gdf,
+            )
+            print_fountains(fountains_on_segment, public_fountains_gdf, m)
 
     elif type_route == "Valenbisi":
         # Fetch station data once
@@ -134,9 +186,9 @@ if st.session_state.start and st.session_state.end:
             dist_end,
             ini_station,
             end_station,
-        ) = get_valenbisi_route(
-            (st.session_state.start["lat"], st.session_state.start["lng"]),
-            (st.session_state.end["lat"], st.session_state.end["lng"]),
+        ) = compute_valenbisi_trip(
+            start_coord,
+            end_coord,
             graph_cycling,
             graph_walking,
             valenbisi_stations,
@@ -153,14 +205,7 @@ if st.session_state.start and st.session_state.end:
             (graph_cycling, dist_cycle, cycle, "En Bicicleta"),
             (graph_walking, dist_end, end_walk, "Caminando"),
         ]:
-
-            @st.cache_data
-            def compute_fountains_seg(_g, d, r, mode, temp_val, _fountains_gdf):
-                return get_nearest_water_fountains_on_route(
-                    _g, d, r, mode, temp_val, _fountains_gdf
-                )
-
-            fts = compute_fountains_seg(
+            fts = compute_fountains(
                 seg_graph, seg_dist, seg_route, seg_mode, temp, public_fountains_gdf
             )
             print_fountains(fts, public_fountains_gdf, m)
