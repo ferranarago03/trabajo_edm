@@ -7,7 +7,7 @@ sys.path.append("./src/")
 from utils import get_nearest_station, get_distance
 
 
-def get_route(start, end, graph, range="length"):
+def get_route(start, end, graph, range_temp="length"):
     """
     Get the route between two nodes in the graph.
 
@@ -23,10 +23,21 @@ def get_route(start, end, graph, range="length"):
     from_node = ox.distance.nearest_nodes(graph, start[1], start[0])
     to_node = ox.distance.nearest_nodes(graph, end[1], end[0])
     distancia = get_distance(start, end)
-    route = ox.shortest_path(graph, from_node, to_node, weight=range)
+    route = ox.shortest_path(graph, from_node, to_node, weight=range_temp)
     if not route:
         print("No route found.")
         return [], 0
+
+    distancia = 0
+    for i in range(len(route) - 1):
+        edge_data = graph.get_edge_data(route[i], route[i + 1])
+        if edge_data and "length" in edge_data[0]:
+            distancia += edge_data[0]["length"]
+        else:
+            distancia += get_distance(
+                (graph.nodes[route[i]]["y"], graph.nodes[route[i]]["x"]),
+                (graph.nodes[route[i + 1]]["y"], graph.nodes[route[i + 1]]["x"]),
+            )
     return route, distancia
 
 
@@ -71,7 +82,7 @@ def print_route(route, graph, map, color="blue"):
 
 
 def get_valenbisi_route(
-    start, end, cycling_graph, walking_graph, valenbisi_stations, range="length"
+    start, end, cycling_graph, walking_graph, valenbisi_stations, range_temp="length"
 ):
     """
     Get the Valenbisi route from start to end using the cycling network graph.
@@ -124,16 +135,19 @@ def get_valenbisi_route(
     end_station_loc = end_station["geo_point_2d"]
 
     ini_walking_route, dist1 = get_route(
-        start, (ini_station_loc["lat"], ini_station_loc["lon"]), walking_graph, range
+        start,
+        (ini_station_loc["lat"], ini_station_loc["lon"]),
+        walking_graph,
+        range_temp,
     )
     end_walking_route, dist2 = get_route(
-        (end_station_loc["lat"], end_station_loc["lon"]), end, walking_graph, range
+        (end_station_loc["lat"], end_station_loc["lon"]), end, walking_graph, range_temp
     )
     cycling_route, dist3 = get_route(
         (ini_station_loc["lat"], ini_station_loc["lon"]),
         (end_station_loc["lat"], end_station_loc["lon"]),
         cycling_graph,
-        range,
+        range_temp,
     )
 
     dist_ini_station = ox.distance.euclidean(
@@ -158,7 +172,7 @@ def get_valenbisi_route(
                 cycling_graph.nodes[cycling_route[0]]["x"],
             ),
             walking_graph,
-            range,
+            range_temp,
         )
         ini_walking_route.extend(inter_ini)
         dist1 += d_aux
@@ -170,7 +184,7 @@ def get_valenbisi_route(
             ),
             (end_station_loc["lat"], end_station_loc["lon"]),
             walking_graph,
-            range,
+            range_temp,
         )
         end_walking_route = inter_end + end_walking_route
         dist2 += d_aux
@@ -186,7 +200,7 @@ def get_valenbisi_route(
     )
 
 
-def get_cycling_route(start, end, cycling_graph, walking_graph, range="length"):
+def get_cycling_route(start, end, cycling_graph, walking_graph, range_temp="length"):
     """
     Get the mixed route from start to end using walking and cycling network graphs.
 
@@ -216,7 +230,7 @@ def get_cycling_route(start, end, cycling_graph, walking_graph, range="length"):
             cycling_graph.nodes[nodo_ini_bike]["x"],
         ),
         walking_graph,
-        range,
+        range_temp,
     )
 
     cycling_route, dist2 = get_route(
@@ -229,7 +243,7 @@ def get_cycling_route(start, end, cycling_graph, walking_graph, range="length"):
             cycling_graph.nodes[nodo_end_bike]["x"],
         ),
         cycling_graph,
-        range,
+        range_temp,
     )
 
     end_walking_route, dist3 = get_route(
@@ -239,7 +253,7 @@ def get_cycling_route(start, end, cycling_graph, walking_graph, range="length"):
         ),
         end,
         walking_graph,
-        range,
+        range_temp,
     )
 
     return (

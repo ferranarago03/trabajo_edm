@@ -1,16 +1,16 @@
 import streamlit as st
 from streamlit_folium import st_folium
 import folium
-import osmnx as ox
 from shapely.geometry import shape
 import pandas as pd
 from datetime import datetime as dt
+from zoneinfo import ZoneInfo
 
 # Import your existing utilities without modifying their internal logic
 import sys
 
 sys.path.append("./src/")
-from utils import get_valencian_open_data, get_gdf
+from utils import get_valencian_open_data, get_gdf, read_graph
 from fountains import get_nearest_water_fountains_on_route, print_fountains
 from routes import (
     get_route,
@@ -25,9 +25,9 @@ from temperature import get_temperature_data
 # 1. Cache-loading of heavy static resources
 @st.cache_resource
 def load_graphs():
-    cycling_graph = ox.load_graphml("data/valencia_cycling_network.graphml")
-    walking_graph = ox.load_graphml("data/valencia_walking_network.graphml")
-    now = dt.now()
+    cycling_graph = read_graph("data/valencia_cycling_sombra.graphml")
+    walking_graph = read_graph("data/valencia_walking_sombra.graphml")
+    now = dt.now(tz=ZoneInfo("UTC"))
     return cycling_graph, walking_graph, now
 
 
@@ -48,18 +48,21 @@ def fetch_valenbisi_stations(url, params):
 
 # Cache the route computation by inputs
 @st.cache_data
-def compute_route(s, e, _graph):
-    return get_route(s, e, _graph)
+def compute_route(s, e, _graph, range_temp="length"):
+    return get_route(s, e, _graph, range_temp)
 
 
 @st.cache_data
-def compute_valenbisi_trip(start, end, _cycling_graph, _walking_graph, _stations):
+def compute_valenbisi_trip(
+    start, end, _cycling_graph, _walking_graph, _stations, range_temp="length"
+):
     return get_valenbisi_route(
         start,
         end,
         _cycling_graph,
         _walking_graph,
         _stations,
+        range_temp,
     )
 
 
@@ -72,13 +75,10 @@ def compute_fountains(_g, d, r, mode, temp_val, _fountains_gdf):
 
 
 @st.cache_data
-def compute_cycling_route(start, end, _cycling_graph, _walking_graph):
-    return get_cycling_route(
-        start,
-        end,
-        _cycling_graph,
-        _walking_graph,
-    )
+def compute_cycling_route(
+    start, end, _cycling_graph, _walking_graph, range_temp="length"
+):
+    return get_cycling_route(start, end, _cycling_graph, _walking_graph, range_temp)
 
 
 @st.cache_data
@@ -86,11 +86,20 @@ def fetch_temperature(now):
     return get_temperature_data(now)
 
 
+@st.cache_data
+def get_range(temp):
+    for i in range(0, 41, 5):
+        if temp - 5 < i:
+            return f"peso_{i}_{i + 5}"
+
+
 # Load cached data
 graph_cycling, graph_walking, now = load_graphs()
 public_fountains_gdf = load_public_fountains()
 
 temp = fetch_temperature(now)
+
+range_temp = get_range(temp)
 
 st.title("Define inicio y fin de tu ruta")
 
@@ -138,7 +147,7 @@ if st.session_state.start and st.session_state.end:
     end_coord = (st.session_state.end["lat"], st.session_state.end["lng"])
 
     if type_route == "Caminando":
-        route, dist = compute_route(start_coord, end_coord, graph_walking)
+        route, dist = compute_route(start_coord, end_coord, graph_walking, range_temp)
         print_route(route, graph_walking, m, color="green")
 
         fountains_on_route = compute_fountains(
@@ -148,7 +157,9 @@ if st.session_state.start and st.session_state.end:
 
     elif type_route == "En Bicicleta":
         ini_walk, dist_ini, cycle, dist_cycle, end_walk, dist_end = (
-            compute_cycling_route(start_coord, end_coord, graph_cycling, graph_walking)
+            compute_cycling_route(
+                start_coord, end_coord, graph_cycling, graph_walking, range_temp
+            )
         )
 
         print_route(ini_walk, graph_walking, m, color="green")
@@ -195,6 +206,7 @@ if st.session_state.start and st.session_state.end:
             graph_cycling,
             graph_walking,
             valenbisi_stations,
+            range_temp,
         )
 
         print_stations(ini_station, end_station, m)

@@ -4,6 +4,7 @@ import requests
 import geopandas as gpd
 from shapely.geometry import Point
 import math
+import os
 
 
 def get_walking_network(place_name: str):
@@ -84,7 +85,8 @@ def get_gdf(df):
     """
 
     # Convert the DataFrame to a GeoDataFrame
-    gdf = gpd.GeoDataFrame(df, geometry=df["geometry"], crs="EPSG:4326")
+    gdf = gpd.GeoDataFrame(df, geometry=df["geometry"])
+    gdf.set_crs(epsg=4326, inplace=True)
 
     return gdf
 
@@ -159,3 +161,37 @@ def get_distance(start, end):
     gc_dist_m = R * c
 
     return gc_dist_m
+
+
+def read_graph(file_path: str):
+    """
+    Read a graph from a file.
+
+    Parameters:
+        file_path (str): Path to the graph file.
+
+    Returns:
+        graph: The loaded graph.
+    """
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Graph file not found: {file_path}")
+
+    graph = ox.load_graphml(file_path)
+    # Cambiar el tipo de valor de algunos atributos de aristas
+    tramos = [
+        (0, 5),
+        (5, 10),
+        (10, 15),
+        (15, 20),
+        (20, 25),
+        (25, 30),
+        (30, 35),
+        (35, 40),
+    ]
+    for u, v, data in graph.edges(data=True):
+        for tramo in tramos:
+            t_str = f"peso_{tramo[0]}_{tramo[1]}"
+            if t_str in data:
+                data[t_str] = float(data[t_str])
+    graph = ox.project_graph(graph, to_crs="EPSG:4326")
+    return graph

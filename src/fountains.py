@@ -41,11 +41,11 @@ def get_nearest_water_fountains_on_route(
     }
 
     def obtener_frecuencia():
-        if temperatura < 10:
+        if temperatura < 15:
             return freq_config["frio"][type_displacement]
         elif 15 <= temperatura <= 25:
             return freq_config["ideal"][type_displacement]
-        elif temperatura > 30:
+        elif temperatura > 25:
             return freq_config["calor_extremo"][type_displacement]
         else:
             return None
