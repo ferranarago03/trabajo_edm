@@ -10,7 +10,7 @@ sys.path.append("./src/")
 
 from utils import get_valencian_open_data, get_gdf
 
-from fuentes import get_nearest_water_fountains_on_route, print_fountains
+from fountains import get_nearest_water_fountains_on_route, print_fountains
 
 from routes import get_route, print_route, get_valenbisi_route, print_stations
 
