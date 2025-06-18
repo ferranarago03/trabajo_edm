@@ -4,6 +4,7 @@ import folium
 import osmnx as ox
 from shapely.geometry import shape
 import pandas as pd
+from datetime import datetime as dt
 
 # Import your existing utilities without modifying their internal logic
 import sys
@@ -18,6 +19,7 @@ from routes import (
     get_cycling_route,
     print_stations,
 )
+from temperature import get_temperature_data
 
 
 # 1. Cache-loading of heavy static resources
@@ -25,7 +27,8 @@ from routes import (
 def load_graphs():
     cycling_graph = ox.load_graphml("data/valencia_cycling_network.graphml")
     walking_graph = ox.load_graphml("data/valencia_walking_network.graphml")
-    return cycling_graph, walking_graph
+    now = dt.now()
+    return cycling_graph, walking_graph, now
 
 
 @st.cache_data
@@ -79,15 +82,15 @@ def compute_cycling_route(start, end, _cycling_graph, _walking_graph):
 
 
 @st.cache_data
-def fetch_temperature():
-    pass
+def fetch_temperature(now):
+    return get_temperature_data(now)
 
 
 # Load cached data
-graph_cycling, graph_walking = load_graphs()
+graph_cycling, graph_walking, now = load_graphs()
 public_fountains_gdf = load_public_fountains()
 
-temp = 20
+temp = fetch_temperature(now)
 
 st.title("Define inicio y fin de tu ruta")
 
