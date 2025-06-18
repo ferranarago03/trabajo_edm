@@ -7,7 +7,7 @@ sys.path.append("./src/")
 from utils import get_nearest_station, get_distance
 
 
-def get_route(start, end, graph):
+def get_route(start, end, graph,range):
     """
     Get the route between two nodes in the graph.
 
@@ -15,6 +15,7 @@ def get_route(start, end, graph):
         start(tuple): Tuple of coordenates for the start point.
         end: Tuple of coordinates for the end point.
         graph: The cycling network graph.
+        range: Temperature range for obtaining edge weight.
 
     Returns:
         list: A list of nodes representing the route.
@@ -22,7 +23,7 @@ def get_route(start, end, graph):
     from_node = ox.distance.nearest_nodes(graph, start[1], start[0])
     to_node = ox.distance.nearest_nodes(graph, end[1], end[0])
     distancia = get_distance(start, end)
-    route = ox.shortest_path(graph, from_node, to_node, weight="length")
+    route = ox.shortest_path(graph, from_node, to_node, weight=range)
     if not route:
         print("No route found.")
         return [], 0
@@ -69,7 +70,7 @@ def print_route(route, graph, map, color="blue"):
             ).add_to(map)
 
 
-def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stations):
+def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stations,range):
     """
     Get the Valenbisi route from start to end using the cycling network graph.
 
@@ -79,6 +80,8 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
         cycling_graph: The cycling network graph.
         walking_graph: The walking network graph.
         valenbisi_stations(geoDataFrame): A GeoDataFrame containing Valenbisi stations.
+        range: Temperature range for obtaining edge weight.
+
 
     Returns:
         tuple: A tuple containing three lists:
@@ -119,15 +122,16 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
     end_station_loc = end_station["geo_point_2d"]
 
     ini_walking_route, dist1 = get_route(
-        start, (ini_station_loc["lat"], ini_station_loc["lon"]), walking_graph
+        start, (ini_station_loc["lat"], ini_station_loc["lon"]), walking_graph,range
     )
     end_walking_route, dist2 = get_route(
-        (end_station_loc["lat"], end_station_loc["lon"]), end, walking_graph
+        (end_station_loc["lat"], end_station_loc["lon"]), end, walking_graph,range
     )
     cycling_route, dist3 = get_route(
         (ini_station_loc["lat"], ini_station_loc["lon"]),
         (end_station_loc["lat"], end_station_loc["lon"]),
         cycling_graph,
+        range
     )
 
     dist_ini_station = ox.distance.euclidean(
@@ -152,6 +156,7 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
                 cycling_graph.nodes[cycling_route[0]]["x"],
             ),
             walking_graph,
+            range
         )
         ini_walking_route.extend(inter_ini)
         dist1 += d_aux
@@ -163,6 +168,7 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
             ),
             (end_station_loc["lat"], end_station_loc["lon"]),
             walking_graph,
+            range
         )
         end_walking_route = inter_end + end_walking_route
         dist2 += d_aux
@@ -174,7 +180,7 @@ def get_valenbisi_route(start, end, cycling_graph, walking_graph, valenbisi_stat
         end_walking_route,
         dist3,
         ini_station,
-        end_station,
+        end_station
     )
 
 
@@ -208,6 +214,7 @@ def get_cycling_route(start, end, cycling_graph, walking_graph):
             cycling_graph.nodes[nodo_ini_bike]["x"],
         ),
         walking_graph,
+        range,
     )
 
     cycling_route, dist2 = get_route(
@@ -220,6 +227,7 @@ def get_cycling_route(start, end, cycling_graph, walking_graph):
             cycling_graph.nodes[nodo_end_bike]["x"],
         ),
         cycling_graph,
+        range,
     )
 
     end_walking_route, dist3 = get_route(
@@ -229,6 +237,7 @@ def get_cycling_route(start, end, cycling_graph, walking_graph):
         ),
         end,
         walking_graph,
+        range,
     )
 
     return (
