@@ -84,10 +84,14 @@ def get_gdf(df):
     """
 
     # Convert the DataFrame to a GeoDataFrame
-    gdf = gpd.GeoDataFrame(df, geometry=df["geometry"])
-    gdf.set_crs(epsg=4326, inplace=True)  # Set the coordinate reference system
+    gdf = gpd.GeoDataFrame(df, geometry=df["geometry"], crs="EPSG:4326")
 
-    return gdf
+    
+
+    gdf_proj=gdf.to_crs(epsg=25830)  # Reproject to UTM zone 30N
+
+
+    return gdf_proj
 
 
 def get_nearest_cycle_station(graph, geovalenbisi):
@@ -160,3 +164,4 @@ def get_distance(start, end):
     gc_dist_m = R * c
 
     return gc_dist_m
+
