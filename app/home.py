@@ -4,53 +4,42 @@ from streamlit_option_menu import option_menu
 import pandas as pd
 from pathlib import Path
 import base64
+from typing import Union
 
 # --- 0. NO MÁS MÓDULO DE AUTENTICACIÓN ---
 
 # --- Define Paths to Local Assets ---
 APP_DIR = Path(__file__).resolve().parent
 
-LOGO_FILENAME = (
-    "route_planner.png"  # You might want to rename this to a more generic app logo
-)
+LOGO_FILENAME = "route_planner.png"
 LOGO_LOCAL_PATH_OBJ = APP_DIR / LOGO_FILENAME
 LOGO_LOCAL_PATH_STR = str(LOGO_LOCAL_PATH_OBJ)
 
-# Placeholder for an intro image if you want one, or remove if not needed
-APP_INTRO_FILENAME = "aj_val.png"  # Renamed to be general
+APP_INTRO_FILENAME = "upv.png"
 APP_INTRO_LOCAL_PATH_OBJ = APP_DIR / APP_INTRO_FILENAME
 
 # --- 0.1 FAVICON SETUP ---
-FAVICON_FILENAME = (
-    "route_planner.png"  # Consider a more generic favicon like "favicon.png"
-)
+FAVICON_FILENAME = "route_planner.png"
 FAVICON_LOCAL_PATH_OBJ = APP_DIR / FAVICON_FILENAME
 
-page_icon_to_use = "https://www.esade.edu/favicon.ico"  # Default fallback
+page_icon_to_use = "https://www.esade.edu/favicon.ico"
 if FAVICON_LOCAL_PATH_OBJ.is_file():
-    page_icon_to_use = FAVICON_LOCAL_PATH_OBJ
+    page_icon_to_use = str(FAVICON_LOCAL_PATH_OBJ)
 else:
     print(
         f"DEBUG: Local favicon '{FAVICON_FILENAME}' not found at {FAVICON_LOCAL_PATH_OBJ}, using default URL."
     )
 
 # --- 0.2 NO MÁS LOGIN GATEKEEPER ---
-# if not gatekeeper(page_icon=page_icon_to_use, is_main_login_page=True):
-#     pass
 
-# --- IF WE REACH HERE, THE USER IS LOGGED IN (no longer relevant, always accessible) ---
-# initialize_session_state() # No longer needed without auth
-
-
-# Set initial page if not already set (retains functionality for direct access)
-if "current_page_for_nav" not in st.session_state or Path(__file__).name == "home.py":
-    st.session_state.current_page_for_nav = "Homepage"
-    print("DEBUG: Setting current_page_for_nav to Homepage")
+if "current_page_for_nav" not in st.session_state:
+    st.session_state.current_page_for_nav = "Página Principal"
+    print("DEBUG: Setting current_page_for_nav to Homepage (initial load)")
 
 
 # --- 1. Page Configuration (FOR THE MAIN APP) ---
 st.set_page_config(
-    page_title="Route Planner App | Welcome",
+    page_title="Aplicación Planificador de Rutas | Bienvenido",
     layout="wide",
     initial_sidebar_state="expanded",
     page_icon=page_icon_to_use,
@@ -65,10 +54,10 @@ def load_main_app_css(file_name: str):
             with open(css_path, encoding="utf-8") as f:
                 st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
         except Exception as e:
-            st.error(f"Error loading CSS from {css_path}: {e}")
+            st.error(f"Error al cargar CSS desde {css_path}: {e}")
     else:
         st.warning(
-            f"CSS file '{file_name}' not found at {css_path}. Ensure it's in the '{APP_DIR.name}' directory."
+            f"Archivo CSS '{file_name}' no encontrado en {css_path}. Asegúrate de que esté en el directorio '{APP_DIR.name}'."
         )
 
 
@@ -76,93 +65,98 @@ load_main_app_css("styles.css")
 
 
 # --- Utility Function to Convert Image to Base64 ---
-def get_image_as_base64(path_str: str) -> str | None:
+def get_image_as_base64(path_str: str) -> Union[str, None]:
     path_obj = Path(path_str)
-    # 1) DEBUG: mostrar ruta y si existe
-    st.write(f"DEBUG: buscando imagen en {path_obj}")
-    st.write(f"DEBUG: ¿existe? {path_obj.is_file()}")
+
+    print(f"DEBUG (get_image_as_base64): Buscando imagen en {path_obj}")
+    print(f"DEBUG (get_image_as_base64): ¿Existe el archivo? {path_obj.is_file()}")
+
     if not path_obj.is_file():
+        # st.error(f"Image file not found: {path_obj.name}") # Descomentar para error en UI
         return None
 
     try:
-        # 2) Leer y codificar
         with open(path_obj, "rb") as image_file:
+            print(f"DEBUG (get_image_as_base64): Leyendo imagen {path_obj.name}")
             data = image_file.read()
             encoded_string = base64.b64encode(data).decode()
 
         ext = path_obj.suffix.lower()
-        # 3) Mapear extensiones a MIME-types correctos
         mime_map = {
             ".png": "image/png",
             ".jpg": "image/jpeg",
             ".jpeg": "image/jpeg",
             ".svg": "image/svg+xml",
             ".gif": "image/gif",
+            ".ico": "image/x-icon",
         }
         mime = mime_map.get(ext)
         if not mime:
-            st.error(f"DEBUG: extensión no soportada: {ext}")
+            print(
+                f"DEBUG (get_image_as_base64): Extensión de archivo no soportada: {ext} para {path_obj.name}"
+            )
+            # st.error(f"Unsupported image format: {ext} for {path_obj.name}") # Descomentar para error en UI
             return None
 
         return f"data:{mime};base64,{encoded_string}"
 
     except Exception as e:
-        st.error(f"Error encoding image to base64: {e}")
+        print(
+            f"DEBUG (get_image_as_base64): Error al codificar la imagen {path_obj.name} a base64: {e}"
+        )
+        # st.error(f"Error processing image {path_obj.name}: {e}") # Descomentar para error en UI
         return None
 
 
 # --- 3. Sidebar Content ---
 with st.sidebar:
-    if LOGO_LOCAL_PATH_OBJ.is_file():
-        st.image(LOGO_LOCAL_PATH_STR, width=180)
+    sidebar_logo_base64 = get_image_as_base64(LOGO_LOCAL_PATH_STR)
+    if sidebar_logo_base64:
+        st.markdown(
+            f"<img src='{sidebar_logo_base64}' alt='Logotipo de la aplicación' style='display:block; margin:0 auto; width:180px;'>",
+            unsafe_allow_html=True,
+        )
     else:
         st.markdown(
-            "<h2 style='text-align:center;'>ROUTE PLANNER</h2>", unsafe_allow_html=True
+            "<h2 style='text-align:center;'>PLANIFICADOR DE RUTAS</h2>",
+            unsafe_allow_html=True,
         )
 
-    st.markdown("## Urban Mobility Insights")
+    st.markdown("## Información de Movilidad Urbana")
     st.markdown(
         """
-        Your go-to platform for planning sustainable routes within Valencia.
-        Find optimal paths for walking, personal bikes, and ValenBisi.
+        Tu plataforma de referencia para planificar rutas sostenibles dentro de Valencia.
+        Encuentra las rutas óptimas para caminar, ir en bicicleta personal y ValenBisi.
         """
     )
     st.markdown("---")
-    st.markdown("#### Quick Navigation")
+    st.markdown("#### Navegación Rápida")
     if st.button(
-        "🗺️ Route Planner", use_container_width=True, key="sb_nav_route_planner"
+        "🗺️ Planificador de Rutas", use_container_width=True, key="sb_nav_route_planner"
     ):
-        st.session_state.current_page_for_nav = "Route Planner"
-        st.switch_page("pages/1_🗺️_Route_Planner.py")
+        st.session_state.current_page_for_nav = "Planificador de Rutas"
+        st.switch_page("pages/1_Implementation.py")
     if st.button(
-        "💡 Idea Presentation", use_container_width=True, key="sb_nav_idea_presentation"
+        "💡 Presentación de la Idea",
+        use_container_width=True,
+        key="sb_nav_idea_presentation",
     ):
-        st.session_state.current_page_for_nav = "Idea Presentation"
-        st.switch_page("pages/2_💡_Idea_Presentation.py")
+        st.session_state.current_page_for_nav = "Presentación de la Idea"
+        st.switch_page("pages/2_Idea_Presentation.py")
 
     st.markdown("---")
-    st.markdown("#### External Resources")
+    st.markdown("#### Recursos Externos")
     st.markdown(
         "- [OpenStreetMap](https://www.openstreetmap.org/)", unsafe_allow_html=True
     )
     st.markdown(
-        "- [ValenBisi Official Website](https://www.valenbisi.es/)",
+        "- [Sitio Web Oficial de ValenBisi](https://www.valenbisi.es/)",
         unsafe_allow_html=True,
     )
 
     st.markdown("---")
-    # NO Logout Button (removed)
-    # if st.button(
-    #     "Logout",
-    #     use_container_width=True,
-    #     key="logout_button_sidebar_main_v3",
-    #     type="secondary",
-    # ):
-    #     do_logout()
-    #     st.rerun()
-
-    st.caption(f"© {pd.Timestamp.now().year} Route Planner | v1.0")
-    st.caption("Sustainable Urban Mobility")
+    st.caption(f"© {pd.Timestamp.now().year} Planificador de Rutas | v1.0")
+    st.caption("Movilidad Urbana Sostenible")
 
 # --- 4. Top Horizontal Navigation Menu ---
 menu_styles = {
@@ -194,17 +188,17 @@ menu_styles = {
     },
 }
 
-options_list = ["Homepage", "Route Planner", "Idea Presentation"]
+options_list = ["Página Principal", "Planificador de Rutas", "Presentación de la Idea"]
 
 try:
     if (
         "current_page_for_nav" not in st.session_state
         or st.session_state.current_page_for_nav not in options_list
     ):
-        st.session_state.current_page_for_nav = "Homepage"
+        st.session_state.current_page_for_nav = "Página Principal"
     default_menu_index = options_list.index(st.session_state.current_page_for_nav)
 except (ValueError, AttributeError, KeyError):
-    st.session_state.current_page_for_nav = "Homepage"
+    st.session_state.current_page_for_nav = "Página Principal"
     default_menu_index = 0
 
 
@@ -228,26 +222,28 @@ selected_page_from_menu = option_menu(
 if selected_page_from_menu != st.session_state.current_page_for_nav:
     st.session_state.current_page_for_nav = selected_page_from_menu
 
-    if selected_page_from_menu == "Route Planner":
-        st.switch_page("pages/1_🗺️_Route_Planner.py")
-    elif selected_page_from_menu == "Idea Presentation":
-        st.switch_page("pages/2_💡_Idea_Presentation.py")
+    if selected_page_from_menu == "Planificador de Rutas":
+        st.switch_page("pages/1_Implementation.py")
+    elif selected_page_from_menu == "Presentación de la Idea":
+        st.switch_page("pages/2_Idea_Presentation.py")
 
-# --- 6. Homepage Content (Only displayed if st.session_state.current_page_for_nav == "Homepage") ---
-if st.session_state.current_page_for_nav == "Homepage":
+
+if st.session_state.current_page_for_nav == "Página Principal":
     # --- Hero Section ---
     logo_base64_hero_str = get_image_as_base64(LOGO_LOCAL_PATH_STR)
 
     hero_section_logo_html = ""
     if logo_base64_hero_str:
         hero_section_logo_html = f"""
-        <img src="{logo_base64_hero_str}" alt="App Logo" style="
-            width: 240px;
+        <img src="{logo_base64_hero_str}" alt="Logotipo de la aplicación" style="
+            display: block;
+            margin: 0 auto 2.5rem auto;
+            width: 480px;
             margin-bottom: 2.5rem;
-            filter: brightness(0) invert(1);
+            filter: brightness(1) invert(0);
         ">"""
     else:
-        hero_section_logo_html = """<h2 style="color: #fff; font-size:2rem; margin-bottom: 2rem; letter-spacing: 2px; text-transform: uppercase;">ROUTE PLANNER</h2>"""
+        hero_section_logo_html = """<h2 style="color: #fff; font-size:2rem; margin-bottom: 2rem; letter-spacing: 2px; text-transform: uppercase;">PLANIFICADOR DE RUTAS</h2>"""
 
     st.markdown(
         f"""
@@ -269,7 +265,7 @@ if st.session_state.current_page_for_nav == "Homepage":
                 line-height: 1.15;
                 text-shadow: 0px 3px 6px rgba(0,0,0,0.3);
             ">
-                Valencia Route Planner
+                Planificador de Rutas de Valencia
             </h1>
             <h1 style="
                 font-size: 1.6rem;
@@ -279,7 +275,7 @@ if st.session_state.current_page_for_nav == "Homepage":
                 line-height: 1.65;
                 font-weight: 300;
             ">
-                Navigate Valencia effortlessly with optimized routes for walking, cycling, and public bikes.
+                Navega por Valencia sin esfuerzo con rutas optimizadas para caminar, ir en bicicleta y utilizar bicicletas públicas.
             </h1>
         </div>
         """,
@@ -288,70 +284,62 @@ if st.session_state.current_page_for_nav == "Homepage":
 
     # --- About the Application Section ---
     with st.container():
-        st.header("🎯 Purpose & Utility")
+        st.header("🎯 Propósito y Utilidad")
         st.markdown(
             """
-            The **Valencia Route Planner** is designed to enhance urban mobility by providing intuitive and efficient routing options.
-            We focus on promoting sustainable transportation methods within the city.
+            El **Planificador de Rutas de Valencia** está diseñado para mejorar la movilidad urbana, proporcionando opciones de ruta intuitivas y eficientes.
+            Nos enfocamos en promover métodos de transporte sostenibles dentro de la ciudad.
             """
         )
         cols_about = st.columns(3, gap="large")
         with cols_about[0]:
-            st.markdown("##### 🚶‍♂️ Walking Routes")
+            st.markdown("##### 🚶‍♂️ Rutas a Pie")
             st.markdown(
-                "Find the best pedestrian paths, ideal for exploring the city on foot."
+                "Encuentra los mejores caminos peatonales, ideales para explorar la ciudad a pie."
             )
         with cols_about[1]:
-            st.markdown("##### 🚴‍♂️ Personal Bicycle Routes")
+            st.markdown("##### 🚴‍♂️ Rutas en Bicicleta Personal")
             st.markdown(
-                "Discover bicycle-friendly routes, perfect for your personal cycling adventures."
+                "Descubre rutas aptas para bicicletas, perfectas para tus aventuras ciclistas personales."
             )
         with cols_about[2]:
-            st.markdown("##### 🚲 ValenBisi Integration")
+            st.markdown("##### 🚲 Integración ValenBisi")
             st.markdown(
-                "Utilize Valencia's public bike-sharing network with integrated routing."
+                "Utiliza la red de bicicletas públicas compartidas de Valencia con enrutamiento integrado."
             )
         st.markdown(
             """
             <br>
-            Our platform aims to make navigating Valencia greener, easier, and more enjoyable for everyone.
+            Nuestra plataforma tiene como objetivo hacer que la navegación por Valencia sea más ecológica, fácil y agradable para todos.
             """,
             unsafe_allow_html=True,
         )
     st.markdown("---")
 
     # --- Section to promote the Route Planner ---
-    st.header("✨ Visualize Your Routes")
+    st.header("✨ Visualiza tus Rutas")
     col_img_text_hp, col_img_main_hp = st.columns([0.55, 0.45], gap="large")
     with col_img_text_hp:
         st.markdown(
-            f"""Our interactive map allows you to:
-        <ul>
-            <li>**Select start and end points** with a simple click.</li>
-            <li>**Choose your preferred mode of transport** (walking, personal bike, ValenBisi).</li>
-            <li>**See the optimized route** clearly displayed on the map.</li>
-        </ul>
-        Start planning your next journey now!""",
+            f"""Nuestro mapa interactivo te permite:
+            <ul>
+                <li>**Seleccionar puntos de inicio y fin** con un simple clic.</li>
+                <li>**Elegir tu modo de transporte preferido** (a pie, bicicleta personal, ValenBisi).</li>
+                <li>**Ver la ruta optimizada** claramente mostrada en el mapa.</li>
+            </ul>
+            ¡Empieza a planificar tu próximo viaje ahora!""",
             unsafe_allow_html=True,
         )
         if st.button(
-            "Start Planning Your Route!", use_container_width=False, type="primary"
+            "¡Empieza a Planificar Tu Ruta!", use_container_width=False, type="primary"
         ):
-            st.session_state.current_page_for_nav = "Route Planner"
-            st.switch_page("pages/1_🗺️_Route_Planner.py")
+            st.session_state.current_page_for_nav = "Planificador de Rutas"
+            st.switch_page("pages/1_Implementation.py")
 
-    with col_img_main_hp:
-        if APP_INTRO_LOCAL_PATH_OBJ.is_file():
-            st.image(
-                APP_INTRO_LOCAL_PATH_OBJ,
-                caption="Interactive Route Planner Preview.",
-                use_container_width=True,
-            )
-        else:
-            # Using a generic map image as placeholder if your specific image isn't found
-            st.image(
-                "https://images.unsplash.com/photo-1543360411-a83626e2e541?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                caption="Map Preview Not Found (Using Placeholder)",
-                use_container_width=True,
-            )
     st.markdown("---")
+
+# --- 6. Page Redirection (for other pages) ---
+if st.session_state.current_page_for_nav == "Planificador de Rutas":
+    st.switch_page("pages/1_Implementation.py")
+elif st.session_state.current_page_for_nav == "Presentación de la Idea":
+    st.switch_page("pages/2_Idea_Presentation.py")
