@@ -209,14 +209,6 @@ def get_cycling_route(start, end, cycling_graph, walking_graph):
         ),
         walking_graph,
     )
-    end_walking_route, dist3 = get_route(
-        (
-            cycling_graph.nodes[nodo_ini_bike]["y"],
-            cycling_graph.nodes[nodo_ini_bike]["x"],
-        ),
-        end,
-        walking_graph,
-    )
 
     cycling_route, dist2 = get_route(
         (
@@ -228,6 +220,15 @@ def get_cycling_route(start, end, cycling_graph, walking_graph):
             cycling_graph.nodes[nodo_end_bike]["x"],
         ),
         cycling_graph,
+    )
+
+    end_walking_route, dist3 = get_route(
+        (
+            cycling_graph.nodes[nodo_end_bike]["y"],
+            cycling_graph.nodes[nodo_end_bike]["x"],
+        ),
+        end,
+        walking_graph,
     )
 
     return (
