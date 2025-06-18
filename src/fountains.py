@@ -5,7 +5,7 @@ import folium
 
 
 def get_nearest_water_fountains_on_route(
-    graph, distancia, route_nodes, type_displacement, temperatura, public_fountains_gdf
+    graph, distancia, route_nodes, type_displacement, temperatura, fuentes_publicas_gpd
 ):
     """
     Find the nearest public water fountains along a given route, using pre-loaded fountain GeoDataFrame.
@@ -16,13 +16,13 @@ def get_nearest_water_fountains_on_route(
         route_nodes (list): A list of nodes representing the route.
         type_displacement (str): "Caminando", "En Bicicleta" or "En ValenBisi".
         temperatura (float): Current temperature in °C.
-        public_fountains_gdf (GeoDataFrame): GeoDataFrame of public fountains with geometry column.
+        fuentes_publicas_gpd (GeoDataFrame): GeoDataFrame of public fountains with geometry column.
 
     Returns:
         list: A list of node IDs for fountains within max_distance of each stop point.
     """
-    fountain_nodes = public_fountains_gdf.index.to_list()
-    fountain_coords = np.array([(pt.y, pt.x) for pt in public_fountains_gdf.geometry])
+    fountain_nodes = fuentes_publicas_gpd.index.to_list()
+    fountain_coords = np.array([(pt.y, pt.x) for pt in fuentes_publicas_gpd.geometry])
     tree = cKDTree(fountain_coords)
 
     def haversine(a, b):
@@ -33,12 +33,14 @@ def get_nearest_water_fountains_on_route(
         u = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
         return 2 * R * atan2(sqrt(u), sqrt(1 - u))
 
+    # Temperature-based stop frequency
+    freq_config = {
+        "frio": {"min": -50, "max": 10, "Caminando": 7, "En Bicicleta": 12},
+        "ideal": {"min": 15, "max": 25, "Caminando": 5, "En Bicicleta": 9},
+        "calor_extremo": {"min": 30, "max": 50, "Caminando": 3, "En Bicicleta": 6},
+    }
+
     def obtener_frecuencia():
-        freq_config = {
-            "frio": {"min": -50, "max": 10, "Caminando": 7, "En Bicicleta": 12},
-            "ideal": {"min": 15, "max": 25, "Caminando": 5, "En Bicicleta": 9},
-            "calor_extremo": {"min": 30, "max": 50, "Caminando": 3, "En Bicicleta": 6},
-        }
         if temperatura < 10:
             return freq_config["frio"][type_displacement]
         elif 15 <= temperatura <= 25:
@@ -50,11 +52,11 @@ def get_nearest_water_fountains_on_route(
 
     # Determine speed and max_distance
     if type_displacement == "Caminando":
-        velocidad = 1.0
-        max_distance = 150
+        velocidad = 1.0  # m/s
+        max_distance = 150  # meters
     else:
-        velocidad = 2.6
-        max_distance = 200
+        velocidad = 2.6  # m/s (both bicycle and ValenBisi)
+        max_distance = 350  # meters
 
     frecuencia = obtener_frecuencia()
     if frecuencia is None:
@@ -72,31 +74,24 @@ def get_nearest_water_fountains_on_route(
 
     for i in range(len(route_nodes) - 1):
         edge_info = graph.get_edge_data(route_nodes[i], route_nodes[i + 1])
+        if not edge_info or "length" not in edge_info[0]:
+            continue
 
-        if edge_info:
-            d_accum += edge_info[0]["length"]
-            if d_accum >= parada * d:
-                _, idx = tree.query(
-                    [
-                        (
-                            graph.nodes[route_nodes[i]]["y"],
-                            graph.nodes[route_nodes[i]]["x"],
-                        )
-                    ],
-                    k=1,
-                )
-                fountain_idx = fountain_nodes[idx[0]]
-                fountain_pt = public_fountains_gdf.loc[fountain_idx].geometry
-                d_m = haversine(
-                    (
-                        graph.nodes[route_nodes[i]]["y"],
-                        graph.nodes[route_nodes[i]]["x"],
-                    ),
-                    (fountain_pt.y, fountain_pt.x),
-                )
-                parada += 1
-                if d_m <= max_distance:
-                    resultados.append(fountain_idx)
+        d_accum += edge_info[0]["length"]
+        if d_accum >= parada * d:
+            _, idx = tree.query(
+                [(graph.nodes[route_nodes[i]]["y"], graph.nodes[route_nodes[i]]["x"])],
+                k=1,
+            )
+            fountain_idx = fountain_nodes[idx[0]]
+            fountain_pt = fuentes_publicas_gpd.loc[fountain_idx].geometry
+            d_m = haversine(
+                (graph.nodes[route_nodes[i]]["y"], graph.nodes[route_nodes[i]]["x"]),
+                (fountain_pt.y, fountain_pt.x),
+            )
+            parada += 1
+            if d_m <= max_distance:
+                resultados.append(fountain_idx)
 
     return resultados
 
