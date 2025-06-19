@@ -34,14 +34,14 @@ def show_nav_menu(current_page: str = None):
 
     options_list = [
         "Página Principal",
-        "Planificador de Rutas",
         "Presentación de la Idea",
+        "Planificador de Rutas",
     ]
 
     selected_page_from_menu = option_menu(
         menu_title=None,
         options=options_list,
-        icons=["house-door-fill", "map", "lightbulb-fill"],
+        icons=["house-door-fill", "lightbulb-fill", "map"],
         menu_icon="list-ul",
         default_index=options_list.index(current_page) if current_page else 0,
         orientation="horizontal",

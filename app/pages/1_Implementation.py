@@ -27,13 +27,15 @@ from nav import show_nav_menu
 
 APP_DIR = Path(__file__).resolve().parent.parent
 
+FILE_ID = "1aPsZF__V9mNxLMmcixAF0A8joReIn_FC"
+FILENAME = "data/valencia_walking_sombra.graphml"
 
 try:
     st.set_page_config(
         page_title="Planificador de Rutas",
         layout="wide",
         initial_sidebar_state="expanded",
-        page_icon=st.session_state.page_icon,
+        page_icon="🗺",
     )
 except AttributeError:
     FAVICON_FILENAME = "route_planner.png"
@@ -47,8 +49,20 @@ except AttributeError:
         page_title="Planificador de Rutas",
         layout="wide",
         initial_sidebar_state="expanded",
-        page_icon=page_icon_to_use,
+        page_icon="🗺",
     )
+
+st.markdown(
+    """
+    <style>
+      /* Oculta la navegación automática de páginas en el sidebar */
+      [data-testid="stSidebarNav"] {
+        display: none;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 if "current_page_for_nav" not in st.session_state:
     st.session_state.current_page_for_nav = "Planificador de Rutas"
@@ -72,10 +86,10 @@ def load_main_app_css(file_name: str):
 
 load_main_app_css("styles.css")
 
-FILE_ID = "1aPsZF__V9mNxLMmcixAF0A8joReIn_FC"
-FILENAME = "data/valencia_walking_sombra.graphml"
 
-
+# ----------------------
+# Functions for loading data and caching
+# ----------------------
 @st.cache_data()
 def get_data_from_drive(file_id: str, filename: str):
     """Descarga el fichero de Google Drive si no existe localmente."""
@@ -156,6 +170,9 @@ def get_range(temp):
             return f"peso_{i}_{i + 5}"
 
 
+# ----------------------
+# Global variables and initial setup
+# ----------------------
 get_data_from_drive(FILE_ID, FILENAME)
 
 # Load cached data
@@ -166,7 +183,26 @@ temp = fetch_temperature(now)
 
 range_temp = get_range(temp)
 
-st.header("Define inicio y fin de tu ruta")
+
+# ----------------------
+# Streamlit app layout and logic
+# ----------------------
+st.header("Intrucciones para el Planificador de Rutas")
+st.markdown(
+    """
+    1. **Selecciona el tipo de ruta**: Puedes elegir entre **Caminando**, **En Bicicleta** o **Valenbisi**.
+    2. **Define los puntos de inicio y fin**:
+        - Selecciona en el menú de la izquierda si deseas intruducir el inicio o la llegada de tu ruta.
+        - Una vez seleccionado, haz clic en el mapa para fijar el punto deseado.
+        - Cambia a la opción contraria para fijar el otro punto.
+    3. **Visualiza la ruta**: Una vez que hayas fijado ambos puntos, el mapa mostrará la ruta calculada.
+    4. **Consulta las fuentes de agua**: Se mostrarán las fuentes de agua cercanas a tu ruta, teniendo en cuenta la temperatura actual de Valencia. Podrás acceder a su información haciendo clic en los iconos de las fuentes en el mapa.
+    5. **Consulta las estaciones de ValenBisi**: Si has seleccionado la opción de ValenBisi, se mostrarán las estaciones disponibles en tu ruta, indicando, el número de bicicletas disponibles para la estción de inicio y el número de plazas disponibles para la de llegada.
+        Estas siempre tendrán alguna bicicleta disponible y alguna plaza libre, ya que el sistema se encarga de que así sea.
+    """
+)
+
+st.header("Planificador")
 st.markdown("")
 
 # Sidebar inputs
@@ -186,12 +222,17 @@ if "end" not in st.session_state:
 
 # Center map on last known point
 centro = [39.4699, -0.3763]
-if st.session_state.start:
+if st.session_state.start and st.session_state.end:
+    centro = [
+        (st.session_state.start["lat"] + st.session_state.end["lat"]) / 2,
+        (st.session_state.start["lng"] + st.session_state.end["lng"]) / 2,
+    ]
+elif st.session_state.start:
     centro = [st.session_state.start["lat"], st.session_state.start["lng"]]
 elif st.session_state.end:
     centro = [st.session_state.end["lat"], st.session_state.end["lng"]]
 
-m = folium.Map(location=centro, zoom_start=15)
+m = folium.Map(location=centro, zoom_start=14)
 
 # Add existing markers
 if st.session_state.start:
@@ -207,19 +248,24 @@ if st.session_state.end:
         icon=folium.Icon(color="red"),
     ).add_to(m)
 
-# 2. Compute and draw route only if both points are set
+dist_total = 0
+okey = True
 if st.session_state.start and st.session_state.end:
     start_coord = (st.session_state.start["lat"], st.session_state.start["lng"])
     end_coord = (st.session_state.end["lat"], st.session_state.end["lng"])
 
+    paradas_total = 0
     if type_route == "Caminando":
         route, dist = compute_route(start_coord, end_coord, graph_walking, range_temp)
         print_route(route, graph_walking, m, color="green")
 
-        fountains_on_route = compute_fountains(
+        fountains_on_route, paradas = compute_fountains(
             graph_walking, dist, route, type_route, temp, public_fountains_gdf
         )
         print_fountains(fountains_on_route, public_fountains_gdf, m)
+
+        paradas_total += paradas
+        dist_total = dist
 
     elif type_route == "En Bicicleta":
         ini_walk, dist_ini, cycle, dist_cycle, end_walk, dist_end = (
@@ -228,17 +274,23 @@ if st.session_state.start and st.session_state.end:
             )
         )
 
-        print_route(ini_walk, graph_walking, m, color="green")
-        print_route(cycle, graph_cycling, m, color="blue")
-        print_route(end_walk, graph_walking, m, color="green")
+        if ini_walk and cycle and end_walk:
+            print_route(ini_walk, graph_walking, m, color="green")
+            print_route(cycle, graph_cycling, m, color="blue")
+            print_route(end_walk, graph_walking, m, color="green")
+        else:
+            okey = False
+            st.error(
+                "No se ha podido calcular la ruta en bicicleta entre los puntos seleccionados."
+            )
+            st.stop()
 
-        # Fountains for each segment
         for seg_graph, seg_dist, seg_route, seg_mode in [
             (graph_walking, dist_ini, ini_walk, "Caminando"),
             (graph_cycling, dist_cycle, cycle, "En Bicicleta"),
             (graph_walking, dist_end, end_walk, "Caminando"),
         ]:
-            fountains_on_segment = compute_fountains(
+            fountains_on_segment, paradas = compute_fountains(
                 seg_graph,
                 seg_dist,
                 seg_route,
@@ -247,6 +299,9 @@ if st.session_state.start and st.session_state.end:
                 public_fountains_gdf,
             )
             print_fountains(fountains_on_segment, public_fountains_gdf, m)
+            paradas_total += paradas
+
+        dist_total = dist_ini + dist_cycle + dist_end
 
     elif type_route == "Valenbisi":
         # Fetch station data once
@@ -257,39 +312,54 @@ if st.session_state.start and st.session_state.end:
         )
         valenbisi_stations = fetch_valenbisi_stations(url, params)
 
-        (
-            ini_walk,
-            dist_ini,
-            cycle,
-            dist_cycle,
-            end_walk,
-            dist_end,
-            ini_station,
-            end_station,
-        ) = compute_valenbisi_trip(
-            start_coord,
-            end_coord,
-            graph_cycling,
-            graph_walking,
-            valenbisi_stations,
-            range_temp,
-        )
+        try:
+            (
+                ini_walk,
+                dist_ini,
+                cycle,
+                dist_cycle,
+                end_walk,
+                dist_end,
+                ini_station,
+                end_station,
+            ) = compute_valenbisi_trip(
+                start_coord,
+                end_coord,
+                graph_cycling,
+                graph_walking,
+                valenbisi_stations,
+                range_temp,
+            )
 
-        print_stations(ini_station, end_station, m)
-        print_route(ini_walk, graph_walking, m, color="green")
-        print_route(cycle, graph_cycling, m, color="blue")
-        print_route(end_walk, graph_walking, m, color="green")
+            print_stations(ini_station, end_station, m)
+            print_route(ini_walk, graph_walking, m, color="green")
+            print_route(cycle, graph_cycling, m, color="blue")
+            print_route(end_walk, graph_walking, m, color="green")
 
-        # Fountains for each segment
+        except:
+            okey = False
+            st.error(
+                "No se ha podido calcular la ruta en ValenBisi entre los puntos seleccionados."
+            )
+            st.stop()
+
         for seg_graph, seg_dist, seg_route, seg_mode in [
             (graph_walking, dist_ini, ini_walk, "Caminando"),
             (graph_cycling, dist_cycle, cycle, "En Bicicleta"),
             (graph_walking, dist_end, end_walk, "Caminando"),
         ]:
-            fts = compute_fountains(
+            fts, paradas = compute_fountains(
                 seg_graph, seg_dist, seg_route, seg_mode, temp, public_fountains_gdf
             )
             print_fountains(fts, public_fountains_gdf, m)
+            paradas_total += paradas
+
+        dist_total = dist_ini + dist_cycle + dist_end
+
+if okey and dist_total > 0:
+    st.markdown(
+        f"La distancia total de la ruta es de **{dist_total:.2f} metros**.\nHace una temperatura de **{temp:.2f}°C** en Valencia, por lo que se recomienda hacer un total de **{paradas_total} paradas**."
+    )
 
 # 3. Add click handler
 m.add_child(folium.ClickForMarker(popup=f"Selecciona el {punto.lower()} de la ruta"))

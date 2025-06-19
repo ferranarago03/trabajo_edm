@@ -35,9 +35,9 @@ def get_nearest_water_fountains_on_route(
 
     # Temperature-based stop frequency
     freq_config = {
-        "frio": {"min": -50, "max": 10, "Caminando": 7, "En Bicicleta": 12},
-        "ideal": {"min": 15, "max": 25, "Caminando": 5, "En Bicicleta": 9},
-        "calor_extremo": {"min": 30, "max": 50, "Caminando": 3, "En Bicicleta": 6},
+        "frio": {"min": -50, "max": 10, "Caminando": 10, "En Bicicleta": 12},
+        "ideal": {"min": 15, "max": 25, "Caminando": 7, "En Bicicleta": 9},
+        "calor_extremo": {"min": 30, "max": 50, "Caminando": 4, "En Bicicleta": 6},
     }
 
     def obtener_frecuencia():
@@ -53,18 +53,18 @@ def get_nearest_water_fountains_on_route(
     # Determine speed and max_distance
     if type_displacement == "Caminando":
         velocidad = 1.0  # m/s
-        max_distance = 150  # meters
+        max_distance = 100  # meters
     else:
-        velocidad = 2.6  # m/s (both bicycle and ValenBisi)
+        velocidad = 3.0  # m/s (both bicycle and ValenBisi)
         max_distance = 350  # meters
 
     frecuencia = obtener_frecuencia()
     if frecuencia is None:
-        return []
+        return [], 0
 
     n_paradas = int(distancia / (velocidad * 60 * frecuencia))
     if n_paradas <= 0:
-        return []
+        return [], 0
 
     d = distancia / n_paradas
     resultados = []
@@ -93,7 +93,7 @@ def get_nearest_water_fountains_on_route(
             if d_m <= max_distance:
                 resultados.append(fountain_idx)
 
-    return resultados
+    return resultados, n_paradas
 
 
 def print_fountains(fountains, public_fountains_gpd, map):

@@ -1,75 +1,73 @@
 # pages/2_Idea_Presentation.py
 import streamlit as st
-from streamlit_option_menu import option_menu
+from nav import show_nav_menu
+from pathlib import Path
 
-# --- Configuración de la Página ---
+APP_DIR = Path(__file__).resolve().parent.parent
+
 st.set_page_config(
     page_title="Presentación de la Idea",
     page_icon="💡",
-    layout="centered",
+    layout="wide",
+    initial_sidebar_state="collapsed",
 )
 
-menu_styles = {
-    "container": {
-        "padding": "0!important",
-        "background-color": "white",
-        "border-bottom": "1px solid #E0E0E0",
-        "margin-bottom": "2.5rem",
-        "box-shadow": "0 2px 4px rgba(0,0,0,0.03)",
-    },
-    "icon": {"color": "white", "font-size": "1.1rem", "vertical-align": "middle"},
-    "nav-link": {
-        "font-size": "1rem",
-        "font-weight": "500",
-        "text-align": "center",
-        "margin": "0px 8px",
-        "padding": "18px 15px",
-        "--hover-color": "#e7f3ff",
-        "color": "#333333",
-        "border-bottom": "3px solid transparent",
-    },
-    "nav-link-selected": {
-        "background-color": "#002D62",
-        "color": "white",
-        "font-weight": "600",
-        "border-bottom": "3px solid #FF7F0E",
-        "border-radius": "6px 6px 0 0",
-        "padding-bottom": "15px",
-    },
-}
-
-seleccion = option_menu(
-    menu_title=None,
-    options=["Página Principal", "Planificador de Rutas", "Presentación de la Idea"],
-    icons=["house-door-fill", "map", "lightbulb-fill"],
-    menu_icon="list-ul",
-    orientation="horizontal",  # Eliminado default_index
-    styles=menu_styles,
+st.markdown(
+    """
+    <style>
+      /* Oculta la navegación automática de páginas en el sidebar */
+      [data-testid="stSidebarNav"] {
+        display: none;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
-# --- Redirección si el usuario cambia de sección ---
-if seleccion == "Página Principal":
-    st.switch_page("home.py")
-    st.stop()  # ¡IMPORTANTE: Detiene la ejecución aquí!
-elif seleccion == "Planificador de Rutas":
-    st.switch_page("pages/1_Implementation.py")
-    st.stop()  # ¡IMPORTANTE: Detiene la ejecución aquí!
-# Si es "Presentación de la Idea", no hace falta redirigir porque ya estás aquí
+if "current_page_for_nav" not in st.session_state:
+    st.session_state.current_page_for_nav = "Presentación de la Idea"
+
+show_nav_menu(st.session_state.current_page_for_nav)
+
+
+def load_main_app_css(file_name: str):
+    css_path = APP_DIR / file_name
+    if css_path.is_file():
+        try:
+            with open(css_path, encoding="utf-8") as f:
+                st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        except Exception as e:
+            st.error(f"Error al cargar CSS desde {css_path}: {e}")
+    else:
+        st.warning(
+            f"Archivo CSS '{file_name}' no encontrado en {css_path}. Asegúrate de que esté en el directorio '{APP_DIR.name}'."
+        )
+
+
+load_main_app_css("styles.css")
 
 # --- Contenido Principal ---
-st.title("Presentación de la Idea: Movilidad Urbana Inteligente en Valencia")
+st.header("Presentación de la Idea: Movilidad Urbana Inteligente en Valencia")
 
 st.markdown("""
----
 ### Visión del Proyecto
-Nuestro proyecto tiene como objetivo mejorar la movilidad urbana en Valencia mediante una aplicación intuitiva y eficiente de planificación de rutas.
-Nos centramos en métodos de transporte sostenibles, promoviendo caminar y el uso de la bicicleta como modos principales de desplazamiento.
+El proyecto tiene como objetivo mejorar la movilidad urbana, proporcionando opciones de rutas inteligentes, sostenibles y seguras. Está enfocado en promover métodos de transporte respetuosos con el entorno dentro de la ciudad y de promover rutas con gran cantidad de sombra y mostrar fuentes públicas donde hidratarse durante el trayecto para luchar contra las altas temperaturas que genera el cambio climático.
 
 ### Características Clave
-* **Planificación Multimodal de Rutas**: Los usuarios pueden elegir entre rutas a pie, en bicicleta personal o con ValenBisi.
-* **Interfaz de Mapa Interactiva**: Selección fácil de puntos de inicio y destino directamente en un mapa interactivo con Folium.
-* **Rutas Optimizadas**: Utiliza datos de OpenStreetMap y `osmnx` para encontrar rutas inteligentes según la red vial y el modo de transporte elegido.
-* **Experiencia Amigable**: Una interfaz simple y limpia, diseñada para todo tipo de usuarios.
+* **Obtención de los datos**: 
+    * Descarga de datos de OpenStreetMap (OSM) para Valencia. Obtención de los dos grafo utilizados para el cálculo de las rutas.
+    * Descarga de datos abiertos de la ciudad de Valencia a través de la API de Open Data. De esta forma se han obtenido todas las fuentes públicas de la ciudad así como los árboles que hay en la ciudad para calcular las zonas con sombra.
+            
+        También se hace uso de este portal para obtener los datos de las estaciones de ValenBisi y poder saber cuáles de ellas son las más cercanas y tienen bicicletas y plazas disponibles. Este es un valor relativamente actual ya que se descarga en el momento de hacer la consulta y en la API se actualiza cada 15 minutos.
+    * Descarga de los datos de temperatura a través de la API de Open Meteo. Estos datos se actualizan cada hora y permiten calcular la temperatura actual en Valencia para poder calcular el número de paradas que se deben hacer en las fuentes públicas y la importacia de la sombra en la ruta.
+* **Cálculo de los pesos por la sombra**: Para calcular la importancia de la sombra, se ha usado el dataset con los árboles de Valencia, junto con las proyecciones de los grafos. Para cada tramo del grafo (es decir, una arista entre dos nodos), se construye una zona de influencia de 15 metros alrededor del tramo. Dre esa manea, con un índice espacial, se consultan de manera eficiente todos los árboles situados dentro de la zona, ya que cuantos más árboles, más sombra. Para calcular los pesos del grafo, se definen distintos rangos de temperatura, de 5 en 5 grados y de 0 Cº a 40 Cº.  Para cada diferente rango, se establecen diferentes pesos dependiendo de la importancia de la longitud o del número de árboles. A mayor temperatura, se le dará un poco más de importancia ir por una zona sombreada, sin embargo, a menor temperatura, se le dará más importancia a la longitud. La fórmula utilizada final es: (importancia_longitud * longitud) - (importancia_sombra*número de arboles) + 1000 (esta suma final se añade para garantizar que se den pesos positivos para no tener problemas con el algoritmo Dijkstra).
+* **Cálculo de la ruta**:
+    1. El primer paso consiste en obtener los nodos del grafo correspondiente que más cerca se encuentren del punto de inicio y del punto de destino, ya que se desea que la selección de estos puntos sea interactiva.
+    2. A continuación, se calcula la ruta más corta entre estos dos nodos.
+    3. En el caso de la ruta en bicicleta, además de calcular la ruta más corta considerando solo la calles con carril bici, se calcula la ruta caminando para llegar del punto de inicio al carril bici más cercano y del carril bici más cercano al punto de destino.
+    4. Finalmente, para el ValenBisi, se realiza un proceso similar al de la bicicleta, pero se guía en primer lugar a la estación de ValenBisi más cercana al punto de inicio y a la incorporación al carril bici, y al final se guía a la estación de ValenBisi más cercana al punto de destino. Ambas estaciones se seleccionan considerando la disponibilidad de bicicletas y plazas en el momento de la consulta.
+* **Obtención de las fuentes públicas**: Una vez calculada la ruta y su distancia total, se procede a obtener las fuentes públicas que se encuentran a lo largo de la ruta. Para ello, se calcula el número de paradas que se aconsejaría realizar en función de la temperatura actual de Valencia y, con ello, la distancia que se debe recorrer entre cada parada. A partir de este valor, se va recorriendo la ruta y buscando, en la distancia correcta, las fuentes públicas que se encuentren cerca de la ruta calculada.
+* **Visualización de los resultados**: Por último, se visulizan todos los resultados en un mapa interactivo realizado con Folium y presentado en la aplicación web con Streamlit. En este mapa se muestran las rutas calculadas y las fuentes públicas, así como la temperatura actual de Valencia, la distancia de la ruta o el número de paradas recomendadas.
 
 ### Público Objetivo
 Esta aplicación está pensada para:
@@ -84,11 +82,5 @@ Esta aplicación está pensada para:
 * **Python**: El lenguaje de programación principal.
 
 ### Mejoras Futuras
-* **Tráfico / Disponibilidad en Tiempo Real**: Integrar datos en vivo sobre la disponibilidad de estaciones ValenBisi o el estado del tráfico.
-* **Opciones de Accesibilidad**: Considerar rutas optimizadas para personas con movilidad reducida.
-* **Personalización de Rutas**: Permitir que los usuarios especifiquen preferencias como "evitar cuestas" o "ruta más escénica".
-* **Tiempo y Distancia Estimada**: Mostrar el tiempo de viaje y la distancia calculados para la ruta generada.
-* **Integración con Transporte Público**: Combinar rutas a pie o en bicicleta con opciones de transporte público.
 
----
 """)

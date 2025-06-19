@@ -43,7 +43,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     page_icon=page_icon_to_use,
 )
-st.session_state.page_icon = page_icon_to_use
+
+st.markdown(
+    """
+    <style>
+      /* Oculta la navegación automática de páginas en el sidebar */
+      [data-testid="stSidebarNav"] {
+        display: none;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 # --- 2. Load CSS ---
@@ -149,7 +160,8 @@ with st.sidebar:
         "- [OpenStreetMap](https://www.openstreetmap.org/)", unsafe_allow_html=True
     )
     st.markdown(
-        "- [Datos abiertos de Valencia](https://valencia.opendatasoft.com/pages/home/)", unsafe_allow_html=True
+        "- [Datos abiertos de Valencia](https://valencia.opendatasoft.com/pages/home/)",
+        unsafe_allow_html=True,
     )
     st.markdown("#### 👤 Autores")
     st.markdown(
@@ -161,13 +173,10 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    
-
     st.markdown("---")
     st.caption(f"© {pd.Timestamp.now().year} Planificador de Rutas | v1.0")
     st.caption("Movilidad Urbana Sostenible")
     st.markdown("---")
-    
 
 
 show_nav_menu(st.session_state.current_page_for_nav)
@@ -269,7 +278,6 @@ if st.session_state.current_page_for_nav == "Página Principal":
         )
         st.markdown("---")
 
-
         # --- Section to promote the Route Planner ---
         st.header("✨ Visualiza tus Rutas")
         col_img_text_hp, col_img_main_hp = st.columns([0.55, 0.45], gap="large")
@@ -285,7 +293,9 @@ if st.session_state.current_page_for_nav == "Página Principal":
                 unsafe_allow_html=True,
             )
             if st.button(
-                "¡Empieza a Planificar Tu Ruta!", use_container_width=False, type="primary"
+                "¡Empieza a Planificar Tu Ruta!",
+                use_container_width=False,
+                type="primary",
             ):
                 st.session_state.current_page_for_nav = "Planificador de Rutas"
                 st.switch_page("pages/1_Implementation.py")
