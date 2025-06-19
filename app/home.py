@@ -22,7 +22,7 @@ APP_INTRO_LOCAL_PATH_OBJ = APP_DIR / APP_INTRO_FILENAME
 FAVICON_FILENAME = "route_planner.png"
 FAVICON_LOCAL_PATH_OBJ = APP_DIR / FAVICON_FILENAME
 
-page_icon_to_use = "https://www.esade.edu/favicon.ico"
+page_icon_to_use = "https://www.valenbisi.es/assets/img/logo-contract.png"
 if FAVICON_LOCAL_PATH_OBJ.is_file():
     page_icon_to_use = str(FAVICON_LOCAL_PATH_OBJ)
 else:
@@ -38,7 +38,7 @@ if "current_page_for_nav" not in st.session_state:
 
 # --- 1. Page Configuration (FOR THE MAIN APP) ---
 st.set_page_config(
-    page_title="Aplicación Planificador de Rutas | Bienvenido",
+    page_title="Aplicación Planificadora de Rutas en Valencia | Bienvenido",
     layout="wide",
     initial_sidebar_state="expanded",
     page_icon=page_icon_to_use,
@@ -136,7 +136,7 @@ with st.sidebar:
     st.markdown("## Información de Movilidad Urbana")
     st.markdown(
         """
-        Tu plataforma de referencia para moverte de forma sostenible por Valencia. Encuentra las rutas más óptimas.
+        Tu plataforma de referencia para moverte de forma sostenible y segura por Valencia. Encuentra las rutas más óptimas y frescas de toda la ciudad.
         """
     )
     st.markdown("---")
@@ -229,7 +229,7 @@ if st.session_state.current_page_for_nav == "Página Principal":
                 line-height: 1.65;
                 font-weight: 300;
             ">
-                Muévete por Valencia de forma fácil, fresca y ecológica: rutas a pie, en bici o con ValenBisi.
+                Muévete por Valencia de forma fácil, fresca y ecológica: rutas a pie, en bici personal o con ValenBisi.
             </h1>
         </div>
         """,
@@ -241,7 +241,7 @@ if st.session_state.current_page_for_nav == "Página Principal":
         st.markdown(
             """
             **Valen Fresc** está diseñado para mejorar la movilidad urbana, proporcionando opciones de rutas inteligentes, sostenibles y seguras.
-            Nos enfocamos en promover métodos de transporte respetuosos con el entorno dentro de la ciudad y de cuidar a los ciudadanos bajo altas temperaturas.
+            Nos enfocamos en promover métodos de transporte respetuosos con el entorno dentro de la ciudad y de cuidar a los ciudadanos bajo altas temperaturas, ofreciéndoles puntos estratégicos donde refrescarse.
             """
         )
 
@@ -270,7 +270,7 @@ if st.session_state.current_page_for_nav == "Página Principal":
             Frente al avance del **cambio climático** y las altas temperaturas en entornos urbanos, nuestra aplicación no solo planifica trayectos, sino que te cuida en el camino.
 
             - 🌳 **Priorizamos zonas con sombra**, detectando árboles cercanos a las calles.
-            - 🚰 **Sugerimos paradas en fuentes públicas** según tu tipo de desplazamiento y la temperatura.
+            - 🚰 **Sugerimos paradas en fuentes públicas** según tu tipo de desplazamiento y la temperatura en ese preciso instante.
             - 🔁 **Adaptamos la frecuencia de descanso e hidratación** si el calor es extremo, protegiéndote de riesgos como el golpe de calor.
 
             Este enfoque climático convierte tu ruta en una experiencia **más saludable, sostenible y consciente del entorno**.
