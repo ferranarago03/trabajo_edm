@@ -1,6 +1,4 @@
-# esade_hub_app.py
 import streamlit as st
-from streamlit_option_menu import option_menu
 import pandas as pd
 from pathlib import Path
 import base64
@@ -13,7 +11,7 @@ from nav import show_nav_menu
 # --- Define Paths to Local Assets ---
 APP_DIR = Path(__file__).resolve().parent
 
-LOGO_FILENAME = "route_planner.png"
+LOGO_FILENAME = "ValenFresc.png"
 LOGO_LOCAL_PATH_OBJ = APP_DIR / LOGO_FILENAME
 LOGO_LOCAL_PATH_STR = str(LOGO_LOCAL_PATH_OBJ)
 
@@ -127,8 +125,7 @@ with st.sidebar:
     st.markdown("## Información de Movilidad Urbana")
     st.markdown(
         """
-        Tu plataforma de referencia para planificar rutas sostenibles dentro de Valencia.
-        Encuentra las rutas óptimas para caminar, ir en bicicleta personal y ValenBisi.
+        Tu plataforma de referencia para moverte de forma sostenible por Valencia. Encuentra las rutas más óptimas.
         """
     )
     st.markdown("---")
@@ -152,13 +149,25 @@ with st.sidebar:
         "- [OpenStreetMap](https://www.openstreetmap.org/)", unsafe_allow_html=True
     )
     st.markdown(
-        "- [Sitio Web Oficial de ValenBisi](https://www.valenbisi.es/)",
+        "- [Datos abiertos de Valencia](https://valencia.opendatasoft.com/pages/home/)", unsafe_allow_html=True
+    )
+    st.markdown("#### 👤 Autores")
+    st.markdown(
+        """
+        - Ferran Aragó Ausina
+        - Carles Navarro Esteve  
+        - Aleixandre Tarrasó Sorní
+        """,
         unsafe_allow_html=True,
     )
+
+    
 
     st.markdown("---")
     st.caption(f"© {pd.Timestamp.now().year} Planificador de Rutas | v1.0")
     st.caption("Movilidad Urbana Sostenible")
+    st.markdown("---")
+    
 
 
 show_nav_menu(st.session_state.current_page_for_nav)
@@ -174,7 +183,7 @@ if st.session_state.current_page_for_nav == "Página Principal":
         <img src="{logo_base64_hero_str}" alt="Logotipo de la aplicación" style="
             display: block;
             margin: 0 auto 2.5rem auto;
-            width: 480px;
+            width: 320px;
             margin-bottom: 2.5rem;
             filter: brightness(1) invert(0);
         ">"""
@@ -211,65 +220,74 @@ if st.session_state.current_page_for_nav == "Página Principal":
                 line-height: 1.65;
                 font-weight: 300;
             ">
-                Navega por Valencia sin esfuerzo con rutas optimizadas para caminar, ir en bicicleta y utilizar bicicletas públicas.
+                Muévete por Valencia de forma fácil, fresca y ecológica: rutas a pie, en bici o con ValenBisi.
             </h1>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    # --- About the Application Section ---
     with st.container():
         st.header("🎯 Propósito y Utilidad")
         st.markdown(
             """
-            El **Planificador de Rutas de Valencia** está diseñado para mejorar la movilidad urbana, proporcionando opciones de ruta intuitivas y eficientes.
-            Nos enfocamos en promover métodos de transporte sostenibles dentro de la ciudad.
+            **Valen Fresc** está diseñado para mejorar la movilidad urbana, proporcionando opciones de rutas inteligentes, sostenibles y seguras.
+            Nos enfocamos en promover métodos de transporte respetuosos con el entorno dentro de la ciudad y de cuidar a los ciudadanos bajo altas temperaturas.
             """
         )
+
         cols_about = st.columns(3, gap="large")
         with cols_about[0]:
             st.markdown("##### 🚶‍♂️ Rutas a Pie")
             st.markdown(
-                "Encuentra los mejores caminos peatonales, ideales para explorar la ciudad a pie."
+                "Encuentra el mejor camino peatonal entre dos puntos de Valencia."
             )
         with cols_about[1]:
             st.markdown("##### 🚴‍♂️ Rutas en Bicicleta Personal")
             st.markdown(
-                "Descubre rutas aptas para bicicletas, perfectas para tus aventuras ciclistas personales."
+                "Encuentra la mejor ruta disponible para ir en carril bici o ciclovía por la ciudad de Valencia."
             )
         with cols_about[2]:
             st.markdown("##### 🚲 Integración ValenBisi")
             st.markdown(
-                "Utiliza la red de bicicletas públicas compartidas de Valencia con enrutamiento integrado."
+                "Utiliza la red de bicicletas públicas ValenBisi para encontrar la mejor ruta y con las mejores estaciones disponibles."
             )
+
+        st.markdown("---")
+
+        st.subheader("🌡️ Adaptado al Clima: Rutas Inteligentes")
         st.markdown(
             """
-            <br>
-            Nuestra plataforma tiene como objetivo hacer que la navegación por Valencia sea más ecológica, fácil y agradable para todos.
-            """,
-            unsafe_allow_html=True,
-        )
-    st.markdown("---")
+            Frente al avance del **cambio climático** y las altas temperaturas en entornos urbanos, nuestra aplicación no solo planifica trayectos, sino que te cuida en el camino.
 
-    # --- Section to promote the Route Planner ---
-    st.header("✨ Visualiza tus Rutas")
-    col_img_text_hp, col_img_main_hp = st.columns([0.55, 0.45], gap="large")
-    with col_img_text_hp:
-        st.markdown(
-            """Nuestro mapa interactivo te permite:
-            <ul>
-                <li>**Seleccionar puntos de inicio y fin** con un simple clic.</li>
-                <li>**Elegir tu modo de transporte preferido** (a pie, bicicleta personal, ValenBisi).</li>
-                <li>**Ver la ruta optimizada** claramente mostrada en el mapa.</li>
-            </ul>
-            ¡Empieza a planificar tu próximo viaje ahora!""",
-            unsafe_allow_html=True,
-        )
-        if st.button(
-            "¡Empieza a Planificar Tu Ruta!", use_container_width=False, type="primary"
-        ):
-            st.session_state.current_page_for_nav = "Planificador de Rutas"
-            st.switch_page("pages/1_Implementation.py")
+            - 🌳 **Priorizamos zonas con sombra**, detectando árboles cercanos a las calles.
+            - 🚰 **Sugerimos paradas en fuentes públicas** según tu tipo de desplazamiento y la temperatura.
+            - 🔁 **Adaptamos la frecuencia de descanso e hidratación** si el calor es extremo, protegiéndote de riesgos como el golpe de calor.
 
-    st.markdown("---")
+            Este enfoque climático convierte tu ruta en una experiencia **más saludable, sostenible y consciente del entorno**.
+            """
+        )
+        st.markdown("---")
+
+
+        # --- Section to promote the Route Planner ---
+        st.header("✨ Visualiza tus Rutas")
+        col_img_text_hp, col_img_main_hp = st.columns([0.55, 0.45], gap="large")
+        with col_img_text_hp:
+            st.markdown(
+                """Nuestro mapa interactivo te permite:
+                <ul>
+                    <li>**Seleccionar puntos de inicio y fin** con un simple clic.</li>
+                    <li>**Elegir tu modo de transporte preferido** (a pie, bicicleta personal, ValenBisi).</li>
+                    <li>**Ver la ruta optimizada** claramente mostrada en el mapa.</li>
+                </ul>
+                ¡Empieza a planificar tu próximo viaje ahora!""",
+                unsafe_allow_html=True,
+            )
+            if st.button(
+                "¡Empieza a Planificar Tu Ruta!", use_container_width=False, type="primary"
+            ):
+                st.session_state.current_page_for_nav = "Planificador de Rutas"
+                st.switch_page("pages/1_Implementation.py")
+
+        st.markdown("---")
