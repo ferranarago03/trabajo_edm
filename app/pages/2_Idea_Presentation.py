@@ -1,16 +1,14 @@
 # pages/2_Idea_Presentation.py
 import streamlit as st
-import os
 from streamlit_option_menu import option_menu
 
 # --- Configuración de la Página ---
 st.set_page_config(
     page_title="Presentación de la Idea",
     page_icon="💡",
-    layout="centered",  # Puedes usar "wide" si prefieres más espacio
+    layout="centered",
 )
 
-# --- Estilos del Menú (misma que Home.py) ---
 menu_styles = {
     "container": {
         "padding": "0!important",
@@ -40,55 +38,26 @@ menu_styles = {
     },
 }
 
-# --- Mapeo de nombres de display a rutas de archivo ---
-page_map = {
-    "Página Principal": "home.py",
-    "Planificador de Rutas": "pages/1_Implementation.py",
-    "Presentación de la Idea": "pages/2_Idea_Presentation.py",
-}
-
-# --- Lógica para determinar la página actual y el índice por defecto del menú ---
-current_page_filename = os.path.basename(__file__)  # "2_Idea_Presentation.py"
-current_page_full_path = f"pages/{current_page_filename}"
-
-# Encontrar el nombre de display de la página actual
-current_display_name = None
-for display_name, file_path in page_map.items():
-    if file_path == current_page_full_path:
-        current_display_name = display_name
-        break
-
-# Establecer índice por defecto para el menú
-default_index_for_menu = 0
-if current_display_name:
-    default_index_for_menu = list(page_map.keys()).index(current_display_name)
-
-# --- Menú de Navegación ---
 seleccion = option_menu(
     menu_title=None,
-    options=list(page_map.keys()),
+    options=["Página Principal", "Planificador de Rutas", "Presentación de la Idea"],
     icons=["house-door-fill", "map", "lightbulb-fill"],
     menu_icon="list-ul",
-    orientation="horizontal",
-    default_index=default_index_for_menu,
+    orientation="horizontal",  # Eliminado default_index
     styles=menu_styles,
-    key="main_navigation_menu_presentation",
 )
 
-# --- Manejo de la navegación ---
-target_file_path = page_map[seleccion]
+# --- Redirección si el usuario cambia de sección ---
+if seleccion == "Página Principal":
+    st.switch_page("home.py")
+    st.stop()  # ¡IMPORTANTE: Detiene la ejecución aquí!
+elif seleccion == "Planificador de Rutas":
+    st.switch_page("pages/1_Implementation.py")
+    st.stop()  # ¡IMPORTANTE: Detiene la ejecución aquí!
+# Si es "Presentación de la Idea", no hace falta redirigir porque ya estás aquí
 
-# Solo redirigir si es diferente a la página actual
-if target_file_path != current_page_full_path:
-    # Actualizar el estado de sesión si existe
-    if "current_page_for_nav" in st.session_state:
-        st.session_state.current_page_for_nav = seleccion
-
-    # Redirigir a la página seleccionada
-    st.switch_page(target_file_path)
-
-# --- Contenido Principal de "Presentación de la Idea" ---
-st.title("💡 Presentación de la Idea: Movilidad Urbana Inteligente en Valencia")
+# --- Contenido Principal ---
+st.title("Presentación de la Idea: Movilidad Urbana Inteligente en Valencia")
 
 st.markdown("""
 ---

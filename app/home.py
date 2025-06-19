@@ -1,10 +1,12 @@
-# home.py
+# esade_hub_app.py
 import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 from pathlib import Path
 import base64
 from typing import Union
+from nav import show_nav_menu
+
 
 # --- 0. NO MÁS MÓDULO DE AUTENTICACIÓN ---
 
@@ -34,7 +36,6 @@ else:
 
 if "current_page_for_nav" not in st.session_state:
     st.session_state.current_page_for_nav = "Página Principal"
-    print("DEBUG: Setting current_page_for_nav to Homepage (initial load)")
 
 
 # --- 1. Page Configuration (FOR THE MAIN APP) ---
@@ -44,6 +45,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     page_icon=page_icon_to_use,
 )
+st.session_state.page_icon = page_icon_to_use
 
 
 # --- 2. Load CSS ---
@@ -158,74 +160,8 @@ with st.sidebar:
     st.caption(f"© {pd.Timestamp.now().year} Planificador de Rutas | v1.0")
     st.caption("Movilidad Urbana Sostenible")
 
-# --- 4. Top Horizontal Navigation Menu ---
-menu_styles = {
-    "container": {
-        "padding": "0!important",
-        "background-color": "white",
-        "border-bottom": "1px solid #E0E0E0",
-        "margin-bottom": "2.5rem",
-        "box-shadow": "0 2px 4px rgba(0,0,0,0.03)",
-    },
-    "icon": {"color": "white", "font-size": "1.1rem", "vertical-align": "middle"},
-    "nav-link": {
-        "font-size": "1rem",
-        "font-weight": "500",
-        "text-align": "center",
-        "margin": "0px 8px",
-        "padding": "18px 15px",
-        "--hover-color": "#e7f3ff",
-        "color": "#333333",
-        "border-bottom": "3px solid transparent",
-    },
-    "nav-link-selected": {
-        "background-color": "#002D62",
-        "color": "white",
-        "font-weight": "600",
-        "border-bottom": "3px solid #FF7F0E",
-        "border-radius": "6px 6px 0 0",
-        "padding-bottom": "15px",
-    },
-}
 
-options_list = ["Página Principal", "Planificador de Rutas", "Presentación de la Idea"]
-
-try:
-    if (
-        "current_page_for_nav" not in st.session_state
-        or st.session_state.current_page_for_nav not in options_list
-    ):
-        st.session_state.current_page_for_nav = "Página Principal"
-    default_menu_index = options_list.index(st.session_state.current_page_for_nav)
-except (ValueError, AttributeError, KeyError):
-    st.session_state.current_page_for_nav = "Página Principal"
-    default_menu_index = 0
-
-
-def nav_menu_changed(key_of_menu):
-    st.session_state.current_page_for_nav = st.session_state[key_of_menu]
-
-
-selected_page_from_menu = option_menu(
-    menu_title=None,
-    options=options_list,
-    icons=["house-door-fill", "map", "lightbulb-fill"],
-    menu_icon="list-ul",
-    default_index=default_menu_index,
-    orientation="horizontal",
-    key="main_nav_menu_global_final_v4",
-    styles=menu_styles,
-    on_change=nav_menu_changed,
-)
-
-# --- 5. Handle Page Navigation (based on top menu selection) ---
-if selected_page_from_menu != st.session_state.current_page_for_nav:
-    st.session_state.current_page_for_nav = selected_page_from_menu
-
-    if selected_page_from_menu == "Planificador de Rutas":
-        st.switch_page("pages/1_Implementation.py")
-    elif selected_page_from_menu == "Presentación de la Idea":
-        st.switch_page("pages/2_Idea_Presentation.py")
+show_nav_menu(st.session_state.current_page_for_nav)
 
 
 if st.session_state.current_page_for_nav == "Página Principal":
@@ -321,7 +257,7 @@ if st.session_state.current_page_for_nav == "Página Principal":
     col_img_text_hp, col_img_main_hp = st.columns([0.55, 0.45], gap="large")
     with col_img_text_hp:
         st.markdown(
-            f"""Nuestro mapa interactivo te permite:
+            """Nuestro mapa interactivo te permite:
             <ul>
                 <li>**Seleccionar puntos de inicio y fin** con un simple clic.</li>
                 <li>**Elegir tu modo de transporte preferido** (a pie, bicicleta personal, ValenBisi).</li>
@@ -337,9 +273,3 @@ if st.session_state.current_page_for_nav == "Página Principal":
             st.switch_page("pages/1_Implementation.py")
 
     st.markdown("---")
-
-# --- 6. Page Redirection (for other pages) ---
-if st.session_state.current_page_for_nav == "Planificador de Rutas":
-    st.switch_page("pages/1_Implementation.py")
-elif st.session_state.current_page_for_nav == "Presentación de la Idea":
-    st.switch_page("pages/2_Idea_Presentation.py")
