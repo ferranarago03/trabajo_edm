@@ -192,9 +192,9 @@ def get_valenbisi_route(
         ini_walking_route,
         dist1,
         cycling_route,
-        dist2,
-        end_walking_route,
         dist3,
+        end_walking_route,
+        dist2,
         ini_station,
         end_station,
     )
