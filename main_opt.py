@@ -5,8 +5,9 @@ from shapely.geometry import shape
 import pandas as pd
 from datetime import datetime as dt
 from zoneinfo import ZoneInfo
+import gdown
 
-# Import your existing utilities without modifying their internal logic
+import os
 import sys
 
 sys.path.append("./src/")
@@ -21,12 +22,24 @@ from routes import (
 )
 from temperature import get_temperature_data
 
+FILE_ID = "1aPsZF__V9mNxLMmcixAF0A8joReIn_FC"
+FILENAME = "data/valencia_walking_sombra.graphml"
+
+
+@st.cache_data()
+def get_data_from_drive(file_id: str, filename: str):
+    """Descarga el fichero de Google Drive si no existe localmente."""
+    if not os.path.exists(filename):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, filename, quiet=False)
+    return filename
+
 
 # 1. Cache-loading of heavy static resources
 @st.cache_resource
 def load_graphs():
     cycling_graph = read_graph("data/valencia_cycling_sombra.graphml")
-    walking_graph = read_graph("data/valencia_walking_sombra.graphml")
+    walking_graph = read_graph(FILENAME)
     now = dt.now(tz=ZoneInfo("UTC"))
     return cycling_graph, walking_graph, now
 
@@ -92,6 +105,8 @@ def get_range(temp):
         if temp - 5 < i:
             return f"peso_{i}_{i + 5}"
 
+
+get_data_from_drive(FILE_ID, FILENAME)
 
 # Load cached data
 graph_cycling, graph_walking, now = load_graphs()
