@@ -79,16 +79,12 @@ load_main_app_css("styles.css")
 def get_image_as_base64(path_str: str) -> Union[str, None]:
     path_obj = Path(path_str)
 
-    print(f"DEBUG (get_image_as_base64): Buscando imagen en {path_obj}")
-    print(f"DEBUG (get_image_as_base64): ¿Existe el archivo? {path_obj.is_file()}")
-
     if not path_obj.is_file():
         # st.error(f"Image file not found: {path_obj.name}") # Descomentar para error en UI
         return None
 
     try:
         with open(path_obj, "rb") as image_file:
-            print(f"DEBUG (get_image_as_base64): Leyendo imagen {path_obj.name}")
             data = image_file.read()
             encoded_string = base64.b64encode(data).decode()
 
@@ -103,9 +99,6 @@ def get_image_as_base64(path_str: str) -> Union[str, None]:
         }
         mime = mime_map.get(ext)
         if not mime:
-            print(
-                f"DEBUG (get_image_as_base64): Extensión de archivo no soportada: {ext} para {path_obj.name}"
-            )
             # st.error(f"Unsupported image format: {ext} for {path_obj.name}") # Descomentar para error en UI
             return None
 
