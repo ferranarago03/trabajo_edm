@@ -42,7 +42,7 @@ trabajo_edm/
 │   ├── upv.png
 │   ├── ValenFresc.png
 │   └── __pycache__/                 # Archivos compilados automáticamente
-
+│
 ├── 📂 data/                         # Datos geoespaciales y CSVs
 │   ├── arbratge-arbolado.csv
 │   ├── cartografia-base-edificis-... .geojson
@@ -54,7 +54,7 @@ trabajo_edm/
 │   ├── valencia_cycling_sombra.graphml
 │   ├── valencia_walking_network.graphml
 │   └── valencia_walking_sombra.graphml
-
+│
 ├── 📂 notebooks/                    # Notebooks de prueba y procesamiento
 │   ├── cache/
 │   ├── creacion_ruta.ipynb
@@ -64,14 +64,14 @@ trabajo_edm/
 │   ├── obtencion_temp.ipynb
 │   ├── pruebas_sombra.ipynb
 │   └── ruta_valenbisi.ipynb
-
+│
 ├── 📂 src/                          # Código Python del backend
 │   ├── __pycache__/
 │   ├── fountains.py                 # Obtención de rutas con fuentes
 │   ├── routes.py                    # Cálculo de rutas con sombra
 │   ├── temperature.py               # Obtención temperatura y tiempos
 │   └── utils.py                     # Utilidades generales
-
+│
 ├── 📄 README.md                     # 📖 Documentación del proyecto
 ├── 📄 requirements.txt              # 📦 Dependencias del proyecto
 ├── 📄 pyproject.toml                # ⚙️ Configuración del proyecto
