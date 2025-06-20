@@ -34,7 +34,7 @@ def show_nav_menu(current_page: str = None):
 
     options_list = [
         "Página Principal",
-        "Presentación de la Idea",
+        "Implementación de la Idea",
         "Planificador de Rutas",
     ]
 
@@ -52,8 +52,8 @@ def show_nav_menu(current_page: str = None):
     if selected_page_from_menu != st.session_state.current_page_for_nav:
         st.session_state.current_page_for_nav = selected_page_from_menu
         if selected_page_from_menu == "Planificador de Rutas":
-            st.switch_page("pages/1_Implementation.py")
-        elif selected_page_from_menu == "Presentación de la Idea":
-            st.switch_page("pages/2_Idea_Presentation.py")
+            st.switch_page("pages/Planificador.py")
+        elif selected_page_from_menu == "Implementación de la Idea":
+            st.switch_page("pages/Implementación.py")
         elif selected_page_from_menu == "Página Principal":
             st.switch_page("home.py")

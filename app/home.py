@@ -38,7 +38,7 @@ if "current_page_for_nav" not in st.session_state:
 
 # --- 1. Page Configuration (FOR THE MAIN APP) ---
 st.set_page_config(
-    page_title="Aplicación Planificadora de Rutas en Valencia | Bienvenido",
+    page_title="VALEN FRESC | Bienvenido",
     layout="wide",
     initial_sidebar_state="expanded",
     page_icon=page_icon_to_use,
@@ -138,14 +138,14 @@ with st.sidebar:
         "🗺️ Planificador de Rutas", use_container_width=True, key="sb_nav_route_planner"
     ):
         st.session_state.current_page_for_nav = "Planificador de Rutas"
-        st.switch_page("pages/1_Implementation.py")
+        st.switch_page("pages/Planificador.py")
     if st.button(
-        "💡 Presentación de la Idea",
+        "💡 Implementación de la Idea",
         use_container_width=True,
         key="sb_nav_idea_presentation",
     ):
-        st.session_state.current_page_for_nav = "Presentación de la Idea"
-        st.switch_page("pages/2_Idea_Presentation.py")
+        st.session_state.current_page_for_nav = "Implementación de la Idea"
+        st.switch_page("pages/Implementación.py")
 
     st.markdown("---")
     st.markdown("#### Recursos Externos")
@@ -154,6 +154,10 @@ with st.sidebar:
     )
     st.markdown(
         "- [Datos abiertos de Valencia](https://valencia.opendatasoft.com/pages/home/)",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "- [Open Meteo API](https://open-meteo.com/)",
         unsafe_allow_html=True,
     )
     st.markdown("#### 👤 Autores")
@@ -291,6 +295,6 @@ if st.session_state.current_page_for_nav == "Página Principal":
                 type="primary",
             ):
                 st.session_state.current_page_for_nav = "Planificador de Rutas"
-                st.switch_page("pages/1_Implementation.py")
+                st.switch_page("pages/Planificador.py")
 
         st.markdown("---")

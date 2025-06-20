@@ -35,7 +35,7 @@ try:
         page_title="Planificador de Rutas",
         layout="wide",
         initial_sidebar_state="expanded",
-        page_icon="🗺",
+        page_icon="🗺️",
     )
 except AttributeError:
     FAVICON_FILENAME = "route_planner.png"
@@ -49,7 +49,7 @@ except AttributeError:
         page_title="Planificador de Rutas",
         layout="wide",
         initial_sidebar_state="expanded",
-        page_icon="🗺",
+        page_icon="🗺️",
     )
 
 st.markdown(
@@ -90,7 +90,7 @@ load_main_app_css("styles.css")
 # ----------------------
 # Functions for loading data and caching
 # ----------------------
-@st.cache_data()
+@st.cache_data
 def get_data_from_drive(file_id: str, filename: str):
     """Descarga el fichero de Google Drive si no existe localmente."""
     if not os.path.exists(filename):
@@ -104,8 +104,7 @@ def get_data_from_drive(file_id: str, filename: str):
 def load_graphs():
     cycling_graph = read_graph("data/valencia_cycling_sombra.graphml")
     walking_graph = read_graph(FILENAME)
-    now = dt.now(tz=ZoneInfo("UTC"))
-    return cycling_graph, walking_graph, now
+    return cycling_graph, walking_graph
 
 
 @st.cache_data
@@ -115,7 +114,6 @@ def load_public_fountains():
     return get_gdf(df)
 
 
-@st.cache_data
 def fetch_valenbisi_stations(url, params):
     df = get_valencian_open_data(url, params)
     df["geometry"] = df["geo_shape"].apply(shape)
@@ -176,13 +174,17 @@ def get_range(temp):
 get_data_from_drive(FILE_ID, FILENAME)
 
 # Load cached data
-graph_cycling, graph_walking, now = load_graphs()
+graph_cycling, graph_walking = load_graphs()
 public_fountains_gdf = load_public_fountains()
+now = dt.now(tz=ZoneInfo("UTC"))
+
+if "now" not in st.session_state:
+    st.session_state.now = now
+    st.session_state.first_run = True
 
 temp = fetch_temperature(now)
 
 range_temp = get_range(temp)
-
 
 # ----------------------
 # Streamlit app layout and logic
@@ -206,13 +208,29 @@ st.header("Planificador")
 st.markdown("")
 
 # Sidebar inputs
-st.sidebar.header("Tipo de ruta")
-tipo_opciones = ["Caminando", "En Bicicleta", "Valenbisi"]
-type_route = st.sidebar.selectbox("¿Qué tipo de ruta quieres definir?", tipo_opciones)
+with st.sidebar:
+    st.header("Tipo de ruta")
+    tipo_opciones = ["Caminando", "Bicicleta", "Valenbisi"]
+    type_route = st.selectbox("¿Qué tipo de ruta quieres definir?", tipo_opciones)
 
-st.sidebar.header("Selecciona el punto de la ruta")
-punto_opciones = ["Inicio", "Fin"]
-punto = st.sidebar.radio("¿Qué punto quieres fijar?", punto_opciones)
+    st.header("Selecciona el punto de la ruta")
+    punto_opciones = ["Inicio", "Fin"]
+    punto = st.radio("¿Qué punto quieres fijar?", punto_opciones)
+
+    st.markdown("---")
+    st.markdown("#### 👤 Autores")
+    st.markdown(
+        """
+        - Ferran Aragó Ausina
+        - Carles Navarro Esteve  
+        - Aleixandre Tarrasó Sorní
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown("---")
+    st.caption(f"© {pd.Timestamp.now().year} Planificador de Rutas | v1.0")
+    st.caption("Movilidad Urbana Sostenible")
+    st.markdown("---")
 
 # Session state for start/end
 if "start" not in st.session_state:
@@ -250,11 +268,12 @@ if st.session_state.end:
 
 dist_total = 0
 okey = True
+paradas_total = 0
+fuentes_total = 0
 if st.session_state.start and st.session_state.end:
     start_coord = (st.session_state.start["lat"], st.session_state.start["lng"])
     end_coord = (st.session_state.end["lat"], st.session_state.end["lng"])
 
-    paradas_total = 0
     if type_route == "Caminando":
         route, dist = compute_route(start_coord, end_coord, graph_walking, range_temp)
         print_route(route, graph_walking, m, color="green")
@@ -265,9 +284,10 @@ if st.session_state.start and st.session_state.end:
         print_fountains(fountains_on_route, public_fountains_gdf, m)
 
         paradas_total += paradas
+        fuentes_total += len(fountains_on_route)
         dist_total = dist
 
-    elif type_route == "En Bicicleta":
+    elif type_route == "Bicicleta":
         ini_walk, dist_ini, cycle, dist_cycle, end_walk, dist_end = (
             compute_cycling_route(
                 start_coord, end_coord, graph_cycling, graph_walking, range_temp
@@ -300,48 +320,56 @@ if st.session_state.start and st.session_state.end:
             )
             print_fountains(fountains_on_segment, public_fountains_gdf, m)
             paradas_total += paradas
+            fuentes_total += len(fountains_on_segment)
 
         dist_total = dist_ini + dist_cycle + dist_end
 
     elif type_route == "Valenbisi":
         # Fetch station data once
-        params = {"rows": 100}
-        url = (
-            "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/"
-            "datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records"
+
+        if st.session_state.first_run or now - st.session_state.now > pd.Timedelta(
+            minutes=15
+        ):
+            st.session_state.now = now
+            st.session_state.first_run = False
+            params = {"rows": 100}
+            url = (
+                "https://valencia.opendatasoft.com/api/explore/v2.1/catalog/"
+                "datasets/valenbisi-disponibilitat-valenbisi-dsiponibilidad/records"
+            )
+            st.session_state.valenbisi_stations = fetch_valenbisi_stations(url, params)
+
+        # try:
+        (
+            ini_walk,
+            dist_ini,
+            cycle,
+            dist_cycle,
+            end_walk,
+            dist_end,
+            ini_station,
+            end_station,
+        ) = compute_valenbisi_trip(
+            start_coord,
+            end_coord,
+            graph_cycling,
+            graph_walking,
+            st.session_state.valenbisi_stations,
+            range_temp,
         )
-        valenbisi_stations = fetch_valenbisi_stations(url, params)
 
-        try:
-            (
-                ini_walk,
-                dist_ini,
-                cycle,
-                dist_cycle,
-                end_walk,
-                dist_end,
-                ini_station,
-                end_station,
-            ) = compute_valenbisi_trip(
-                start_coord,
-                end_coord,
-                graph_cycling,
-                graph_walking,
-                valenbisi_stations,
-                range_temp,
-            )
+        print_stations(ini_station, end_station, m)
+        print_route(ini_walk, graph_walking, m, color="green")
+        print_route(cycle, graph_cycling, m, color="blue")
+        print_route(end_walk, graph_walking, m, color="green")
 
-            print_stations(ini_station, end_station, m)
-            print_route(ini_walk, graph_walking, m, color="green")
-            print_route(cycle, graph_cycling, m, color="blue")
-            print_route(end_walk, graph_walking, m, color="green")
-
-        except:
-            okey = False
-            st.error(
-                "No se ha podido calcular la ruta en ValenBisi entre los puntos seleccionados."
-            )
-            st.stop()
+        # except :
+        #     okey = False
+        #     st.error(
+        #         "No se ha podido calcular la ruta en ValenBisi entre los puntos seleccionados."
+        #     )
+        #     print()
+        #     st.stop()
 
         for seg_graph, seg_dist, seg_route, seg_mode in [
             (graph_walking, dist_ini, ini_walk, "Caminando"),
@@ -353,12 +381,13 @@ if st.session_state.start and st.session_state.end:
             )
             print_fountains(fts, public_fountains_gdf, m)
             paradas_total += paradas
+            fuentes_total += len(fts)
 
         dist_total = dist_ini + dist_cycle + dist_end
 
 if okey and dist_total > 0:
     st.markdown(
-        f"La distancia total de la ruta es de **{dist_total:.2f} metros**.\nHace una temperatura de **{temp:.2f}°C** en Valencia, por lo que se recomienda hacer un total de **{paradas_total} paradas**."
+        f"La distancia total de la ruta es de **{dist_total:.2f} metros**.\nHace una temperatura de **{temp:.2f}°C** en Valencia, por lo que se recomienda hacer un total de **{paradas_total} paradas**, pero se han encontrado un total de **{fuentes_total} fuentes** cercanas a la ruta."
     )
 
 # 3. Add click handler
