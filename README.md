@@ -28,8 +28,18 @@ La idea surge ante la creciente problemática de las altas temperaturas en las c
 
 ## 📂 Estructura del Proyecto
 
-├── data/ # Datos estáticos o generados
-├── src/ # Módulos Python
-├── app.py # Aplicación Streamlit
-├── requirements.txt
-├── README.md # Este archivo
+```text
+coolroute-valencia/
+├── 📂 data/
+│   ├── 📂 external/      # Datos de OpenStreetMap
+│   ├── 📂 processed/     # Grafos procesados
+│   └── 📂 raw/           # Descargas brutas de APIs
+├── 📂 src/
+│   ├── 📂 routing/       # Algoritmos de rutas
+│   │   ├── bike.py       # 🚲 Rutas ciclistas
+│   │   └── pedestrian.py # 🚶 Rutas peatonales
+│   ├── 📂 utils/         # Herramientas auxiliares
+│   └── config.py         # ⚙️ Configuración
+├── 📄 app.py             # 🖥️ Interfaz Streamlit
+├── 📄 requirements.txt   # 📦 Dependencias
+└── 📄 README.md          # 📖 Documentación
