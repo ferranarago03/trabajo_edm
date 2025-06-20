@@ -27,10 +27,9 @@ La idea surge ante la creciente problemática de las altas temperaturas en las c
 - 🌡️ **API Open-Meteo** para datos meteorológicos.
 
 ## 📂 Estructura del Proyecto
-'''
+
 ├── data/ # Datos estáticos o generados
 ├── src/ # Módulos Python
 ├── app.py # Aplicación Streamlit
 ├── requirements.txt
 ├── README.md # Este archivo
-'''
