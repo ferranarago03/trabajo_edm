@@ -43,3 +43,20 @@ coolroute-valencia/
 ├── 📄 app.py             # 🖥️ Interfaz Streamlit
 ├── 📄 requirements.txt   # 📦 Dependencias
 └── 📄 README.md          # 📖 Documentación
+```
+## 🚀 Cómo Usar la aplicación en local
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu_usuario/tu_proyecto.git
+   cd tu_proyecto
+   ```
+2. Instala el entorno
+```bash
+   uv add .venv
+   ```
+3. Ejecuta la aplicación desde la ruta padre, es decir, desde trabajo_edm:
+```bash
+   streamlit run .\home.py
+   ```
+4. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
+
