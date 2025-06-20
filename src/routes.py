@@ -25,7 +25,6 @@ def get_route(start, end, graph, range_temp="length"):
     distancia = get_distance(start, end)
     route = ox.shortest_path(graph, from_node, to_node, weight=range_temp)
     if not route:
-        print("No route found.")
         return [], 0
 
     distancia = 0
@@ -271,12 +270,12 @@ def print_stations(ini, end, map):
     end_station_loc = end["geo_point_2d"]
     folium.Marker(
         location=(ini_station_loc["lat"], ini_station_loc["lon"]),
-        popup=f"Start Station.<br>Available Bikes: {ini['available']}",
+        popup=f"Estación de Salida.<br>Bicicletas Disponibles: {ini['available']}",
         icon=folium.Icon(color="green", icon="bicycle", prefix="fa"),
     ).add_to(map)
 
     folium.Marker(
         location=(end_station_loc["lat"], end_station_loc["lon"]),
-        popup=f"End Station<br>Available Places: {end['free']}",
+        popup=f"Estación de Llegada<br>Plazas Disponibles: {end['free']}",
         icon=folium.Icon(color="red", icon="home"),
     ).add_to(map)

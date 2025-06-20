@@ -35,24 +35,24 @@ def get_nearest_water_fountains_on_route(
 
     # Temperature-based stop frequency
     freq_config = {
-        "frio": {"min": -50, "max": 10, "Caminando": 10, "En Bicicleta": 12},
-        "ideal": {"min": 15, "max": 25, "Caminando": 7, "En Bicicleta": 9},
-        "calor_extremo": {"min": 30, "max": 50, "Caminando": 4, "En Bicicleta": 6},
+        "frio": {"min": -50, "max": 10, "Caminando": 15, "En Bicicleta": 12},
+        "ideal": {"min": 15, "max": 25, "Caminando": 13, "En Bicicleta": 9},
+        "calor_extremo": {"min": 30, "max": 50, "Caminando": 10, "En Bicicleta": 6},
     }
 
     def obtener_frecuencia():
         if temperatura < 15:
             return freq_config["frio"][type_displacement]
-        elif 15 <= temperatura <= 25:
+        elif 15 <= temperatura <= 28:
             return freq_config["ideal"][type_displacement]
-        elif temperatura > 25:
+        elif temperatura > 28:
             return freq_config["calor_extremo"][type_displacement]
         else:
             return None
 
     # Determine speed and max_distance
     if type_displacement == "Caminando":
-        velocidad = 1.0  # m/s
+        velocidad = 1.2  # m/s
         max_distance = 100  # meters
     else:
         velocidad = 3.0  # m/s (both bicycle and ValenBisi)

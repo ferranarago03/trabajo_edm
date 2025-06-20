@@ -135,17 +135,17 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("#### Navegación Rápida")
     if st.button(
-        "🗺️ Planificador de Rutas", use_container_width=True, key="sb_nav_route_planner"
-    ):
-        st.session_state.current_page_for_nav = "Planificador de Rutas"
-        st.switch_page("pages/Planificador.py")
-    if st.button(
         "💡 Implementación de la Idea",
         use_container_width=True,
         key="sb_nav_idea_presentation",
     ):
         st.session_state.current_page_for_nav = "Implementación de la Idea"
         st.switch_page("pages/Implementación.py")
+    if st.button(
+        "🗺️ Planificador de Rutas", use_container_width=True, key="sb_nav_route_planner"
+    ):
+        st.session_state.current_page_for_nav = "Planificador de Rutas"
+        st.switch_page("pages/Planificador.py")
 
     st.markdown("---")
     st.markdown("#### Recursos Externos")
@@ -160,7 +160,8 @@ with st.sidebar:
         "- [Open Meteo API](https://open-meteo.com/)",
         unsafe_allow_html=True,
     )
-    st.markdown("#### 👤 Autores")
+    st.markdown("---")
+    st.markdown("#### Autores")
     st.markdown(
         """
         - Ferran Aragó Ausina
@@ -259,8 +260,6 @@ if st.session_state.current_page_for_nav == "Página Principal":
                 "Utiliza la red de bicicletas públicas ValenBisi para encontrar la mejor ruta y con las mejores estaciones disponibles."
             )
 
-        st.markdown("---")
-
         st.subheader("🌡️ Adaptado al Clima: Rutas Inteligentes")
         st.markdown(
             """
@@ -273,7 +272,6 @@ if st.session_state.current_page_for_nav == "Página Principal":
             Este enfoque climático convierte tu ruta en una experiencia **más saludable, sostenible y consciente del entorno**.
             """
         )
-        st.markdown("---")
 
         # --- Section to promote the Route Planner ---
         st.header("✨ Visualiza tus Rutas")
@@ -286,7 +284,7 @@ if st.session_state.current_page_for_nav == "Página Principal":
                     <li>**Elegir tu modo de transporte preferido** (a pie, bicicleta personal, ValenBisi).</li>
                     <li>**Ver la ruta optimizada** claramente mostrada en el mapa.</li>
                 </ul>
-                ¡Empieza a planificar tu próximo viaje ahora!""",
+                """,
                 unsafe_allow_html=True,
             )
             if st.button(
@@ -296,5 +294,3 @@ if st.session_state.current_page_for_nav == "Página Principal":
             ):
                 st.session_state.current_page_for_nav = "Planificador de Rutas"
                 st.switch_page("pages/Planificador.py")
-
-        st.markdown("---")

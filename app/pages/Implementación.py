@@ -6,7 +6,7 @@ from pathlib import Path
 APP_DIR = Path(__file__).resolve().parent.parent
 
 st.set_page_config(
-    page_title="Implementación de la Idea",
+    page_title="VALEN FRESC | Implementación de la Idea",
     page_icon="💡",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -61,7 +61,7 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
     st.markdown("---")
-    st.markdown("#### 👤 Autores")
+    st.markdown("#### Autores")
     st.markdown(
         """
         - Ferran Aragó Ausina
@@ -77,7 +77,7 @@ with st.sidebar:
 
 
 # --- Contenido Principal ---
-st.header("Presentación de la Idea: Movilidad Urbana Inteligente en Valencia")
+st.header("Implementación de la Idea: Movilidad Urbana Inteligente en Valencia")
 
 st.markdown("""
 ### Visión del Proyecto
@@ -88,9 +88,9 @@ El proyecto tiene como objetivo mejorar la movilidad urbana, proporcionando opci
     * Descarga de datos de OpenStreetMap (OSM) para Valencia. Obtención de los dos grafos (ruta en bicicleta o caminando) utilizados para el cálculo de las rutas.
     * Descarga de datos abiertos de la ciudad de Valencia a través de la API de Open Data. De esta forma se han obtenido todas las fuentes públicas de la ciudad así como los árboles que hay en la ciudad para calcular las zonas con sombra.
             
-        También se hace uso de este portal para obtener los datos de las estaciones de ValenBisi y poder saber cuáles de ellas son las más cercanas y tienen bicicletas y plazas disponibles. Este es un valor relativamente actual ya que se descarga en el momento de hacer la consulta y en la API se actualiza cada 15 minutos.
+        También se hace uso de este portal para obtener los datos de las estaciones de ValenBisi y poder saber cuáles de ellas son las más cercanas y tienen bicicletas y plazas disponibles. Este es un valor relativamente actual ya que se descarga en el momento de hacer la consulta y actualizándose, desde la propia API, cada 10 minutos.
     * Descarga de los datos de temperatura a través de la API de Open Meteo. Estos datos se actualizan cada hora y permiten calcular la temperatura actual en Valencia para poder calcular el número de paradas que se deben hacer en las fuentes públicas y la importacia de la sombra en la ruta.
-* **Cálculo de los pesos por la sombra**: Para calcular la importancia de la sombra, se ha usado el dataset con los árboles de Valencia, junto con las proyecciones de los grafos. Para cada tramo del grafo (es decir, una arista entre dos nodos), se construye una zona de influencia de 15 metros alrededor del tramo. De esa manea, con un índice espacial, se consultan de manera eficiente todos los árboles situados dentro de la zona, asumiendo que, cuantos más árboles haya, también habrá más sombra. Para calcular los pesos del grafo, se definen distintos rangos de temperatura, de 5 en 5 grados y de 0 Cº a 40 Cº.  Para cada diferente rango, se establecen diferentes pesos dependiendo de la importancia de la longitud o del número de árboles. A mayor temperatura, se le dará un poco más de importancia ir por una zona sombreada, sin embargo, a menor temperatura, se le dará más importancia a la longitud. La fórmula utilizada final es: (importancia_longitud * longitud) - (importancia_sombra*número de arboles) + 1000 (esta suma final se añade para garantizar que se den pesos positivos para no tener problemas con el algoritmo Dijkstra).
+* **Cálculo de los pesos por la sombra**: Para calcular la importancia de la sombra, se ha usado el dataset con los árboles de Valencia, junto con las proyecciones de los grafos. Para cada tramo del grafo (es decir, una arista entre dos nodos), se construye una zona de influencia de 15 metros alrededor del tramo. De esa manera, con un índice espacial, se consultan de manera eficiente todos los árboles situados dentro de la zona, asumiendo que, cuantos más árboles haya, también habrá más sombra. Para calcular los pesos del grafo, se definen distintos rangos de temperatura, de 5 en 5 grados y de 0 Cº a 40 Cº.  Para cada diferente rango, se establecen diferentes pesos dependiendo de la importancia de la longitud o del número de árboles. A mayor temperatura, se le dará un poco más de importancia ir por una zona sombreada, sin embargo, a menor temperatura, se le dará más importancia a la longitud. La fórmula utilizada final es: (importancia_longitud * longitud) - (importancia_sombra * número de árboles) + 1000 (esta suma final se añade para garantizar que se den pesos positivos para no tener problemas con el algoritmo Dijkstra).
 * **Cálculo de la ruta**:
     1. El primer paso consiste en obtener los nodos del grafo correspondiente que más cerca se encuentren del punto de inicio y del punto de destino, ya que se desea que la selección de estos puntos sea interactiva.
     2. A continuación, se calcula la ruta más corta entre estos dos nodos haciendo uso del algoritmo comentado anteriormente.
@@ -112,7 +112,7 @@ Esta aplicación está pensada para:
 * **Geopandas**: Para trabajar con datos geoespaciales y realizar análisis espaciales.
 * **Python**: El lenguaje de programación principal.
 
-### Mejoras Futuras
+### Futuras Extensiones
 De cara al futuro se plantea la posibilidad de perfeccionar el cálculo de las rutas mediante diversas líneas de mejora:
 - **Integración de la altura de los edificios**: La recolección de los datos de altura de los edificios a partir de los catastros municipales permitiría calcular con mayor precisión la sombra proyectada en cada tramo de la ciudad en función de la hora del día. Esto contribuiría a ofrecer rutas aún más seguras y confortables durante episodios de temperaturas extremas.
 - **Consideración de la humedad y otros factores térmicos**: La incorporación de datos relativos a la humedad y a otros indicadores del confort térmico, como la sensación térmica, permitiría ajustar aún más los cálculos de la cantidad de paradas recomendadas, pudiendo incluso consultar con expertos en climatología para definir mejor los rangos de temperatura y humedad que se consideran críticos para la salud y el bienestar de los usuarios.

@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_folium import st_folium
 import folium
+from branca.element import Template, MacroElement
 from shapely.geometry import shape
 import pandas as pd
 from datetime import datetime as dt
@@ -32,7 +33,7 @@ FILENAME = "data/valencia_walking_sombra.graphml"
 
 try:
     st.set_page_config(
-        page_title="Planificador de Rutas",
+        page_title="VALEN FRESC | Planificador de Rutas",
         layout="wide",
         initial_sidebar_state="expanded",
         page_icon="🗺️",
@@ -46,11 +47,12 @@ except AttributeError:
         page_icon_to_use = str(FAVICON_LOCAL_PATH_OBJ)
 
     st.set_page_config(
-        page_title="Planificador de Rutas",
+        page_title="VALEN FRESC | Planificador de Rutas",
         layout="wide",
         initial_sidebar_state="expanded",
         page_icon="🗺️",
     )
+
 
 st.markdown(
     """
@@ -194,9 +196,9 @@ st.markdown(
     """
     1. **Selecciona el tipo de ruta**: Puedes elegir entre **Caminando**, **En Bicicleta** o **Valenbisi**.
     2. **Define los puntos de inicio y fin**:
-        - Selecciona en el menú de la izquierda si deseas intruducir el inicio o la llegada de tu ruta.
-        - Una vez seleccionado, haz clic en el mapa para fijar el punto deseado.
-        - Cambia a la opción contraria para fijar el otro punto.
+        * Selecciona en el menú de la izquierda si deseas intruducir el inicio o la llegada de tu ruta.
+        * Una vez seleccionado, haz clic en el mapa para fijar el punto deseado.
+        * Cambia a la opción contraria para fijar el otro punto.
     3. **Visualiza la ruta**: Una vez que hayas fijado ambos puntos, el mapa mostrará la ruta calculada.
     4. **Consulta las fuentes de agua**: Se mostrarán las fuentes de agua cercanas a tu ruta, teniendo en cuenta la temperatura actual de Valencia. Podrás acceder a su información haciendo clic en los iconos de las fuentes en el mapa.
     5. **Consulta las estaciones de ValenBisi**: Si has seleccionado la opción de ValenBisi, se mostrarán las estaciones disponibles en tu ruta, indicando, el número de bicicletas disponibles para la estción de inicio y el número de plazas disponibles para la de llegada.
@@ -218,7 +220,7 @@ with st.sidebar:
     punto = st.radio("¿Qué punto quieres fijar?", punto_opciones)
 
     st.markdown("---")
-    st.markdown("#### 👤 Autores")
+    st.markdown("#### Autores")
     st.markdown(
         """
         - Ferran Aragó Ausina
@@ -250,7 +252,7 @@ elif st.session_state.start:
 elif st.session_state.end:
     centro = [st.session_state.end["lat"], st.session_state.end["lng"]]
 
-m = folium.Map(location=centro, zoom_start=14)
+m = folium.Map(location=centro, zoom_start=15)
 
 # Add existing markers
 if st.session_state.start:
@@ -328,7 +330,7 @@ if st.session_state.start and st.session_state.end:
         # Fetch station data once
 
         if st.session_state.first_run or now - st.session_state.now > pd.Timedelta(
-            minutes=15
+            minutes=10
         ):
             st.session_state.now = now
             st.session_state.first_run = False
@@ -339,37 +341,36 @@ if st.session_state.start and st.session_state.end:
             )
             st.session_state.valenbisi_stations = fetch_valenbisi_stations(url, params)
 
-        # try:
-        (
-            ini_walk,
-            dist_ini,
-            cycle,
-            dist_cycle,
-            end_walk,
-            dist_end,
-            ini_station,
-            end_station,
-        ) = compute_valenbisi_trip(
-            start_coord,
-            end_coord,
-            graph_cycling,
-            graph_walking,
-            st.session_state.valenbisi_stations,
-            range_temp,
-        )
+        try:
+            (
+                ini_walk,
+                dist_ini,
+                cycle,
+                dist_cycle,
+                end_walk,
+                dist_end,
+                ini_station,
+                end_station,
+            ) = compute_valenbisi_trip(
+                start_coord,
+                end_coord,
+                graph_cycling,
+                graph_walking,
+                st.session_state.valenbisi_stations,
+                range_temp,
+            )
 
-        print_stations(ini_station, end_station, m)
-        print_route(ini_walk, graph_walking, m, color="green")
-        print_route(cycle, graph_cycling, m, color="blue")
-        print_route(end_walk, graph_walking, m, color="green")
+            print_stations(ini_station, end_station, m)
+            print_route(ini_walk, graph_walking, m, color="green")
+            print_route(cycle, graph_cycling, m, color="blue")
+            print_route(end_walk, graph_walking, m, color="green")
 
-        # except :
-        #     okey = False
-        #     st.error(
-        #         "No se ha podido calcular la ruta en ValenBisi entre los puntos seleccionados."
-        #     )
-        #     print()
-        #     st.stop()
+        except IndexError:
+            okey = False
+            st.error(
+                "No se ha podido calcular la ruta en ValenBisi entre los puntos seleccionados."
+            )
+            st.stop()
 
         for seg_graph, seg_dist, seg_route, seg_mode in [
             (graph_walking, dist_ini, ini_walk, "Caminando"),
@@ -385,10 +386,42 @@ if st.session_state.start and st.session_state.end:
 
         dist_total = dist_ini + dist_cycle + dist_end
 
+    legend_html = """
+    {% macro html(this, kwargs) %}
+    <div style="
+        position: fixed;
+        bottom: 50px;
+        left: 50px;
+        width: 140px;
+        height: 70px;
+        background-color: white;
+        border:2px solid grey;
+        z-index:9999;
+        font-size:14px;
+        ">
+        &nbsp;<b>Leyenda</b><br>
+        &nbsp;<i style="background:green;
+                    display:inline-block;
+                    width:12px;
+                    height:12px;
+                    margin-right:6px;"></i> Caminando<br>
+        &nbsp;<i style="background:blue;
+                    display:inline-block;
+                    width:12px;
+                    height:12px;
+                    margin-right:6px;"></i> Bicicleta
+    </div>
+    {% endmacro %}
+    """
+    legend = MacroElement()
+    legend._template = Template(legend_html)
+    m.get_root().add_child(legend)
+
 if okey and dist_total > 0:
     st.markdown(
         f"La distancia total de la ruta es de **{dist_total:.2f} metros**.\nHace una temperatura de **{temp:.2f}°C** en Valencia, por lo que se recomienda hacer un total de **{paradas_total} paradas**, pero se han encontrado un total de **{fuentes_total} fuentes** cercanas a la ruta."
     )
+
 
 # 3. Add click handler
 m.add_child(folium.ClickForMarker(popup=f"Selecciona el {punto.lower()} de la ruta"))
