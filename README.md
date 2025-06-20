@@ -27,22 +27,57 @@ La idea surge ante la creciente problemática de las altas temperaturas en las c
 - 🌡️ **API Open-Meteo** para datos meteorológicos.
 
 ## 📂 Estructura del Proyecto
+A continuación mostraremos una pequeña introducción, para entender cómo está estructurado el proyecto:
 
 ```text
-coolroute-valencia/
-├── 📂 data/
-│   ├── 📂 external/      # Datos de OpenStreetMap
-│   ├── 📂 processed/     # Grafos procesados
-│   └── 📂 raw/           # Descargas brutas de APIs
-├── 📂 src/
-│   ├── 📂 routing/       # Algoritmos de rutas
-│   │   ├── bike.py       # 🚲 Rutas ciclistas
-│   │   └── pedestrian.py # 🚶 Rutas peatonales
-│   ├── 📂 utils/         # Herramientas auxiliares
-│   └── config.py         # ⚙️ Configuración
-├── 📄 app.py             # 🖥️ Interfaz Streamlit
-├── 📄 requirements.txt   # 📦 Dependencias
-└── 📄 README.md          # 📖 Documentación
+trabajo_edm/
+├── 📂 app/                           # Código principal para la app Streamlit
+│   ├── 📂 pages/                    # Páginas secundarias de la app
+│   │   ├── ImplementaciOn.py
+│   │   └── Planificador.py
+│   ├── home.py
+│   ├── nav.py
+│   ├── styles.css
+│   ├── route_planner.png
+│   ├── upv.png
+│   ├── ValenFresc.png
+│   └── __pycache__/                 # Archivos compilados automáticamente
+
+├── 📂 data/                         # Datos geoespaciales y CSVs
+│   ├── arbratge-arbolado.csv
+│   ├── cartografia-base-edificis-... .geojson
+│   ├── fonts_publiques.csv
+│   ├── itinerarios-ciclistas.geojson
+│   ├── valenbisi_disponibilitat.csv
+│   ├── valenbisi_stations.geojson
+│   ├── valencia_cycling_network.graphml
+│   ├── valencia_cycling_sombra.graphml
+│   ├── valencia_walking_network.graphml
+│   └── valencia_walking_sombra.graphml
+
+├── 📂 notebooks/                    # Notebooks de prueba y procesamiento
+│   ├── cache/
+│   ├── creacion_ruta.ipynb
+│   ├── creacion_sombra.ipynb
+│   ├── descarga_archivo.ipynb
+│   ├── obtencion_fuentes.ipynb
+│   ├── obtencion_temp.ipynb
+│   ├── pruebas_sombra.ipynb
+│   └── ruta_valenbisi.ipynb
+
+├── 📂 src/                          # Código Python del backend
+│   ├── __pycache__/
+│   ├── fountains.py                 # Obtención de rutas con fuentes
+│   ├── routes.py                    # Cálculo de rutas con sombra
+│   ├── temperature.py               # Obtención temperatura y tiempos
+│   └── utils.py                     # Utilidades generales
+
+├── 📄 README.md                     # 📖 Documentación del proyecto
+├── 📄 requirements.txt              # 📦 Dependencias del proyecto
+├── 📄 pyproject.toml                # ⚙️ Configuración del proyecto
+├── 📄 uv.lock                       # 📌 Bloqueo de versiones
+└── 📂 .venv/                        # 🐍 Entorno virtual (no se versiona)
+
 ```
 ## 🚀 Cómo Usar la aplicación en local
 1. Clona el repositorio:
@@ -79,4 +114,18 @@ coolroute-valencia/
    streamlit run .\home.py
    ```
 6. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
+   
+   ## 🔮 Mejoras Futuras
 
+- 🏢 **Integrar altura de edificios** para calcular sombra en tiempo real.
+- 💧 **Considerar humedad y sensación térmica** para priorizar rutas.
+- 🚦 **Analizar tiempos reales de desplazamiento** considerando semáforos y zonas de espera.
+
+## 🤝 Contribuciones
+¡Toda colaboración es bienvenida!
+Abre un issue o envía un pull request si quieres proponer cambios, mejoras o nuevas funcionalidades.
+
+## 📧  Contacto 
+- [faraaus@etsinf.upv.es](mailto:faraaus@etsinf.upv.es)
+- [cnavest@etsinf.upv.es](mailto:cnavest@etsinf.upv.es)
+- [atarsor@etsinf.upv.es](mailto:atarsor@etsinf.upv.es)
