@@ -47,16 +47,36 @@ coolroute-valencia/
 ## 🚀 Cómo Usar la aplicación en local
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/tu_proyecto.git
-   cd tu_proyecto
+   git clone https://github.com/ferranarago03/trabajo_edm.git
+   cd trabajo_edm
    ```
-2. Instala el entorno
-```bash
-   uv add .venv
+2. Instala el entorno 
+   ```bash
+   # Crear entorno virtual (usando uv)
+    uv venv .venv
+
+    # Activar el entorno:
+    ## Linux/MacOS:
+    source .venv/bin/activate
+
+    ## Windows (PowerShell):
+    .\.venv\Scripts\activate
    ```
-3. Ejecuta la aplicación desde la ruta padre, es decir, desde trabajo_edm:
-```bash
+3. Instala dependencias con uv
+   ```bash
+   ## Con requirements.txt
+   uv pip install -r requirements.txt
+
+   ## Con pyproject.toml
+   uv pip install .  # Instala en modo editable (recomendado para desarrollo)
+   ```
+4. Sincronizar dependencias
+   ```bash
+   uv pip sync requirements.lock  # Bloquea versiones exactas
+   ```
+5. Ejecuta la aplicación desde la ruta padre, es decir, desde trabajo_edm:
+   ```bash
    streamlit run .\home.py
    ```
-4. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
+6. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
 
