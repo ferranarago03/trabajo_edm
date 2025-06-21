@@ -38,18 +38,12 @@ trabajo_edm/
 │   ├── home.py
 │   ├── nav.py
 │   ├── styles.css
-│   ├── route_planner.png
-│   ├── upv.png
 │   ├── ValenFresc.png
 │   └── __pycache__/                 # Archivos compilados automáticamente
 │
 ├── 📂 data/                         # Datos geoespaciales y CSVs
 │   ├── arbratge-arbolado.csv
-│   ├── cartografia-base-edificis-... .geojson
 │   ├── fonts_publiques.csv
-│   ├── itinerarios-ciclistas.geojson
-│   ├── valenbisi_disponibilitat.csv
-│   ├── valenbisi_stations.geojson
 │   ├── valencia_cycling_network.graphml
 │   ├── valencia_cycling_sombra.graphml
 │   ├── valencia_walking_network.graphml
@@ -62,7 +56,6 @@ trabajo_edm/
 │   ├── descarga_archivo.ipynb
 │   ├── obtencion_fuentes.ipynb
 │   ├── obtencion_temp.ipynb
-│   ├── pruebas_sombra.ipynb
 │   └── ruta_valenbisi.ipynb
 │
 ├── 📂 src/                          # Código Python del backend
