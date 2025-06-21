@@ -1,4 +1,4 @@
-# 🌳 ValenFresc 
+# 🌳 Valen Fresc 
 
 ## 📝 Descripción
 Aplicación web que calcula rutas urbanas sostenibles en Valencia minimizando la exposición al calor. Tiene en cuenta la sombra de los árboles, la ubicación de fuentes públicas, estaciones ValenBisi, temperatura en tiempo real y carriles bici, para ofrecer trayectos más saludables y confortables.
@@ -68,8 +68,7 @@ trabajo_edm/
 ├── 📄 README.md                     # 📖 Documentación del proyecto
 ├── 📄 requirements.txt              # 📦 Dependencias del proyecto
 ├── 📄 pyproject.toml                # ⚙️ Configuración del proyecto
-├── 📄 uv.lock                       # 📌 Bloqueo de versiones
-└── 📂 .venv/                        # 🐍 Entorno virtual (no se versiona)
+└── 📄 uv.lock                       # 📌 Bloqueo de versiones
 
 ```
 ## 🚀 Cómo Usar la aplicación en local
@@ -79,36 +78,58 @@ trabajo_edm/
    cd trabajo_edm
    ```
 2. Instala el entorno 
-   ```bash
-   # Crear entorno virtual (usando uv)
-    uv venv .venv
+   1. Mediante `uv` (recomendado):
+      ```bash
+      # Crear entorno virtual
+      uv sync
 
-    # Activar el entorno:
-    ## Linux/MacOS:
-    source .venv/bin/activate
+      # Activar el entorno:
+      ## Linux/MacOS:
+      source .venv/bin/activate
 
-    ## Windows (PowerShell):
-    .\.venv\Scripts\activate
-   ```
+      ## Windows (PowerShell):
+      .\.venv\Scripts\activate
+      ```
+   2. O con `venv` (alternativa):
+
+      ```bash
+      # Crear entorno virtual
+      python -m venv .venv
+      
+      # Activar el entorno:
+      ## Linux/MacOS:
+      source .venv/bin/activate
+      
+      ## Windows (PowerShell):
+      .\.venv\Scripts\activate
+      ```
 3. Instala dependencias con uv
+4. 
+   El comando `uv sync` instalará todas las dependencias necesarias para el proyecto.
    ```bash
-   ## Con requirements.txt
-   uv pip install -r requirements.txt
+   uv sync
+   ```
+   O si prefieres usar `pip`:
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. Descarga los datos necesarios:
 
-   ## Con pyproject.toml
-   uv pip install .  # Instala en modo editable (recomendado para desarrollo)
-   ```
-4. Sincronizar dependencias
-   ```bash
-   uv pip sync requirements.lock  # Bloquea versiones exactas
-   ```
-5. Ejecuta la aplicación desde la ruta padre, es decir, desde trabajo_edm:
+   Los datos se encuentra en la carpeta `data/`, execeptuando de una archivo más pesado que se descargará automáticamente al ejecutar la aplicación por primera vez.
+
+   En caso de no disponer de los datos, puedes disponer de todos ellos de la siguiente manera:
+   
+   1. Ejecutar el notebook `descarga_archivo.ipynb` para descargar los grafos de OSMnx necesarios y la información de las fuentes públicas.
+   2. Descargar el archivo `arbratge-arbolado.csv` desde el [Portal de Datos Abiertos de Valencia](https://valencia.opendatasoft.com/explore/dataset/arbratge-arbolado/export/) y guardarlo en la carpeta `data/`. Este archivo no se descarga automáticamente debido a su tamaño.
+   3. Ejecutar el notebook `creacion_sombra.ipynb` para crear los grafos con la información relativa a la sombra de los árboles.
+
+6. Ejecuta la aplicación desde la ruta padre, es decir, desde trabajo_edm:
    ```bash
    streamlit run .\home.py
    ```
-6. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
+7. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
    
-   ## 🔮 Mejoras Futuras
+   ## 🔮 Futuras Ampliaciones
 
 - 🏢 **Integrar altura de edificios** para calcular sombra en tiempo real.
 - 💧 **Considerar humedad y sensación térmica** para priorizar rutas.
@@ -119,6 +140,6 @@ trabajo_edm/
 Abre un issue o envía un pull request si quieres proponer cambios, mejoras o nuevas funcionalidades.
 
 ## 📧  Contacto 
-- [faraaus@etsinf.upv.es](mailto:faraaus@etsinf.upv.es)
-- [cnavest@etsinf.upv.es](mailto:cnavest@etsinf.upv.es)
-- [atarsor@etsinf.upv.es](mailto:atarsor@etsinf.upv.es)
+- Ferran Aragó Ausina ~ [faraaus@etsinf.upv.es](mailto:faraaus@etsinf.upv.es)
+- Carles Navarro Esteve ~ [cnavest@etsinf.upv.es](mailto:cnavest@etsinf.upv.es)
+- Aleixandre Tarrasó Sorní ~ [atarsor@etsinf.upv.es](mailto:atarsor@etsinf.upv.es)
