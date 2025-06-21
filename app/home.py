@@ -15,19 +15,12 @@ LOGO_FILENAME = "ValenFresc.png"
 LOGO_LOCAL_PATH_OBJ = APP_DIR / LOGO_FILENAME
 LOGO_LOCAL_PATH_STR = str(LOGO_LOCAL_PATH_OBJ)
 
-APP_INTRO_FILENAME = "upv.png"
-APP_INTRO_LOCAL_PATH_OBJ = APP_DIR / APP_INTRO_FILENAME
-
-# --- 0.1 FAVICON SETUP ---
-FAVICON_FILENAME = "route_planner.png"
-FAVICON_LOCAL_PATH_OBJ = APP_DIR / FAVICON_FILENAME
-
 page_icon_to_use = "https://www.valenbisi.es/assets/img/logo-contract.png"
-if FAVICON_LOCAL_PATH_OBJ.is_file():
-    page_icon_to_use = str(FAVICON_LOCAL_PATH_OBJ)
+if LOGO_LOCAL_PATH_OBJ.is_file():
+    page_icon_to_use = str(LOGO_LOCAL_PATH_OBJ)
 else:
     print(
-        f"DEBUG: Local favicon '{FAVICON_FILENAME}' not found at {FAVICON_LOCAL_PATH_OBJ}, using default URL."
+        f"DEBUG: Local favicon '{LOGO_FILENAME}' not found at {LOGO_LOCAL_PATH_OBJ}, using default URL."
     )
 
 # --- 0.2 NO MÁS LOGIN GATEKEEPER ---
