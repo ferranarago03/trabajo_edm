@@ -91,25 +91,6 @@ def get_gdf(df):
     return gdf
 
 
-def get_nearest_cycle_station(graph, geovalenbisi):
-    """
-    Find the nearest point in the graph to each Valenbisi station.
-    Parameters:
-        graph: The cycling network graph.
-        geovalenbisi (GeoDataFrame): A GeoDataFrame containing Valenbisi stations.
-    Returns:
-        GeoDataFrame: A GeoDataFrame with the nearest points in the graph to each Valenbisi station.
-    """
-    nearest_points = []
-    for _, row in geovalenbisi.iterrows():
-        point = row.geometry
-        nearest_node = ox.distance.nearest_nodes(graph, point.x, point.y)
-        nearest_points.append(nearest_node)
-
-    geovalenbisi["nearest_node"] = nearest_points
-    return geovalenbisi
-
-
 def get_nearest_station(point, gdf):
     """
     Find the nearest station to a given point using Euclidean distance
