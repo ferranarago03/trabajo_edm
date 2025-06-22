@@ -129,11 +129,15 @@ trabajo_edm/
    ```
 7. ¡Abre el enlace que te proporciona Streamlit en tu navegador!
    
-   ## 🔮 Futuras Ampliaciones
+## 🔮 Futuras Ampliaciones
 
 - 🏢 **Integrar altura de edificios** para calcular sombra en tiempo real.
 - 💧 **Considerar humedad y sensación térmica** para priorizar rutas.
 - 🚦 **Analizar tiempos reales de desplazamiento** considerando semáforos y zonas de espera.
+
+## 🔗 Despliegue de la Aplicación 
+La aplicación está desplegada en Streamlit Cloud y se puede acceder desde el siguiente enlace:
+[Valen Fresc en Streamlit Cloud](https://valen-fresc.streamlit.app/)
 
 ## 🤝 Contribuciones
 ¡Toda colaboración es bienvenida!
